@@ -18,7 +18,7 @@ export default function GameScreen({ route, navigation }) {
     }
 
     return (
-        <Layout>
+        <Layout hasAIAssistant={false}>
             <View style={styles.header}>
                 <Text>GameId: {gameId}</Text>
                 <Text>LevelId: {levelId}</Text>

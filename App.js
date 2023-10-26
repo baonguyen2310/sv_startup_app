@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo';
 import { StyleSheet, Text, View } from 'react-native';
 import AppNavigation from './src/navigation/AppNavigation';
 import Header from './src/components/Header';
@@ -16,3 +17,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+registerRootComponent(App)

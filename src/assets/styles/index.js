@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "space-between"
@@ -14,3 +14,5 @@ export default styles = StyleSheet.create({
         color: 'gray',
     },
 })
+
+export default styles

@@ -1,14 +1,16 @@
 import { Text, View, StyleSheet, useWindowDimensions } from "react-native"
 import AIAssistant from "../components/AIAssitant"
 
-export default function Layout({ children }) {
+export default function Layout({ children, hasAIAssistant = true }) {
     const { height, width } = useWindowDimensions()
     const isPortrait = height > width
 
     return (
         <View style={{ height: height, margin: 10 }}>
             {children}
-            <AIAssistant height={height} isPortrait={isPortrait} />
+            {
+                hasAIAssistant ? <AIAssistant height={height} isPortrait={isPortrait} /> : <></>
+            }
         </View>
     )
 }
