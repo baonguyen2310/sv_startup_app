@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function LevelItem() {
+export default function LevelItem({ id, name }) {
     return (
         <View style={styles.container}>
-            <Text>Level Item</Text>
+            <Text>{id}</Text>
         </View>
     )
 }

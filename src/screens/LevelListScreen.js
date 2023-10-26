@@ -1,13 +1,15 @@
 import { Text, View } from "react-native"
+import Layout from "../layout"
 import styles from "../assets/styles"
-import AIAssistant from "../components/AIAssitant"
 import LevelList from "../components/LevelList"
 
-export default function LevelListScreen({ navigation }) {
+export default function LevelListScreen({ navigation, route }) {
+    const { gameId, gameName } = route.params
+
     return (
-        <View>
-            <LevelList />
-            <AIAssistant />
-        </View>
+        <Layout>
+            <Text>Trò chơi: {gameName}</Text>
+            <LevelList navigation={navigation} gameId={gameId} />
+        </Layout>
     )
 }

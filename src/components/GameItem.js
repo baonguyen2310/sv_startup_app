@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function GameItem() {
+export default function GameItem({ id, name }) {
     return (
         <View style={styles.container}>
-            <Text>Game Item</Text>
+            <Text>{name}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: 175,
-        height: 100,
+        width: "100%",
+        height: 200,
         backgroundColor: "lightgreen",
-        margin: 10
+        marginVertical: 10
     }
 })

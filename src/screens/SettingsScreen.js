@@ -1,12 +1,11 @@
 import { Text, View } from "react-native"
+import Layout from "../layout"
 import styles from "../assets/styles"
-import AIAssistant from "../components/AIAssitant"
 
 export default function SettingsScreen({ navigation }) {
     return (
-        <View>
+        <Layout>
             <Text style={styles.contentText}>SettingsScreen</Text>
-            <AIAssistant />
-        </View>
+        </Layout>
     )
 }
