@@ -1,19 +1,11 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import Layout from "../layout";
-import {
-    GameBody_1
-} from "../games/index"
+import gameBodyList from "../games/index"
 
 export default function GameScreen({ route, navigation }) {
     // những game được cập nhật trong server phải có body tương ứng trong code
     // thì mới có trạng thái published (status: beta, published, deleted )
     const gameListData = [{name: "game_1"}] // get từ server
-    const gameBodyList = [
-        {
-            id: 0,
-            component: GameBody_1
-        }
-    ] // get từ code
 
     const { levelId, gameId } = route.params
 
