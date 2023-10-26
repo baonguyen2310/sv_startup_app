@@ -11,28 +11,37 @@ export default function GameScreen({ route, navigation }) {
 
     const foundGameBody = gameBodyList.find(gameBody => gameBody.id == gameId)
 
+    let GameBodyComponent = NotFoundGameBodyComponent
+
+    if (foundGameBody) {
+        GameBodyComponent = foundGameBody.component
+    }
+
     return (
         <Layout>
             <View style={styles.header}>
                 <Text>GameId: {gameId}</Text>
                 <Text>LevelId: {levelId}</Text>
+                <Text>Time: 30s</Text>
+                <Text>Score: 100</Text>
             </View>
             <View style={styles.body}>
-                {
-                    foundGameBody ? (
-                        <foundGameBody.component />
-                    ) : (
-                        <Text>Game chưa ra mắt</Text>
-                    )
-                }
+                <GameBodyComponent time={60} requireScore={80}/>
             </View>
         </Layout>
     )
 }
 
+function NotFoundGameBodyComponent() {
+    return (
+        <Text>Game chưa ra mắt</Text>
+    )
+}
+
 const styles = StyleSheet.create({
     header: {
-
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     body: {
         width: "100%",
