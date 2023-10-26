@@ -3,7 +3,10 @@
     "name": "SV_STARTUP_APP",
     "slug": "SV_STARTUP_APP",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": {
+      "default": "portrait",
+      "supportedOrientations": ["portrait", "landscape"] 
+    },
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
