@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
 //import { auth } from '../services/firebase'; // import Firebase authentication service
 
 export default function LoginScreen({ navigation }) {
@@ -19,7 +20,12 @@ export default function LoginScreen({ navigation }) {
     //     alert(error.message);
     //   });
 
-    navigation.navigate('Home');
+    navigation.dispatch(CommonActions.reset({
+      index: 0,
+      routes: [
+        { name: "Home" }
+      ]
+    }));
   };
 
   return (
