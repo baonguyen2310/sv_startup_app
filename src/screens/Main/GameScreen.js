@@ -1,6 +1,6 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import Layout from "../layout";
-import gameBodyList from "../games/index"
+import Layout from "../../layout";
+import gameBodyList from "../../games/index"
 
 export default function GameScreen({ route, navigation }) {
     // những game được cập nhật trong server phải có body tương ứng trong code
