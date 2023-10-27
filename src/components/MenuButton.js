@@ -1,14 +1,14 @@
 import { TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 
-export default function HeaderButton({ navigation }) {
+export default function MenuButton({ navigation }) {
     function handlePress() {
-        navigation.navigate("Settings")
+        navigation.navigate("Menu")
     }
 
     return (
         <TouchableOpacity onPress={handlePress}>
-            <Ionicons name="settings-sharp" size={36} color="#333" />
+            <Ionicons name="menu" size={36} color="#333" />
         </TouchableOpacity>
     )
 }

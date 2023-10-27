@@ -1,11 +1,11 @@
 import HomeScreen from './HomeScreen';
 import LevelListScreen from './LevelListScreen';
-import SettingsScreen from './SettingsScreen';
+import MenuScreen from './MenuScreen';
 import GameScreen from './GameScreen';
 
 export {
     HomeScreen,
     LevelListScreen,
-    SettingsScreen,
+    MenuScreen,
     GameScreen
 }
