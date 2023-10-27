@@ -9,9 +9,9 @@ import {
 } from 'firebase/auth';
 //import { ReactNativeAsyncStorage } from "firebase/auth";
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const auth = initializeAuth(firebaseApp, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+  persistence: getReactNativePersistence(AsyncStorage)
 });
 
 
@@ -19,15 +19,15 @@ const auth = initializeAuth(firebaseApp, {
 
 class AuthService {
     // Kiểm tra đã đăng nhập chưa
-    static checkLoggedIn() {
-        return onAuthStateChanged(auth, (user) => {
-            console.log(user)
-            if (!user) {
-                return
-            }
-            const uid = user.uid
-            return uid
-        })
+    static async checkLoggedIn() {
+        try {
+            return await AsyncStorage.getItem('user')
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+            return null
+        }
     }
 
     // Đăng ký tài khoản mới
@@ -47,22 +47,25 @@ class AuthService {
 
     // Đăng nhập bằng email và mật khẩu
     static async login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            const user = userCredential.user.uid
+            console.log(user)
+            await AsyncStorage.setItem('user', user)
             return user
-        })
-        .catch((error) => {
+        } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorMessage)
             return null
-        });
+        }
     }
 
     // Đăng xuất
     static async logout() {
-        return await signOut(auth);
+        await signOut(auth)
+        await AsyncStorage.removeItem('user')
+        return
     }
 }
 

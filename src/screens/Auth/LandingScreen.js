@@ -6,12 +6,13 @@ import AuthService from '../../services/firebase/AuthServices';
 
 export default function LandingScreen({ navigation }) {
   useEffect(() => {
-    const uid = AuthService.checkLoggedIn();
-
-    if (uid) {
-      console.log(uid);
-      navigation.navigate('Home');
-    }
+    AuthService.checkLoggedIn()
+    .then((user) => {
+      if (user) {
+        console.log(user);
+        navigation.navigate('Home');
+      }
+    }).catch((error) => console.log(error))
   }, []);
 
   return (

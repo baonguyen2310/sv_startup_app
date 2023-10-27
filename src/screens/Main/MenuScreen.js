@@ -1,6 +1,7 @@
 import { Text, View, ScrollView, StyleSheet, Button, TouchableOpacity, Alert } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import Layout from "../../layout"
+import AuthService from "../../services/firebase/AuthServices"
 
 const menuListData = [
     {
@@ -60,7 +61,8 @@ export default function MenuScreen({ navigation }) {
             buttons=[
                 {
                     text: "Yes", 
-                    onPress: () => {
+                    onPress: async () => {
+                        await AuthService.logout()
                         console.log("Logout success")
                     }
                 },

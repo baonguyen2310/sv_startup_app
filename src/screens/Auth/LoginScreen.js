@@ -14,7 +14,7 @@ export default function LoginScreen({ navigation }) {
       return alert("Thông tin đăng nhập sai")
     }
 
-    alert(user)
+    alert("Đăng nhập thành công")
     navigation.dispatch(CommonActions.reset({
       index: 0,
       routes: [
