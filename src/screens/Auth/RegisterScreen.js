@@ -1,24 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-//import { auth } from '../services/firebase'; // import Firebase authentication service
+import AuthService from '../../services/firebase/AuthServices';
 
 export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    // Thực hiện đăng ký bằng email và mật khẩu sử dụng Firebase
-    // auth
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     // Đăng ký thành công, thực hiện điều hướng hoặc thực hiện các hành động khác
-    //     navigation.navigate('Login'); // Ví dụ: Điều hướng người dùng đến màn hình đăng nhập sau khi đăng ký
-    //   })
-    //   .catch(error => {
-    //     // Xử lý lỗi đăng ký
-    //     alert(error.message);
-    //   });
-
+  const handleRegister = async () => {
+    const user = await AuthService.register(email, password)
+    
+    if (!user) {
+      return alert("Đăng ký không thành công")
+    }
+    alert("Đăng ký thành công")
     navigation.navigate('Login'); 
   };
 

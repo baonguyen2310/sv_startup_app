@@ -33,8 +33,8 @@ const story = [
     }
 ]
 const shuffledStory = shuffleArray(story)
-console.log(story)
-console.log(shuffledStory)
+// console.log(story)
+// console.log(shuffledStory)
 
 export default function GameBody({ time, requireScore }) {
     const [sound, setSound] = useState() 

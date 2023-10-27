@@ -32,17 +32,17 @@ class AuthService {
 
     // Đăng ký tài khoản mới
     static async register(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            const user = userCredential.user.uid
+            console.log(user)
             return user
-        })
-        .catch((error) => {
+        } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorMessage)
             return null
-        });
+        }
     }
 
     // Đăng nhập bằng email và mật khẩu
@@ -63,9 +63,13 @@ class AuthService {
 
     // Đăng xuất
     static async logout() {
-        await signOut(auth)
-        await AsyncStorage.removeItem('user')
-        return
+        try {
+            await signOut(auth)
+            await AsyncStorage.removeItem('user')
+            return
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
