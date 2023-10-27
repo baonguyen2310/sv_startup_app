@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from "react-native"
+import { Text, View, ScrollView, StyleSheet, Button, TouchableOpacity, Alert } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import Layout from "../../layout"
 
@@ -53,6 +53,31 @@ function MenuItem({ navigation, screenName, iconName }) {
 }
 
 export default function MenuScreen({ navigation }) {
+    function handleLogout(){
+        Alert.alert(
+            title="Thông báo",
+            message="Bạn có chắc muốn đăng xuất không? :D",
+            buttons=[
+                {
+                    text: "Yes", 
+                    onPress: () => {
+                        console.log("Logout success")
+                    }
+                },
+                {
+                    text: "No",
+                    onPress: () => {
+                        console.log("Canceled")
+                    }
+                }
+            ],
+            options={
+                cancelable: true
+            }
+        )
+    }
+
+
     return (
         <Layout>
             <Text style={styles.title}>Menu</Text>
@@ -69,6 +94,7 @@ export default function MenuScreen({ navigation }) {
                         )
                     })
                 }
+                <Button onPress={handleLogout} title="Logout" />
             </ScrollView>
         </Layout>
     )
