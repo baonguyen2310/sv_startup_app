@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native"
 import GameItem from "./GameItem"
+import { test, test2 } from "../services/firebase/test";
 
 const gameListData = [
     {
@@ -27,6 +28,8 @@ export default function GameList({ navigation }) {
 
     return (
         <ScrollView>
+            <Button title="test" onPress={() => { test() }}/>
+            <Button title="test2" onPress={() => { test2() }}/>
             <View style={styles.container}>
                 {
                     gameListData.map((game, index) => {
