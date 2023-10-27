@@ -8,12 +8,18 @@ import {
     signOut
 } from 'firebase/auth';
 //import { ReactNativeAsyncStorage } from "firebase/auth";
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+const auth = initializeAuth(firebaseApp, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
 
-const auth = getAuth(firebaseApp)
+
+//const auth = getAuth(firebaseApp)
 
 class AuthService {
     // Kiểm tra đã đăng nhập chưa
-    static checkLogined() {
+    static checkLoggedIn() {
         return onAuthStateChanged(auth, (user) => {
             if (!user) {
                 return false
