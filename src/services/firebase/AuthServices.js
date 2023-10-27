@@ -21,22 +21,43 @@ class AuthService {
     // Kiểm tra đã đăng nhập chưa
     static checkLoggedIn() {
         return onAuthStateChanged(auth, (user) => {
+            console.log(user)
             if (!user) {
-                return false
+                return
             }
-            console.log(user.uid)
-            return user.uid
+            const uid = user.uid
+            return uid
         })
     }
 
     // Đăng ký tài khoản mới
     static async register(email, password) {
-        return await createUserWithEmailAndPassword(auth, email, password)
+        return createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            return user
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+            return null
+        });
     }
 
     // Đăng nhập bằng email và mật khẩu
     static async login(email, password) {
-        return await signInWithEmailAndPassword(auth, email, password);
+        return signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            return user
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+            return null
+        });
     }
 
     // Đăng xuất

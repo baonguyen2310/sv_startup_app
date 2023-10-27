@@ -8,14 +8,13 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    const userCredential = await AuthService.login(email, password)
+    const user = await AuthService.login(email, password)
     
-    if (!userCredential) {
-      alert("Thông tin đăng nhập sai")
-      return
+    if (!user) {
+      return alert("Thông tin đăng nhập sai")
     }
 
-    alert(userCredential)
+    alert(user)
     navigation.dispatch(CommonActions.reset({
       index: 0,
       routes: [
