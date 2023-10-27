@@ -1,7 +1,19 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+// import { useDispatch, useSelector } from "react-redux";
+// import { loginSuccess } from "../../redux/actions/loginActions"
+import AuthService from '../../services/firebase/AuthServices';
 
 export default function LandingScreen({ navigation }) {
+  useEffect(() => {
+    const uid = AuthService.checkLoggedIn();
+
+    if (uid) {
+      console.log(uid);
+      navigation.navigate('Home');
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome</Text>
