@@ -7,9 +7,9 @@ export default function GameScreen({ route, navigation }) {
     // thì mới có trạng thái published (status: beta, published, deleted )
     const gameListData = [{name: "game_1"}] // get từ server
 
-    const { levelId, gameId } = route.params
+    const { levelId, gameId, gameName } = route.params
 
-    const foundGameBody = gameBodyList.find(gameBody => gameBody.id == gameId)
+    const foundGameBody = gameBodyList.find(gameBody => gameBody.gameName == gameName)
 
     let GameBodyComponent = NotFoundGameBodyComponent
 
@@ -20,7 +20,7 @@ export default function GameScreen({ route, navigation }) {
     return (
         <Layout hasAIAssistant={false}>
             <View style={styles.header}>
-                <Text>GameId: {gameId}</Text>
+                <Text>GameName: {gameName}</Text>
                 <Text>LevelId: {levelId}</Text>
                 <Text>Time: 30s</Text>
                 <Text>Score: 100</Text>

@@ -128,9 +128,9 @@ const levelListData = [
     }
 ];
 
-export default function LevelList({ navigation, gameId }) {
-    function handlePress({ levelId, gameId }) {
-        navigation.navigate("Game", { levelId, gameId })
+export default function LevelList({ navigation, gameId, gameName }) {
+    function handlePress({ levelId, gameId, gameName }) {
+        navigation.navigate("Game", { levelId, gameId, gameName })
     }
 
     return (
@@ -142,7 +142,7 @@ export default function LevelList({ navigation, gameId }) {
                         return (
                             <TouchableOpacity 
                               key={level.id} 
-                              onPress={() => handlePress({ levelId: level.id, gameId: gameId })}
+                              onPress={() => handlePress({ levelId: level.id, gameId, gameName })}
                             >
                                 <LevelItem id={level.id} name={level.name} />
                             </TouchableOpacity>

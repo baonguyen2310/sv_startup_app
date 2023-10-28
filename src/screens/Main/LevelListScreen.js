@@ -9,7 +9,7 @@ export default function LevelListScreen({ navigation, route }) {
     return (
         <Layout>
             <Text>Trò chơi: {gameName}</Text>
-            <LevelList navigation={navigation} gameId={gameId} />
+            <LevelList navigation={navigation} gameId={gameId} gameName={gameName} />
         </Layout>
     )
 }
