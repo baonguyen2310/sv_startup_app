@@ -1,5 +1,6 @@
 import { Text, View, ScrollView, StyleSheet, Button, TouchableOpacity, Alert } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { CommonActions } from '@react-navigation/native';
 import Layout from "../../layout"
 import AuthService from "../../services/firebase/AuthServices"
 
@@ -64,6 +65,12 @@ export default function MenuScreen({ navigation }) {
                     onPress: async () => {
                         await AuthService.logout()
                         console.log("Logout success")
+                        navigation.dispatch(CommonActions.reset({
+                            index: 0,
+                            routes: [
+                              { name: "AuthNavigation" }
+                            ]
+                          }));
                     }
                 },
                 {
