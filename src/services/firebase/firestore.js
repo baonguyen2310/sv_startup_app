@@ -62,8 +62,8 @@ const userPremiumPackageData = {
 }
 
 const gameData = {
-    gameName: "Kể chuyện",
-    description: "Mô tả trò chơi",
+    gameName: "Test",
+    description: "test",
     thumbnail_url: "",
     status: "active", // ["active", "deleted", "beta"]
     createdAt: serverTimestamp(),
@@ -73,7 +73,7 @@ const gameData = {
 const gamesCollectionRef = collection(db, "games")
 
 const levelData = {
-    gameId: doc(gamesCollectionRef, "hJcaehYOG48HsOZahthM"),
+    gameId: doc(gamesCollectionRef, "tGJLc0GyUVcDdpbZsTaF"),
     levelName: "1",
     description: "Mô tả cấp độ",
     requireScore: 100,
@@ -200,7 +200,7 @@ export async function createDatabase() {
       //const docRef = await addDoc(collection(db, "users"), userData)
       //const docRef = await addDoc(collection(db, "userPremiumPackage"), userPremiumPackageData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
-      //const docRef = await addDoc(collection(db, "levels"), levelData)
+      const docRef = await addDoc(collection(db, "levels"), levelData)
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)
       //const docRef = await addDoc(collection(db, "premiumTransaction"), premiumTransactionData)
@@ -211,7 +211,7 @@ export async function createDatabase() {
       //const docRef = await addDoc(collection(db, "surveyQuestions"), surveyQuestionData)
       //const docRef = await addDoc(collection(db, "surveyResponse"), surveyResponseData)
       //const docRef = await addDoc(collection(db, "proposedPlaySchedule"), proposedPlayScheduleData)
-      //console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
