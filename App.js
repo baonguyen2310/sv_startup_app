@@ -1,16 +1,34 @@
-import { registerRootComponent } from 'expo';
-import { StyleSheet, Text, View } from 'react-native';
-import AppNavigation from './src/navigation/AppNavigation';
-import Header from './src/components/Header';
-import { Provider } from 'react-redux';
-import store from './src/redux/store';
+import { WebView } from 'react-native-webview';
+import { StyleSheet, View, Text } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Camera } from 'expo-camera';
 
 export default function App() {
-  return (
-    <Provider store={store}>
-      <AppNavigation />
-    </Provider>
-  );
+  const [hasPermission, setHasPermission] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+  if (hasPermission) {
+    return (
+      <WebView
+        style={styles.container}
+        allowsInlineMediaPlayback={true}
+        mediaPlaybackRequiresUserAction={false}
+        source={{ uri: 'https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=movenet' }}
+      />
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -21,6 +39,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
-registerRootComponent(App)
