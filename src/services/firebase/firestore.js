@@ -200,7 +200,7 @@ export async function createDatabase() {
       //const docRef = await addDoc(collection(db, "users"), userData)
       //const docRef = await addDoc(collection(db, "userPremiumPackage"), userPremiumPackageData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
-      const docRef = await addDoc(collection(db, "levels"), levelData)
+      //const docRef = await addDoc(collection(db, "levels"), levelData)
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)
       //const docRef = await addDoc(collection(db, "premiumTransaction"), premiumTransactionData)
