@@ -62,8 +62,9 @@ const userPremiumPackageData = {
 }
 
 const gameData = {
-    gameName: "Từ vựng",
+    gameName: "Kể chuyện",
     description: "Mô tả trò chơi",
+    thumbnail_url: "",
     status: "active", // ["active", "deleted", "beta"]
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
