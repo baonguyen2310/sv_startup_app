@@ -1,10 +1,19 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import * as Speech from 'expo-speech'
 import stylesRoot from "../assets/styles"
+import { useSelector } from "react-redux";
+
 
 export default function AIAssistant({ height, isPortrait }) {
+    const { user } = useSelector((state) => state.userReducer)
+
+    function handlePress() {
+        Speech.speak(`Xin chào bé ${user.childName}! Chị sẽ hướng dẫn bé chơi nha!`)
+    }
+
     return (
         <View style={{ ...styles.container, top: isPortrait? height - 220: height - 260 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handlePress}>
                 <Image
                     source={require("../assets/images/AIAssistant.png")} 
                     style={styles.image}
