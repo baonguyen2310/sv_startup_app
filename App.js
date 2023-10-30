@@ -25,7 +25,7 @@ export default function App() {
         style={styles.container}
         allowsInlineMediaPlayback={true}
         mediaPlaybackRequiresUserAction={false}
-        source={{ uri: 'https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=movenet' }}
+        source={{ uri: 'https://wholesale-shocking-scene.glitch.me/' }}
       />
     );
   }
