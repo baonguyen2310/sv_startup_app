@@ -1,18 +1,40 @@
 import { useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-// import { useDispatch, useSelector } from "react-redux";
-// import { loginSuccess } from "../../redux/actions/loginActions"
 import AuthService from '../../services/firebase/AuthServices';
+import UserServices from '../../services/firebase/UserServices';
+
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/actions/userActions'
 
 export default function LandingScreen({ navigation }) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    AuthService.checkLoggedIn()
-    .then((user) => {
-      if (user) {
-        console.log(user);
+    async function getUser(){
+      const userId = await AuthService.checkLoggedIn()
+      if (userId) {
+        console.log(userId);
+        try {
+          const user = await UserServices.getUserById({ userId })
+          if (user) {
+            dispatch(setUser(user))
+          }
+        } catch (error) {
+          return
+        }
         navigation.navigate('Home');
       }
-    }).catch((error) => console.log(error))
+    }
+
+    getUser()
+
+  //   AuthService.checkLoggedIn()
+  //   .then((userId) => {
+  //     if (userId) {
+  //       console.log(userId);
+  //       navigation.navigate('Home');
+  //     }
+  //   }).catch((error) => console.log(error))
   }, []);
 
   return (

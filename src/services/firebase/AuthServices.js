@@ -19,6 +19,7 @@ const auth = initializeAuth(firebaseApp, {
 
 class AuthService {
     // Kiểm tra đã đăng nhập chưa
+    // Check accessToken trong AsyncStorage có hợp lệ trong db không?
     static async checkLoggedIn() {
         try {
             return await AsyncStorage.getItem('user')
@@ -40,7 +41,20 @@ class AuthService {
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage)
+            switch (errorCode) {
+                case "auth/email-already-in-use":
+                    alert("Email đã được sử dụng")
+                    break
+                case "auth/invalid-email":
+                    alert("Email không hợp lệ")
+                    break
+                case "auth/weak-password":
+                    alert("Mật khẩu phải có ít nhất 6 ký tự")
+                    break
+                default:
+                    alert(errorCode)
+                    break
+            }
             return null
         }
     }

@@ -3,15 +3,29 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import AuthService from '../../services/firebase/AuthServices';
 
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../redux/actions/loginActions';
+import { setUser } from '../../redux/actions/userActions';
+import UserServices from '../../services/firebase/UserServices';
+
 export default function LoginScreen({ navigation }) {
+
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    const user = await AuthService.login(email, password)
+    const userId = await AuthService.login(email, password)
     
-    if (!user) {
+    if (!userId) {
       return alert("Thông tin đăng nhập sai")
+    }
+
+    dispatch(loginSuccess(userId))
+    const user = await UserServices.getUserById({ userId })
+    if (user) {
+      dispatch(setUser(user))
     }
 
     alert("Đăng nhập thành công")
