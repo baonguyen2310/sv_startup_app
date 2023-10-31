@@ -84,7 +84,7 @@ export default function GameList({ navigation }) {
                 handlePress({ gameId: game.id, gameName: game.gameName })
               }
             >
-              <GameItem id={game.id} name={game.gameName} />
+              <GameItem game={game} />
             </TouchableOpacity>
           );
         })}
