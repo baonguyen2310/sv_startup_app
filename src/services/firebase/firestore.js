@@ -1,4 +1,4 @@
-import { doc, collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore"; 
+import { doc, collection, addDoc, setDoc, getDocs, serverTimestamp } from "firebase/firestore"; 
 import { db } from '.'
 
 // firebase auth sẽ quản lý tài khoản người dùng để xác thực
@@ -57,31 +57,52 @@ const userPremiumPackageData = {
 }
 
 const gameData = {
-    gameName: "Kể chuyện",
+    gameName: "Đoạn: Hội thoại tự do",
     description: "Mô tả trò chơi",
-    thumbnail_url: "",
+    thumbnail_url: "https://i.ibb.co/NpYLSPr/game-3-thumbnail.jpg",
     status: "active", // ["active", "deleted", "beta"]
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
 }
 
-const levelData = {
-    gameId: "hJcaehYOG48HsOZahthM",
-    levelName: "1",
+// LEVEL DATA
+// GAME 1: 
+const levelData_1 = {
+    gameId: "1",
     description: "Mô tả cấp độ",
     requireScore: 100,
     limitTime: 60,
     goldReward: 50,
     status: "active",
     levelContent: {
-        word: "con mèo",
         imageUrl: "",
-        audioUrl: "",
-        videoUrl: ""
+        videoUrl: "",
+        word: {
+            audioUrl: "",
+            alt: "Hàm răng"
+        },
+        question: {
+            audioUrl: "",
+            alt: "Hàm răng của bé dùng để làm gì?"
+        },
+        answer: {
+            audioUrl: "",
+            alt: "Răng dùng để nhai"
+        },
+        help: {
+            audioUrl: "",
+            alt: "Bé hãy đọc từ 'Hàm răng'"
+        },
+        tips: {
+            audioUrl: "",
+            alt: "Ăn kẹo sẽ bị sâu răng. Bé hãy vệ sinh răng miệng mỗi ngày vào buổi sáng khi thức dậy và buổi tối trước khi đi ngủ."
+        }
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
 }
+
+// GAME 2: 
 
 const unlockMethodData = {
     levelId: "XSkpAx1EFIdoGb8QuPtc",
@@ -186,8 +207,13 @@ export async function createDatabase() {
       //const docRef = await addDoc(collection(db, "purchasePackages"), purchasePackageData)
       //const docRef = await addDoc(collection(db, "users"), userData)
       //const docRef = await addDoc(collection(db, "userPremiumPackage"), userPremiumPackageData)
+      //const docRef = doc(db, "games", "8")
+      //await setDoc(docRef, gameData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
       //const docRef = await addDoc(collection(db, "levels"), levelData)
+      const docRef = doc(db, "levels", "1_2") // 1_1: game1 level1
+      await setDoc(docRef, levelData_1)
+
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)
       //const docRef = await addDoc(collection(db, "premiumTransaction"), premiumTransactionData)
@@ -198,7 +224,7 @@ export async function createDatabase() {
       //const docRef = await addDoc(collection(db, "surveyQuestions"), surveyQuestionData)
       //const docRef = await addDoc(collection(db, "surveyResponse"), surveyResponseData)
       //const docRef = await addDoc(collection(db, "proposedPlaySchedule"), proposedPlayScheduleData)
-      //console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

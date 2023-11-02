@@ -1,14 +1,13 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import * as Speech from 'expo-speech'
 import stylesRoot from "../assets/styles"
-import { useSelector } from "react-redux";
 
 
-export default function AIAssistant({ height, isPortrait }) {
-    const { user } = useSelector((state) => state.userReducer)
+export default function AIAssistant({ height, isPortrait, sentenceList = [] }) {
 
     function handlePress() {
-        Speech.speak(`Xin chào bé ${user.childName}! Chị sẽ hướng dẫn bé chơi nha!`)
+        const sentence = sentenceList[Math.floor(Math.random() * sentenceList.length)]
+        Speech.speak(sentence)
     }
 
     return (

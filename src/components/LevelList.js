@@ -12,7 +12,7 @@ export default function LevelList({ navigation, gameId, gameName }) {
         try {
           const levelList = await LevelServices.getLevelList({ gameId });
           if (levelList) {
-            console.log(levelList)
+            //console.log(levelList)
             levelList.sort((a, b) => a.createdAt - b.createdAt);
             setLevelList(levelList);
           }
@@ -25,8 +25,8 @@ export default function LevelList({ navigation, gameId, gameName }) {
     }, []);
 
 
-    function handlePress({ levelId, gameId, gameName }) {
-        navigation.navigate("Game", { levelId, gameId, gameName })
+    function handlePress({ gameName, level }) {
+        navigation.navigate("Game", { gameName, level })
     }
 
     return (
@@ -38,9 +38,9 @@ export default function LevelList({ navigation, gameId, gameName }) {
                         return (
                             <TouchableOpacity 
                               key={level.id} 
-                              onPress={() => handlePress({ levelId: level.id, gameId, gameName })}
+                              onPress={() => handlePress({ gameName, level })}
                             >
-                                <LevelItem id={level.id} name={level.name} />
+                                <LevelItem id={level.id} />
                             </TouchableOpacity>
                         )
                     })

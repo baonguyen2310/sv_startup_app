@@ -40,7 +40,7 @@ export default function GameList({ navigation }) {
       try {
         const gameList = await GameServices.getGameList();
         if (gameList) {
-          gameList.sort((a, b) => a.createdAt - b.createdAt);
+          gameList.sort((a, b) => a.id - b.id);
           setGameList(gameList);
         }
       } catch (error) {
