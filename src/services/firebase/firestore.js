@@ -65,11 +65,14 @@ const gameData = {
     updatedAt: serverTimestamp()
 }
 
-// LEVEL DATA
-// GAME 1: 
+// LEVEL DATA: CHUNG VÀ RIÊNG (levelContent) CHO CÁC TRÒ CHƠI
+// GAME 1: Từ vựng: 1 hình 1 chữ
 const levelData_1 = {
     gameId: "1",
+    title: "Cái miệng",
+    thumbnail_url: "https://nhakhoakim.com/wp-content/uploads/2021/11/con-nguoi-co-bao-nhieu-cai-rang-3.png",
     description: "Mô tả cấp độ",
+    category: "Bộ phận cơ thể",
     requireScore: 100,
     limitTime: 60,
     goldReward: 50,
@@ -79,30 +82,287 @@ const levelData_1 = {
         videoUrl: "",
         word: {
             audioUrl: "",
-            alt: "Hàm răng"
+            alt: "Cái miệng"
         },
         question: {
             audioUrl: "",
-            alt: "Hàm răng của bé dùng để làm gì?"
+            alt: "Cái miệng của bé dùng để làm gì?"
         },
         answer: {
             audioUrl: "",
-            alt: "Răng dùng để nhai"
+            alt: "Miệng dùng để nói"
         },
         help: {
             audioUrl: "",
-            alt: "Bé hãy đọc từ 'Hàm răng'"
+            alt: "Bé hãy đọc từ 'Cái miệng'"
         },
         tips: {
             audioUrl: "",
-            alt: "Ăn kẹo sẽ bị sâu răng. Bé hãy vệ sinh răng miệng mỗi ngày vào buổi sáng khi thức dậy và buổi tối trước khi đi ngủ."
+            alt: "Miệng của bé cười thật tươi!"
         }
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
 }
 
-// GAME 2: 
+// GAME 2: Từ vựng: 1 hình nhiều chữ
+const levelData_2 = {
+    gameId: "2",
+    title: "Cây tre",
+    thumbnail_url: "https://img.lovepik.com/free-png/20210926/lovepik-bamboo-green-plant-summer-png-image_401447982_wh1200.png",
+    description: "Mô tả cấp độ",
+    category: "Cây cối",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "",
+        videoUrl: "",
+        word: {
+            audioUrl: "",
+            alt: "Cây tre"
+        },
+        question: {
+            audioUrl: "",
+            alt: "Bé hãy chọn từ đúng?"
+        },
+        answers: [
+            {
+                index: 1,
+                audioUrl: "",
+                alt: "Cây tre"
+            },
+            {
+                index: 2,
+                audioUrl: "",
+                alt: "Cây dừa"
+            },
+            {
+                index: 3,
+                audioUrl: "",
+                alt: "Cây mía"
+            }
+        ],
+        correctIndex: 1,
+        help: {
+            audioUrl: "",
+            alt: "Bé hãy đọc từ 'Cây tre'"
+        },
+        tips: {
+            audioUrl: "",
+            alt: "Thánh Gióng nhổ tre đánh giặc"
+        }
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+// GAME 3: Từ vựng: 1 chữ nhiều hình
+const levelData_3 = {
+    gameId: "3",
+    title: "Cây mía",
+    thumbnail_url: "https://img.lovepik.com/free-png/20210926/lovepik-bamboo-green-plant-summer-png-image_401447982_wh1200.png",
+    description: "Mô tả cấp độ",
+    category: "Cây cối",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "",
+        videoUrl: "",
+        word: {
+            audioUrl: "",
+            alt: "Cây mía"
+        },
+        question: {
+            audioUrl: "",
+            alt: "Bé hãy chọn hình đúng?"
+        },
+        answers: [
+            {
+                index: 1,
+                imageUrl: "https://img.lovepik.com/free-png/20210926/lovepik-bamboo-green-plant-summer-png-image_401447982_wh1200.png",
+                audioUrl: "",
+                alt: "Cây tre"
+            },
+            {
+                index: 2,
+                imageUrl: "https://khuvuonxanh.com/uploads/2022/12/cay-dua-thuoc-loai-cay-than-go-cung-ho-nha-cau.jpg",
+                audioUrl: "",
+                alt: "Cây dừa"
+            },
+            {
+                index: 3,
+                imageUrl: "https://ims.baohoabinh.com.vn/NewsImg/2_2016/96957_IMG_3687.jpg",
+                audioUrl: "",
+                alt: "Cây mía"
+            }
+        ],
+        correctIndex: 3,
+        help: {
+            audioUrl: "",
+            alt: "Bé hãy đọc từ 'Cây mía'"
+        },
+        tips: {
+            audioUrl: "",
+            alt: "Đường làm từ mía thì gọi là đường mía"
+        }
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+
+// GAME 4: Từ vựng: nhiều chữ nhiều hình
+
+// GAME 5: Câu: 1 hình nhiều câu
+const levelData_5 = {
+    gameId: "3",
+    title: "Đói bụng",
+    thumbnail_url: "https://res.cloudinary.com/locobee-cdn/image/upload/f_auto/v1583716801/locobee-hoctiengnhat-tutuongthanh-1_uhpelx.jpg",
+    description: "Mô tả cấp độ",
+    category: "Cảm xúc",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "",
+        videoUrl: "",
+        sentence: {
+            audioUrl: "",
+            alt: "Mẹ ơi, con muốn ăn ạ!"
+        },
+        question: {
+            audioUrl: "",
+            alt: "Khi đói, con sẽ nói gì để được ăn cơm? "
+        },
+        answers: [
+            {
+                index: 1,
+                audioUrl: "",
+                alt: "Ăn cơm, đói bụng!"
+            },
+            {
+                index: 2,
+                audioUrl: "",
+                alt: "Mẹ ơi, con muốn ăn ạ!"
+            },
+            {
+                index: 3,
+                audioUrl: "",
+                alt: "Con đói rồi, cho con ăn đi!"
+            }
+        ],
+        correctIndex: 2,
+        help: {
+            audioUrl: "",
+            alt: "Bé hãy đọc câu 'Mẹ ơi, con muốn ăn ạ!'"
+        },
+        tips: {
+            audioUrl: "",
+            alt: "Trẻ em phải biết lễ phép với người lớn"
+        }
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+
+// GAME 6: Câu: Sắp xếp từ trong câu
+const levelData_6 = {
+    gameId: "6",
+    title: "Mẹ ru bé ngủ trưa",
+    thumbnail_url: "https://baohaiquanvietnam.vn/storage/users/user_6/N%C4%82M%202023/Th%C3%A1ng%208/7-8/TTLB.png",
+    description: "Mô tả cấp độ",
+    category: "Gia đình",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "https://baohaiquanvietnam.vn/storage/users/user_6/N%C4%82M%202023/Th%C3%A1ng%208/7-8/TTLB.png",
+        videoUrl: "",
+        sentence: {
+            audioUrl: "",
+            alt: "Mẹ ru bé ngủ trưa"
+        },
+        question: {
+            audioUrl: "",
+            alt: "Con hãy sắp xếp các từ cho đúng thứ tự"
+        },
+        help: {
+            audioUrl: "",
+            alt: "Ầu ơ dí dầu, con ngủ cho ngoan"
+        },
+        tips: {
+            audioUrl: "",
+            alt: "Ầu ơ dí dầu, con ngủ cho ngoan"
+        }
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+// GAME 7: Đoạn: Kể chuyện
+const levelData_7 = {
+    gameId: "7",
+    title: "Chim sẻ đi nắng",
+    thumbnail_url: "https://i.ibb.co/tPH5cPK/1.jpg",
+    description: "Mô tả cấp độ",
+    category: "Động vật",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "",
+        videoUrl: "",
+        story: [
+            {
+                index: 1,
+                imageUrl: "https://i.ibb.co/tPH5cPK/1.jpg",
+                alt: "Cậu bé nhặt được 1 bạn chim sẻ"
+            },
+            {
+                index: 2,
+                imageUrl: "https://i.ibb.co/6BC03Vw/2.jpg",
+                alt: "Cậu bé mang chim sẻ về nhà"
+            },
+            {
+                index: 3,
+                imageUrl: "https://i.ibb.co/Xz7HP7J/3.jpg",
+                alt: "Cậu bé cho chim sẻ ăn"
+            },
+            {
+                index: 4,
+                imageUrl: "https://i.ibb.co/kSvwMLS/4.jpg",
+                alt: "Chim sẻ muốn được chơi cùng các bạn"
+            },
+            {
+                index: 5,
+                imageUrl: "https://i.ibb.co/svC3JvV/5.jpg",
+                alt: "Cậu bé thả chim sẻ bay đi"
+            }
+        ],
+        question: {
+            audioUrl: "",
+            alt: "Con hãy sắp xếp các hình cho đúng thứ tự"
+        },
+        help: {
+            audioUrl: "",
+            alt: "Bé hãy yêu quý các bạn động vật nhé!"
+        },
+        tips: {
+            audioUrl: "",
+            alt: "Bé hãy yêu quý các bạn động vật nhé!"
+        }
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
 
 const unlockMethodData = {
     levelId: "XSkpAx1EFIdoGb8QuPtc",
@@ -211,8 +471,8 @@ export async function createDatabase() {
       //await setDoc(docRef, gameData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
       //const docRef = await addDoc(collection(db, "levels"), levelData)
-      const docRef = doc(db, "levels", "1_2") // 1_1: game1 level1
-      await setDoc(docRef, levelData_1)
+      const docRef = doc(db, "levels", "7_1") // 1_1: game1 level1
+      await setDoc(docRef, levelData_7)
 
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)

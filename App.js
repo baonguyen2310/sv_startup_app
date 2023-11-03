@@ -1,9 +1,8 @@
-import { registerRootComponent } from 'expo';
-import { StyleSheet, Text, View } from 'react-native';
-import AppNavigation from './src/navigation/AppNavigation';
-import Header from './src/components/Header';
-import { Provider } from 'react-redux';
-import store from './src/redux/store';
+import { registerRootComponent } from 'expo'
+import { StyleSheet, Text, View } from 'react-native'
+import AppNavigation from './src/navigation/AppNavigation'
+import { Provider } from 'react-redux'
+import store from './src/redux/store'
 
 export default function App() {
   return (

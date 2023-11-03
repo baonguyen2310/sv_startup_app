@@ -5,7 +5,10 @@
     "version": "1.0.0",
     "orientation": {
       "default": "portrait",
-      "supportedOrientations": ["portrait", "landscape"] 
+      "supportedOrientations": [
+        "portrait",
+        "landscape"
+      ]
     },
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,16 +21,32 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "A"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hehe12343.SV_STARTUP_APP"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "93ee854b-ee6c-47cc-a8e8-875ba446aee1"
+      }
+    },
+    "plugins": [
+      [
+        "@react-native-voice/voice",
+        {
+          "microphonePermission": "CUSTOM: Allow $(PRODUCT_NAME) to access the microphone",
+          "speechRecognitionPermission": "CUSTOM: Allow $(PRODUCT_NAME) to securely recognize user speech"
+        }
+      ]
+    ]
   }
 }

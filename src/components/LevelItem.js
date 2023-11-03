@@ -1,18 +1,23 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 
-export default function LevelItem({ id, name }) {
+export default function LevelItem({ level }) {
     return (
         <View style={styles.container}>
-            <Text>{id}</Text>
+            <Text>{level.title}</Text>
+            <Image style={styles.image} source={{ uri: level.thumbnail_url }} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: 100,
+        width: 150,
         height: 100,
         backgroundColor: "pink",
-        margin: 10
+        margin: 5
+    },
+    image: {
+        width: "100%",
+        height: "100%"
     }
 })

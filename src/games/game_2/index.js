@@ -1,70 +1,108 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image } from "react-native"
-import { useState, useEffect } from "react"
-import Draggable from "react-native-draggable"
-import { shuffleArray } from "../../utils"
-import { AntDesign } from '@expo/vector-icons'; 
+import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimensions } from "react-native";
 import { Audio, Video, ResizeMode } from "expo-av"
+import { useState, useEffect } from "react"
+import { AntDesign } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Speech from 'expo-speech'
+import AIAssistant from "../../components/AIAssitant"
 
-const sentence = "Con đói! Con muốn ăn cơm"
-const wordList = sentence.split(" ")
-const shuffledWordList = shuffleArray(wordList)
-console.log(wordList)
-console.log(shuffledWordList)
+export default function GameBody({ time = 30, requireScore = 100, level }) {
+    // 1 - Nếu có nhiều sound thì nên tạo và giải phóng mỗi lần vì giữ tốn RAM
+    // 2 - Nếu có ít sound mà hay dùng nhiều thì tạo 1 lần vì tạo tốn thời gian và CPU
 
-export default function GameBody({ time, requireScore }) {
-    const [sound, setSound] = useState() 
+    const { height, width } = useWindowDimensions()
+    const isPortrait = height > width
 
-    async function playSound() {
-        const { sound } = await Audio.Sound.createAsync(require("./doi.wav"))
-        setSound(sound)
-        await sound.playAsync()
-    }
+    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState()
+
+    const sentenceList = [
+        level.levelContent.help.alt
+        //level.levelContent.tips?.alt
+    ]
 
     useEffect(() => {
-        return sound 
-        ? () => {
-            sound.unloadAsync()
+        setTimeout(() => {
+            playWord()
+        }, 2000)
+
+        // setInterval(() => {
+        //     playWord()
+        // }, 20000)
+    }, [])
+
+    //console.log(level.levelContent.imageUrl)
+
+    function playWord() {
+        Speech.speak(level.levelContent.word.alt), {
+            voice: "vi-VN-language",
+            rate: 1,
+            pitch: 1
         }
-        : undefined
-    }, [sound])
+    }
+
+    async function playQuestion() {
+        Speech.speak(level.levelContent.question.alt, {
+            voice: "vi-vn-x-vif-local",
+            rate: 0.75,
+            //pitch: 1.1
+        })
+        const voices = await Speech.getAvailableVoicesAsync()
+        //console.log(voices)
+    }
+
+    function handleSelect(answer) {
+        Speech.speak(answer.alt)
+        setSelectedAnswerIndex(answer.index)
+        console.log(answer.index)
+    }
+
+    function handleSubmit() {
+        if (selectedAnswerIndex == level.levelContent.correctIndex) {
+            alert('Bé đã trả lời đúng!')
+            Speech.speak('Bé đã trả lời đúng!')
+        } else {
+            alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+            Speech.speak('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+        }
+    }
 
     return (
         <View>
-            <Text>GameBody 2: Sắp xếp từ trong câu</Text>
-            <TouchableOpacity onPress={playSound}>
-                <AntDesign name="sound" size={40} color="black" />
+            <TouchableOpacity onPress={playWord}>
+                <Text style={styles.text}>{level.levelContent.word.alt}</Text>
+                <Image 
+                    //source={require("./meo.jpg")} 
+                    source={{ uri: level.levelContent.imageUrl }}
+                    style={styles.image}
+                />
             </TouchableOpacity>
-            <Image 
-                source={require("./doi.jpg")} 
-                style={styles.image}
-            />
+            <TouchableOpacity onPress={playQuestion} style={styles.container}>
+                <AntDesign name="questioncircle" size={50} color="yellow" />
+                <Text>{level.levelContent.question.alt}</Text>
+            </TouchableOpacity>
             {
-                shuffledWordList.map((word, index) => {
-                    return (
-                        <Draggable 
-                            key={index}
-                            x={75} 
-                            y={100} 
-                            renderSize={56} 
-                            renderColor='pink' 
-                            renderText={word}
-                            isCircle
-                            shouldReverse={false}
-                            onShortPressRelease={()=>alert('touched!!')}
-                            onDragRelease={(event, gestureState) => {
-                                const xCoordinate = gestureState.moveX;
-                                const yCoordinate = gestureState.moveY;
-                                console.log(`X: ${xCoordinate}, Y: ${yCoordinate}`);
-                            }}
-                        />
-                    )
-                })
+                level.levelContent.answers.map((answer) => (
+                    <TouchableOpacity 
+                        style={answer.index == selectedAnswerIndex ? styles.isSelected : styles.answer} 
+                        key={answer.index} 
+                        onPress={() => handleSelect(answer)} 
+                    >
+                        <MaterialCommunityIcons name="baby-face" size={50} color="green" />
+                        <Text>{answer.alt}</Text>
+                    </TouchableOpacity>
+                ))
             }
+            <Button title="Trả lời" onPress={handleSubmit} />
+            <AIAssistant height={height} isPortrait={isPortrait} sentenceList={sentenceList} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     text: {
         fontSize: 24,
         fontWeight: "bold"
@@ -76,5 +114,13 @@ const styles = StyleSheet.create({
     video: {
         width: 300,
         height: 300
+    },
+    answer: {
+        borderWidth: 1,
+        width: "100%"
+    },
+    isSelected: {
+        borderColor: "blue",
+        borderWidth: 5
     }
 })

@@ -4,6 +4,7 @@ import Logo from '../components/Logo';
 import MenuButton from '../components/MenuButton';
 import {
     HomeScreen,
+    CategoryListScreen,
     LevelListScreen,
     MenuScreen,
     GameScreen
@@ -36,6 +37,7 @@ export default function AppNavigation() {
                 <AppStack.Screen name="Menu" component={MenuScreen} />
                 <AppStack.Screen name="MenuNavigation" component={MenuNavigation} />
                 <AppStack.Screen name="Home" component={HomeScreen} />
+                <AppStack.Screen name="CategoryList" component={CategoryListScreen} />
                 <AppStack.Screen name="LevelList" component={LevelListScreen} />
                 <AppStack.Screen name="Game" component={GameScreen} />
             </AppStack.Navigator>
