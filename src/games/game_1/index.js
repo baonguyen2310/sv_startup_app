@@ -5,11 +5,52 @@ import { AntDesign } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech'
 import AIAssistant from "../../components/AIAssitant"
+import Voice from '@react-native-voice/voice'
+import { normalizeText } from '../../utils/index'
 
 
 export default function GameBody({ time = 30, requireScore = 100, level }) {
     // 1 - Nếu có nhiều sound thì nên tạo và giải phóng mỗi lần vì giữ tốn RAM
     // 2 - Nếu có ít sound mà hay dùng nhiều thì tạo 1 lần vì tạo tốn thời gian và CPU
+
+    const [speechResult, setSpeechResult] = useState('')
+
+    useEffect(() => {
+        Voice.onSpeechError = onSpeechError
+        Voice.onSpeechResults = onSpeechResult
+        return () => {
+          Voice.destroy().then(Voice.removeAllListeners)
+        }
+    }, [])
+
+    function checkSpeechAnswer(speechResult, answer) {
+        //if (speechResult.trim() == answer) {
+        if (normalizeText(speechResult).includes(normalizeText(answer))) {
+            Speech.speak('Bé đã đọc đúng!')
+        } else {
+            Speech.speak(`Bé đọc chưa chính xác! Bé hãy đọc lại từ ${level.levelContent.word.alt} `)
+        }
+    }
+
+    useEffect(() => {
+        checkSpeechAnswer(speechResult, level.levelContent.word.alt)
+    }, [speechResult])
+
+    const startSpeechToText = async () => {
+        await Voice.start("vi-VI")
+      }
+    
+      const stopSpeechToText = async () => {
+        await Voice.stop()
+      }
+    
+      const onSpeechResult = (result) => {
+        setSpeechResult(result.value[0])
+      }
+    
+      const onSpeechError = (error) => {
+        console.log(error)
+      }
 
     const { height, width } = useWindowDimensions()
     const isPortrait = height > width
@@ -71,6 +112,9 @@ export default function GameBody({ time = 30, requireScore = 100, level }) {
 
     return (
         <View>
+            <Button title='Start Speech to Text' onPress={startSpeechToText} />
+            <Button title='Stop Speech to Text' onPress={stopSpeechToText} />
+            <Text style={styles.text}>Bé: {speechResult}</Text>
             <TouchableOpacity onPress={playWord}>
                 <Text style={styles.text}>{level.levelContent.word.alt}</Text>
                 <Image 

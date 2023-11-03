@@ -21,7 +21,13 @@ function arraysAreEqual(arr1, arr2) {
   return true;
 }
 
+function normalizeText(text) {
+  // Loại bỏ dấu câu và đổi thành chữ thường
+  return text.replace(/[.,?!]/g, '').toLowerCase();
+}
+
 export {
     shuffleArray,
-    arraysAreEqual
+    arraysAreEqual,
+    normalizeText
 }
