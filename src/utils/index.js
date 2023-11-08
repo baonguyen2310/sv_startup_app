@@ -24,10 +24,22 @@ function arraysAreEqual(arr1, arr2) {
 function normalizeText(text) {
   // Loại bỏ dấu câu và đổi thành chữ thường
   return text.replace(/[.,?!]/g, '').toLowerCase();
+}  
+
+function checkSpeechAnswer(speechResult, answer) {
+  //if (speechResult.trim() == answer) {
+    // console.log(normalizeText(speechResult))
+    // console.log(normalizeText(answer))
+  if (normalizeText(speechResult).includes(normalizeText(answer))) {
+      return true
+  } else {
+      return false
+  }
 }
 
 export {
     shuffleArray,
     arraysAreEqual,
-    normalizeText
+    normalizeText,
+    checkSpeechAnswer
 }
