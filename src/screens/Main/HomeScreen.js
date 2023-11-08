@@ -66,6 +66,10 @@ export default function HomeScreen({ navigation }) {
     <Layout sentenseList={sentenceList}>
       <Text style={styles.contentText}>Chào bé {user.childName}</Text>
       <ScrollView >
+        <Button 
+          title="BabylonTextToSpeechWebView" 
+          onPress={()=>navigation.navigate('BabylonTextToSpeech')}
+        />
         <Button
           title="createDatabase"
           onPress={() => {

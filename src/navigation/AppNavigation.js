@@ -15,6 +15,8 @@ import {
     RegisterScreen,
     ResetPasswordScreen
 } from "../screens/Auth"
+import TestARWebView from '../components/TestARWebView';
+import BabylonTextToSpeechWebView from '../components/BabylonTextToSpeechWebView';
 
 import MenuNavigation from './MenuNavigation'
 import AuthNavigation from './AuthNavigation'
@@ -40,6 +42,8 @@ export default function AppNavigation() {
                 <AppStack.Screen name="CategoryList" component={CategoryListScreen} />
                 <AppStack.Screen name="LevelList" component={LevelListScreen} />
                 <AppStack.Screen name="Game" component={GameScreen} />
+                <AppStack.Screen name="Reward" component={TestARWebView} />
+                <AppStack.Screen name="BabylonTextToSpeech" component={BabylonTextToSpeechWebView} />
             </AppStack.Navigator>
         </NavigationContainer>
     )

@@ -26,7 +26,7 @@ export default function GameScreen({ route, navigation }) {
                 <Text>Score: 100</Text>
             </View>
             <View style={styles.body}>
-                <GameBodyComponent time={60} requireScore={80} level={level}/>
+                <GameBodyComponent time={60} requireScore={80} level={level} navigation={navigation}/>
             </View>
         </Layout>
     )
