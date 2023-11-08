@@ -10,14 +10,16 @@
 
 // export default store;
 
-import { configureStore } from '@reduxjs/toolkit';
-import loginReducer from '../reducers/loginReducer';
-import userReducer from '../reducers/userReducer';
+import { configureStore } from '@reduxjs/toolkit'
+import loginReducer from '../reducers/loginReducer'
+import userReducer from '../reducers/userReducer'
+import themeReducer from '../reducers/themeReducer'
 
 const store = configureStore({
   reducer: {
     loginReducer: loginReducer,
-    userReducer: userReducer
+    userReducer: userReducer,
+    themeReducer: themeReducer
   },
 });
 
