@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
+  Image
 } from "react-native";
 import GameItem from "../../components/GameItem";
 import { createDatabase } from "../../services/firebase/firestore";
@@ -63,10 +64,14 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <Layout sentenseList={sentenceList}>
-      <Text style={styles.contentText}>Chào bé {user.childName}</Text>
+    <Layout sentenseList={sentenceList} isHomeScreen navigation={navigation}>
+      <View style={{ zIndex: 1, height: "100%", position: "absolute", pointerEvents: "none" }}>
+        <Image source={ require('../../assets/images/start.gif') } />
+      </View>
       <ScrollView >
-        <Button 
+        <Text style={styles.primary}>Xin chào bé {user.childName}!</Text>
+        <Text style={styles.primary}>Cùng chơi nào!</Text>
+        {/* <Button 
           title="BabylonTextToSpeechWebView" 
           onPress={()=>navigation.navigate('BabylonTextToSpeech')}
         />
@@ -75,7 +80,7 @@ export default function HomeScreen({ navigation }) {
           onPress={() => {
             createDatabase();
           }}
-        />
+        /> */}
         <View style={styles.container}>
           {gameList.map((game, index) => {
             return (
@@ -96,5 +101,15 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-
+  primary: {
+    color: "#3AA6B9",
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  secondary: {
+    color: "black",
+    fontSize: 24,
+    fontWeight: "bold"
+  }
 })

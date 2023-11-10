@@ -12,12 +12,12 @@ export default function AIAssistant({ height, isPortrait, sentenceList = [] }) {
 
     return (
         <View style={{ ...styles.container, top: isPortrait? height - 220: height - 260 }}>
-            <TouchableOpacity onPress={handlePress}>
+            <TouchableOpacity onPress={handlePress} style={{ ...styles.image }}>
                 <Image
-                    source={require("../assets/images/AIAssistant.png")} 
+                    source={require("../assets/images/bear3.gif")} 
                     style={styles.image}
                 />
-                <Text style={stylesRoot.contentText}>AIAssistant</Text>
+                {/* <Text style={stylesRoot.contentText}>AIAssistant</Text> */}
             </TouchableOpacity>
         </View>
     )
@@ -28,11 +28,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         //bottom: 60,
         right: 0,
-        width: 120,
-        height: 120
+        width: 150,
+        height: 150,
+        // borderWidth: 3,
+        // borderRadius: 75,
     },
     image: {
-        width: 120,
-        height: 120
+        width: "100%",
+        height: "100%",
+        borderRadius: 75,
+        overflow: "hidden"
     }
 })

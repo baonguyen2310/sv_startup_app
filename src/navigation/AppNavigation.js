@@ -21,9 +21,13 @@ import BabylonTextToSpeechWebView from '../components/BabylonTextToSpeechWebView
 import MenuNavigation from './MenuNavigation'
 import AuthNavigation from './AuthNavigation'
 
+import useTheme from '../themes';
+
 const AppStack = createNativeStackNavigator();
 
 export default function AppNavigation() {
+    const theme = useTheme()
+
     return(
         <NavigationContainer>
             <AppStack.Navigator
@@ -32,7 +36,8 @@ export default function AppNavigation() {
                     headerShown: true,
                     headerTitle: (props) => <Logo />,
                     headerTitleAlign: "left",
-                    headerRight: () => <MenuButton navigation={navigation} />
+                    headerRight: () => <MenuButton navigation={navigation} />,
+                    headerStyle: theme.container
                 })}
             >
                 <AppStack.Screen name="AuthNavigation" component={AuthNavigation} />

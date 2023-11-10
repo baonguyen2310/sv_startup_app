@@ -5,8 +5,8 @@ export default function GameItem({ game }) {
     const theme = useTheme()
 
     return (
-        <View style={styles.container}>
-            <Text style={theme.text}>{game.gameName}</Text>
+        <View style={ styles.container }>
+            <Text style={[theme.text, styles.text]}>{game.gameName}</Text>
             {
                 game.thumbnail_url && (
                     <Image style={styles.image} source={{ uri: game.thumbnail_url }} />
@@ -20,14 +20,30 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: 200,
-        backgroundColor: "lightgreen",
-        marginVertical: 10
+        marginVertical: 5,
+        borderWidth: 10,
+        borderRadius: 20,
+        borderColor: "#F699CD"
     },
     image: {
         width: "100%",
-        height: "100%"
+        height: "100%",
+        borderRadius: 10,
+        overflow: "hidden"
     },
     text: {
-        color: "#fff"
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        padding: 10,
+        zIndex: 1,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontSize: 36,
+        textShadowColor: '#FF4DA6',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 40
     }
 })

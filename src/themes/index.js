@@ -20,7 +20,23 @@ const useTheme = () => {
     const theme = getTheme(themeName)
 
     return StyleSheet.create({
+        container: {
+            backgroundColor: theme.colors.background
+        },
+        image: {
+            width: "100%",
+            height: "100%"
+        },
         text: {
+            color: theme.colors.text
+        },
+        primary: {
+            backgroundColor: theme.colors.primary,
+            color: theme.colors.text,
+            borderColor: theme.colors.border
+        },
+        secondary: {
+            backgroundColor: theme.colors.secondary,
             color: theme.colors.text
         }
     })

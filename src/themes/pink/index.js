@@ -1,9 +1,9 @@
 const pinkTheme = {
     colors: {
-        primary: "#FF74B1",
+        primary: "#FF9EAA", 
         secondary: "#FFA1CF",
         text: "#FFFFFF",
-        background: "#FFD6EC",
+        background: "#FFEEF7",
         error: "",
         success: "",
         warning: "",

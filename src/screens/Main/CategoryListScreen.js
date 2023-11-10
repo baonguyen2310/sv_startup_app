@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image
 } from "react-native";
 import CategoryItem from "../../components/CategoryItem"
 import LevelServices from "../../services/firebase/LevelServices"
@@ -45,10 +46,14 @@ export default function CategoryListScreen({ navigation, route }) {
 
   return (
     <Layout>
-      <Text>Trò chơi: {gameName}</Text>
+      <Text style={styles.primary} >{gameName}</Text>
+      <View style={{ zIndex: 1, height: "100%", position: "absolute", pointerEvents: "none", right: 0, top: 50 }}>
+        <Image style={styles.imageSmall} source={ require('../../assets/images/planet_1.gif') } />
+        <Image style={styles.imageSmall} source={ require('../../assets/images/start.gif') } />
+      </View>
       <ScrollView>
-        <Text>Chọn chủ đề</Text>
-        <View style={styles.container}>
+        <Text style={styles.secondary}>Chọn chủ đề</Text>
+        <View>
           {Object.keys(categoryList).map((category, index) => {
             return (
               <TouchableOpacity
@@ -59,12 +64,16 @@ export default function CategoryListScreen({ navigation, route }) {
                     levelList: categoryList[category] 
                 })}
               >
-                <CategoryItem category={category} />
+                <CategoryItem category={category} imageUrl={categoryList[category][0].thumbnail_url} />
               </TouchableOpacity>
             )
           })}
         </View>
       </ScrollView>
+      <View style={{ zIndex: 1, height: "100%", position: "absolute", pointerEvents: "none", left: 0, bottom: -600 }}>
+        <Image style={styles.imageSmall} source={ require('../../assets/images/planet_2.gif') } />
+        <Image style={styles.imageSmall} source={ require('../../assets/images/start.gif') } />
+      </View>
     </Layout>
   );
 }
@@ -76,4 +85,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  imageSmall: {
+    width: 100,
+    height: 100
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  },
+  primary: {
+    color: "#3AA6B9",
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  secondary: {
+    color: "#B15EFF",
+    fontSize: 24,
+    fontWeight: "bold"
+  }
 });
