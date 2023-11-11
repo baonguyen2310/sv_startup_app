@@ -19,6 +19,7 @@ export default function Microphone({ setSpeechResult }) {
         setSpeechResult(newResult)
     }
 
+    // có thể chỗ này cũng phải trả về là sai
     function onSpeechError(error) {
         console.log(error)
     }

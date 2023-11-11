@@ -7,70 +7,23 @@ import * as Speech from 'expo-speech'
 import AIAssistant from "../../components/AIAssitant"
 import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
+import CompleteModal from "../../components/CompleteModal";
 
 export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
     // 1 - Nếu có nhiều sound thì nên tạo và giải phóng mỗi lần vì giữ tốn RAM
     // 2 - Nếu có ít sound mà hay dùng nhiều thì tạo 1 lần vì tạo tốn thời gian và CPU
-    const [speechResult, setSpeechResult] = useState('')
+    // Download lần đầu lưu vào máy để app vừa nhẹ vừa không phải download lại nhiều lần
+    const [speechResult, setSpeechResult] = useState("")
+    const [countWrong, setCountWrong] = useState(0)
+    const maxWrong = 3
+    const [showCompleteModal, setShowCompleteModal] = useState(false)
+    
 
+    const [sound, setSound] = useState() // dùng 1 sound duy nhất để không bị chồng lên nhau
 
-    useEffect(() => {
-        onLoad()
-    }, [])
-
-    function onLoad() {
-        // Guide
-        setTimeout(() => {
-            playQuestion()
-        }, 3000)
-        setTimeout(() => {
-            playAnswer()
-        }, 6000)
-        setTimeout(() => {
-            playHelp()
-        }, 10000)
-    }
-
-    function onComplete() {
-        //navigation.navigate('Reward')
-        //Speech.stop()
-        Alert.alert(
-            title="Thông báo",
-            message="Bé đã đọc đúng",
-            buttons=[
-                {
-                    text: "Chọn màn chơi", 
-                    onPress: async () => {
-                        navigation.goBack()
-                    }
-                }
-            ],
-            options={
-                cancelable: true
-            }
-        )
-    }
-
-    const { height, width } = useWindowDimensions()
-    const isPortrait = height > width
-
-    const sentenceList = [
-        level.levelContent.help.alt
-        //level.levelContent.tips?.alt
-    ]
-
-    function playHelp() {
-        Speech.speak(level.levelContent.help.alt), {
-            voice: "vi-VN-language",
-            rate: 1,
-            pitch: 1
-        }
-    }
-
-    const [sound, setSound] = useState() 
-
-    async function playSound() {
-        const { sound } = await Audio.Sound.createAsync(require("./meoAudio.wav"))
+    async function playSound(uri) {
+        //const { sound } = await Audio.Sound.createAsync(require("./meoAudio.wav"))
+        const { sound } = await Audio.Sound.createAsync({ uri: uri })
         setSound(sound)
         await sound.playAsync()
     }
@@ -83,7 +36,92 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
         : undefined
     }, [sound])
 
+
+    useEffect(() => {
+        const timeOutId = setTimeout(() => {
+            playHelp()
+        }, 1000)
+
+
+        return (() => {
+            clearTimeout(timeOutId)
+
+            if (sound) {sound.unloadAsync()}
+            Speech.stop()
+        })
+    }, [])
+
+    useEffect(() => {
+        if (speechResult != "") {
+            if (checkSpeechAnswer(speechResult, level.levelContent.word.alt)) {
+                Speech.speak(level.levelContent.complete.right.alt)
+                handleComplete()
+            } else {
+                if (countWrong < maxWrong) {
+                    playGuide()
+                    setCountWrong(prev => prev + 1)
+                } else {
+                    handleComplete()
+                    Speech.speak(level.levelContent.complete.wrong.alt)
+                }
+            }
+        }
+    }, [speechResult]) // bug: chỉ khi đọc khác lần trước thì mới check
+
+    function handleComplete() {
+        setShowCompleteModal(true)
+        //navigation.navigate('Reward')
+        // Alert.alert(
+        //     title="Thông báo",
+        //     message=`Bé đã hoàn thành màn chơi, bé nhận được ${5-countWrong} sao`,
+        //     buttons=[
+        //         {
+        //             text: "Chọn màn chơi", 
+        //             onPress: async () => {
+        //                 navigation.goBack()
+        //             }
+        //         }
+        //     ],
+        //     options={
+        //         cancelable: false
+        //     }
+        // )
+    }
+
+    const { height, width } = useWindowDimensions()
+    const isPortrait = height > width
+
+    const sentenceList = [
+        level.levelContent.help.alt
+        //level.levelContent.tips?.alt
+    ]
+
+    function playHelp() {
+        if (level.levelContent.help.audioUrl != "") {
+            return playSound(level.levelContent.help.audioUrl)
+        }
+        Speech.speak(level.levelContent.help.alt), {
+            voice: "vi-VN-language",
+            rate: 1,
+            pitch: 1
+        }
+    }
+
+    function playGuide() {
+        if (level.levelContent.guide.audioUrl != "") {
+            return playSound(level.levelContent.guide.audioUrl)
+        }
+        Speech.speak(level.levelContent.guide.alt), {
+            voice: "vi-VN-language",
+            rate: 1,
+            pitch: 1
+        }
+    }
+
     function playWord() {
+        if (level.levelContent.word.audioUrl != "") {
+            return playSound(level.levelContent.help.audioUrl)
+        }
         Speech.speak(level.levelContent.word.alt), {
             voice: "vi-VN-language",
             rate: 1,
@@ -107,8 +145,16 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
     return (
         <View>
+            <CompleteModal
+                modalVisible={showCompleteModal}
+                setModalVisible={setShowCompleteModal}
+                message={"Bé đã hoàn thành màn chơi với số sao là"}
+                star={5-countWrong}
+                navigation={navigation}
+            />
             <Microphone setSpeechResult={setSpeechResult} />
             <Text style={styles.text}>Bé: {speechResult}</Text>
+            <Text>{countWrong}</Text>
             <TouchableOpacity onPress={playWord}>
                 <Text style={styles.text}>{level.levelContent.word.alt}</Text>
                 <Image 
