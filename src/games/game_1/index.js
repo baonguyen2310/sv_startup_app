@@ -2,30 +2,23 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimen
 import { Audio, Video, ResizeMode } from "expo-av"
 import { useState, useEffect } from "react"
 import { AntDesign } from '@expo/vector-icons'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Speech from 'expo-speech'
 import AIAssistant from "../../components/AIAssitant"
-import Voice from '@react-native-voice/voice'
-import { checkSpeechAnswer } from "../../utils";
+import { checkSpeechAnswer } from "../../utils"
+import Microphone from "../../components/Microphone"
 
 export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
     // 1 - Nếu có nhiều sound thì nên tạo và giải phóng mỗi lần vì giữ tốn RAM
     // 2 - Nếu có ít sound mà hay dùng nhiều thì tạo 1 lần vì tạo tốn thời gian và CPU
+    const [speechResult, setSpeechResult] = useState('')
 
-    const [isStartSpeechToText, setIsStartSpeechToText] = useState(false)
 
     useEffect(() => {
         onLoad()
-        return (
-            onEnd()
-        )
     }, [])
 
     function onLoad() {
-        // Voice
-        Voice.onSpeechError = onSpeechError
-        Voice.onSpeechResults = onSpeechResult
-
         // Guide
         setTimeout(() => {
             playQuestion()
@@ -36,10 +29,6 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
         setTimeout(() => {
             playHelp()
         }, 10000)
-    }
-
-    function onEnd() {
-        Voice.destroy().then(Voice.removeAllListeners)
     }
 
     function onComplete() {
@@ -61,32 +50,6 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
             }
         )
     }
-
-    const [speechResult, setSpeechResult] = useState('')
-
-    const startSpeechToText = async (e) => {
-        if (!isStartSpeechToText) {
-            await Voice.start("vi-VI")
-        } else {
-            await Voice.stop()
-        }
-        setIsStartSpeechToText((prev)  => !prev)
-      }
-    
-      const onSpeechResult = (result) => {
-        const newResult = result.value[0]
-        if (checkSpeechAnswer(newResult, level.levelContent.word.alt)) {
-            Speech.speak('Bé đã đọc đúng!')
-            onComplete()
-        } else {
-            Speech.speak(`Bé đọc chưa chính xác! Bé hãy đọc lại từ ${level.levelContent.word.alt} `)
-        }
-        setSpeechResult(newResult)
-      }
-    
-      const onSpeechError = (error) => {
-        console.log(error)
-      }
 
     const { height, width } = useWindowDimensions()
     const isPortrait = height > width
@@ -144,7 +107,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
     return (
         <View>
-            <Button title={isStartSpeechToText ? "Dừng nói" : "Nói"} onPress={(e) => startSpeechToText(e)} />
+            <Microphone setSpeechResult={setSpeechResult} />
             <Text style={styles.text}>Bé: {speechResult}</Text>
             <TouchableOpacity onPress={playWord}>
                 <Text style={styles.text}>{level.levelContent.word.alt}</Text>
