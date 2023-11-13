@@ -15,11 +15,12 @@ export default function Microphone({ setSpeechResult }) {
     }, [])
 
     function onSpeechResults(result) {
-        const newResult = result.value[0]
-        setSpeechResult(newResult)
+        setSpeechResult({
+            result: result.value[0],
+            timestamp: Date.now()
+        })
     }
 
-    // có thể chỗ này cũng phải trả về là sai
     function onSpeechError(error) {
         console.log(error)
     }
