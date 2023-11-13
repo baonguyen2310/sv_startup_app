@@ -78,28 +78,54 @@ const levelData_1 = {
     goldReward: 50,
     status: "active",
     levelContent: {
-        imageUrl: "",
+        imageUrl: "https://nhakhoakim.com/wp-content/uploads/2021/11/con-nguoi-co-bao-nhieu-cai-rang-3.png",
         videoUrl: "",
-        word: {
+        main: {
             audioUrl: "",
             alt: "Cái miệng"
         },
-        question: {
-            audioUrl: "",
-            alt: "Cái miệng của bé dùng để làm gì?"
+        questions: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        answers: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        guides: [
+            {
+                audioUrl: "https://firebasestorage.googleapis.com/v0/b/sv-startup.appspot.com/o/games%2Fsounds%2Fgame_1%2Flevel_1%2Fbe_hay_doc_tu_cai_mieng_111123074824.mp3?alt=media&token=dda4ed55-c3a8-4757-b124-1b4eecfb4bdf",
+                alt: "Bé hãy đọc từ . Cái , miệng"
+            }
+        ],
+        reviews: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. cái. miệng"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
         },
-        answer: {
-            audioUrl: "",
-            alt: "Miệng dùng để nói"
-        },
-        help: {
-            audioUrl: "",
-            alt: "Bé hãy đọc từ 'Cái miệng'"
-        },
-        tips: {
-            audioUrl: "",
-            alt: "Miệng của bé cười thật tươi!"
-        }
+        tips: [
+            {
+                audioUrl: "",
+                alt: "Miệng bé dùng để nói"
+            }
+        ]
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
@@ -852,8 +878,8 @@ export async function createDatabase() {
       //await setDoc(docRef, gameData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
       //const docRef = await addDoc(collection(db, "levels"), levelData)
-      const docRef = doc(db, "levels", "11_1") // 1_1: game1 level1
-      await setDoc(docRef, levelData_11)
+      const docRef = doc(db, "levels", "1_1") // 1_1: game1 level1
+      await setDoc(docRef, levelData_1)
 
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)
