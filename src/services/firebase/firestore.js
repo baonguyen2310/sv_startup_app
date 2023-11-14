@@ -102,7 +102,7 @@ const levelData_1 = {
                 alt: "Bé hãy đọc từ . Cái , miệng"
             }
         ],
-        reviews: {
+        reviews_speech: {
             right: {
                 audioUrl: "",
                 alt: "Bé đã đọc đúng"
@@ -143,42 +143,85 @@ const levelData_2 = {
     goldReward: 50,
     status: "active",
     levelContent: {
-        imageUrl: "",
+        imageUrl: "https://img.lovepik.com/free-png/20210926/lovepik-bamboo-green-plant-summer-png-image_401447982_wh1200.png",
         videoUrl: "",
-        word: {
+        main: {
             audioUrl: "",
             alt: "Cây tre"
         },
-        question: {
-            audioUrl: "",
-            alt: "Bé hãy chọn từ đúng?"
-        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy chọn từ đúng?"
+            }
+        ],
         answers: [
             {
-                index: 1,
                 audioUrl: "",
                 alt: "Cây tre"
             },
             {
-                index: 2,
                 audioUrl: "",
                 alt: "Cây dừa"
             },
             {
-                index: 3,
                 audioUrl: "",
                 alt: "Cây mía"
             }
         ],
         correctIndex: 1,
-        help: {
-            audioUrl: "",
-            alt: "Bé hãy đọc từ 'Cây tre'"
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy chọn từ đúng?"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . Cây . tre"
+            }
+        ],
+        reviews_answer: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã trả lời đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành thử thách"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé đã hết lượt chơi"
+            }
         },
-        tips: {
-            audioUrl: "",
-            alt: "Thánh Gióng nhổ tre đánh giặc"
-        }
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. Cây . tre"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: "Thánh Gióng nhổ tre đánh giặc"
+            }
+        ]
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
@@ -196,56 +239,191 @@ const levelData_3 = {
     goldReward: 50,
     status: "active",
     levelContent: {
-        imageUrl: "",
+        imageUrl: "https://img.lovepik.com/free-png/20210926/lovepik-bamboo-green-plant-summer-png-image_401447982_wh1200.png",
         videoUrl: "",
-        word: {
+        main: {
             audioUrl: "",
             alt: "Cây mía"
         },
-        question: {
-            audioUrl: "",
-            alt: "Bé hãy chọn hình đúng?"
-        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy chọn hình đúng?"
+            }
+        ],
         answers: [
             {
-                index: 1,
                 imageUrl: "https://img.lovepik.com/free-png/20210926/lovepik-bamboo-green-plant-summer-png-image_401447982_wh1200.png",
                 audioUrl: "",
                 alt: "Cây tre"
             },
             {
-                index: 2,
                 imageUrl: "https://khuvuonxanh.com/uploads/2022/12/cay-dua-thuoc-loai-cay-than-go-cung-ho-nha-cau.jpg",
                 audioUrl: "",
                 alt: "Cây dừa"
             },
             {
-                index: 3,
                 imageUrl: "https://ims.baohoabinh.com.vn/NewsImg/2_2016/96957_IMG_3687.jpg",
                 audioUrl: "",
                 alt: "Cây mía"
             }
         ],
-        correctIndex: 3,
-        help: {
-            audioUrl: "",
-            alt: "Bé hãy đọc từ 'Cây mía'"
+        correctIndex: 2,
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy chọn hình đúng?"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . Cây . mía"
+            }
+        ],
+        reviews_answer: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã trả lời đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành thử thách"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé đã hết lượt chơi"
+            }
         },
-        tips: {
-            audioUrl: "",
-            alt: "Đường làm từ mía thì gọi là đường mía"
-        }
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. Cây . mía"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: "Đường làm từ mía thì gọi là đường mía"
+            }
+        ]
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
 }
 
 
-// GAME 4: Từ vựng: nhiều chữ nhiều hình
+// GAME 4: Câu: Câu đố
+const levelData_4 = {
+    gameId: "4",
+    title: "Đoán xem là gì?",
+    thumbnail_url: "https://i.ibb.co/RPhQF10/ta-i-xuo-ng.jpg",
+    description: "Mô tả cấp độ",
+    category: "Cây cối",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "https://i.ibb.co/qNPKcHT/1000-F-492327156-Oz-P0alx-FDLWRsia-D0oht-IQ94r-Rl0-FUJR.jpg",
+        videoUrl: "",
+        main: {
+            audioUrl: "",
+            alt: "Bàn tay"
+        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy chọn đáp án đúng"
+            }
+        ],
+        answers: [
+            {
+                imageUrl: "https://i.ibb.co/qNPKcHT/1000-F-492327156-Oz-P0alx-FDLWRsia-D0oht-IQ94r-Rl0-FUJR.jpg",
+                audioUrl: "",
+                alt: "Bàn tay"
+            },
+            {
+                imageUrl: "https://i.ibb.co/WvqKjL7/cz-Nmcy1wcml2-YXRl-L3-Jhd3-Bpe-GVs-X2lt-YWdlcy93-ZWJza-XRl-X2-Nvbn-Rlbn-Qvb-HIv-Zn-Ji-YWJ5-X2-Zvb3-R.webp",
+                audioUrl: "",
+                alt: "Bàn chân"
+            }
+        ],
+        correctIndex: 0,
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy chọn đáp án đúng?"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . bàn . tay"
+            }
+        ],
+        reviews_answer: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã trả lời đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành thử thách"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé đã hết lượt chơi"
+            }
+        },
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. bàn . tay"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: "Bàn tay có 5 ngón tay"
+            }
+        ]
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
 
-// GAME 5: Câu: 1 hình nhiều câu
+// GAME 5: Câu: 1 hình nhiều câu: Lời hay ý đẹp
 const levelData_5 = {
-    gameId: "3",
+    gameId: "5",
     title: "Đói bụng",
     thumbnail_url: "https://res.cloudinary.com/locobee-cdn/image/upload/f_auto/v1583716801/locobee-hoctiengnhat-tutuongthanh-1_uhpelx.jpg",
     description: "Mô tả cấp độ",
@@ -255,47 +433,89 @@ const levelData_5 = {
     goldReward: 50,
     status: "active",
     levelContent: {
-        imageUrl: "",
+        imageUrl: "https://res.cloudinary.com/locobee-cdn/image/upload/f_auto/v1583716801/locobee-hoctiengnhat-tutuongthanh-1_uhpelx.jpg",
         videoUrl: "",
-        sentence: {
+        main: {
             audioUrl: "",
-            alt: "Mẹ ơi, con muốn ăn ạ!"
+            alt: "Đói bụng"
         },
-        question: {
-            audioUrl: "",
-            alt: "Khi đói, con sẽ nói gì để được ăn cơm? "
-        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: "Khi đói, con sẽ nói gì để được ăn cơm?"
+            }
+        ],
         answers: [
             {
-                index: 1,
                 audioUrl: "",
                 alt: "Ăn cơm, đói bụng!"
             },
             {
-                index: 2,
                 audioUrl: "",
                 alt: "Mẹ ơi, con muốn ăn ạ!"
             },
             {
-                index: 3,
                 audioUrl: "",
                 alt: "Con đói rồi, cho con ăn đi!"
             }
         ],
-        correctIndex: 2,
-        help: {
-            audioUrl: "",
-            alt: "Bé hãy đọc câu 'Mẹ ơi, con muốn ăn ạ!'"
+        correctIndex: 1,
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Khi đói, con sẽ nói gì để được ăn cơm?"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc câu . Mẹ ơi, con muốn ăn ạ!"
+            }
+        ],
+        reviews_answer: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã trả lời đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành thử thách"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé đã hết lượt chơi"
+            }
         },
-        tips: {
-            audioUrl: "",
-            alt: "Trẻ em phải biết lễ phép với người lớn"
-        }
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại câu. Mẹ ơi, con muốn ăn ạ!"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy biết lễ phép với ba mẹ nha!"
+            }
+        ]
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
 }
-
 
 // GAME 6: Câu: Sắp xếp từ trong câu
 const levelData_6 = {
@@ -311,22 +531,62 @@ const levelData_6 = {
     levelContent: {
         imageUrl: "https://baohaiquanvietnam.vn/storage/users/user_6/N%C4%82M%202023/Th%C3%A1ng%208/7-8/TTLB.png",
         videoUrl: "",
-        sentence: {
+        main: {
             audioUrl: "",
             alt: "Mẹ ru bé ngủ trưa"
         },
-        question: {
-            audioUrl: "",
-            alt: "Con hãy sắp xếp các từ cho đúng thứ tự"
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Con hãy sắp xếp các từ cho đúng thứ tự"
+            },
+            {
+                audioUrl: "",
+                alt: "Con hãy đọc câu . Mẹ ru bé ngủ trưa"
+            }
+        ],
+        reviews_answer: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã trả lời đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành thử thách"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé đã hết lượt chơi"
+            }
         },
-        help: {
-            audioUrl: "",
-            alt: "Ầu ơ dí dầu, con ngủ cho ngoan"
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại câu . Mẹ ru bé ngủ trưa"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
         },
-        tips: {
-            audioUrl: "",
-            alt: "Ầu ơ dí dầu, con ngủ cho ngoan"
-        }
+        tips: [
+            {
+                audioUrl: "",
+                alt: "Con có thích được mẹ ru không?"
+            }
+        ]
     },
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp()
@@ -390,7 +650,7 @@ const levelData_7 = {
     updatedAt: serverTimestamp()
 }
 
-// GAME 9: Đoạn: Thế giới của con
+// GAME 9: Đoạn: Khoảng trời trẻ thơ
 const levelData_9 = {
     gameId: "9",
     title: "Bộ thẻ 1",
@@ -404,137 +664,153 @@ const levelData_9 = {
     levelContent: {
         imageUrl: "https://i.ibb.co/VJytTpV/z4848221696045-c8b2e06019d8299c93e9ec59c5a4047b.jpg",
         videoUrl: "",
-        cardSet: {
-            context: [
-                {
-                    imageUrl: "https://i.ibb.co/kB4JvJx/z4848075433010-7099846447d934373661999f68c5b0f5.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/Ny6qYRC/z4848075434472-0fd76e1f40cd327441d68f931a440c6c.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/0VN2nRM/z4848075440023-0aae97ec1ced064598f58d5e6fa2b975.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/TkQyqKn/z4848075454408-d512849d0d9adf99168adca8c87b82c9.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/YRkD8cz/z4848075459187-8e7d12267c21dffa6a96f40feb18a94b.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/ZcGBnpk/z4848075459897-b1dbc4d1396cdc29484bfad696b838d0.jpg",
-                    alt: "",
-                    audioUrl: ""
-                }    
-            ],
-            main: [
-                {
-                    imageUrl: "https://i.ibb.co/Mph2ctv/z4848085539181-d188e576f01090ccbd59977dc612ecdb.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/vZS8cfg/z4848085557010-9ff51d984dc012eb06738e7b595ed838.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/YjRzmp5/z4848085560006-d4299bf63591edb1c678ec573aec7428.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/GWS5xR5/z4848085564275-e44915814b2452c2dd3f95790877b562.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/6sswbS8/z4848085564889-fb67b61f4a19858e74574b940d78997d.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/gVRDy7X/z4848085566965-7fcb466bd2b5dddca57c4601387910b2.jpg",
-                    alt: "",
-                    audioUrl: ""
-                }    
-            ],
-            sub: [
-                {
-                    imageUrl: "https://i.ibb.co/7zkQJ5V/z4848093152259-0b393d5f7564258692637714139e525f.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/m6WmYgc/z4848093169652-7977a533c467016c4a23a599e20414f2.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/161JxKx/z4848093171367-96e5aa41b36503a95a08b0de45b20e31.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/swJ9dZf/z4848093179395-7379c6dd22eabc9dcbf0ac3f1d06c6a3.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/6mZJnGB/z4848093178092-81cec955d3b236f2cdf0f53054265b5d.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/gyj9cZ5/z4848093181060-fb010e5f5b2691a84d833596765a311a.jpg",
-                    alt: "",
-                    audioUrl: ""
-                }    
-            ],
-            tool: [
-                {
-                    imageUrl: "https://i.ibb.co/6rVDLdw/z4848094400777-71b296e42f62850c2132ed646966b9fb.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/fH1zWwW/z4848094413027-eef1a2ba2e455890c9861ee3a7330c66.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/XtgpsTs/z4848094413134-5c7a442fcb092626bd4e9895f1b8928b.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/wrhGBFY/z4848094415067-617d611fd3e0cea079fb527706ba7a04.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/vqcyfXF/z4848094428341-926ed36a761c6ee701282d32f86317e7.jpg",
-                    alt: "",
-                    audioUrl: ""
-                },
-                {
-                    imageUrl: "https://i.ibb.co/G2qgM6m/z4848094435286-2b1b2bb347f3ad44df4041396e15568a.jpg",
-                    alt: "",
-                    audioUrl: ""
-                }    
-            ]
+        main: {
+            audioUrl: "",
+            alt: "Bộ thẻ 1"
         },
-        guide: [
+        cardSet: [
+            {
+                type: 'context',
+                data: [
+                    {
+                        imageUrl: "https://i.ibb.co/kB4JvJx/z4848075433010-7099846447d934373661999f68c5b0f5.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/Ny6qYRC/z4848075434472-0fd76e1f40cd327441d68f931a440c6c.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/0VN2nRM/z4848075440023-0aae97ec1ced064598f58d5e6fa2b975.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/TkQyqKn/z4848075454408-d512849d0d9adf99168adca8c87b82c9.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/YRkD8cz/z4848075459187-8e7d12267c21dffa6a96f40feb18a94b.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/ZcGBnpk/z4848075459897-b1dbc4d1396cdc29484bfad696b838d0.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    }    
+                ]
+            },
+            {
+                type: 'main',
+                data: [
+                    {
+                        imageUrl: "https://i.ibb.co/Mph2ctv/z4848085539181-d188e576f01090ccbd59977dc612ecdb.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/vZS8cfg/z4848085557010-9ff51d984dc012eb06738e7b595ed838.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/YjRzmp5/z4848085560006-d4299bf63591edb1c678ec573aec7428.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/GWS5xR5/z4848085564275-e44915814b2452c2dd3f95790877b562.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/6sswbS8/z4848085564889-fb67b61f4a19858e74574b940d78997d.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/gVRDy7X/z4848085566965-7fcb466bd2b5dddca57c4601387910b2.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    }
+                ]
+            },
+            {
+                type: 'sub',
+                data: [
+                    {
+                        imageUrl: "https://i.ibb.co/7zkQJ5V/z4848093152259-0b393d5f7564258692637714139e525f.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/m6WmYgc/z4848093169652-7977a533c467016c4a23a599e20414f2.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/161JxKx/z4848093171367-96e5aa41b36503a95a08b0de45b20e31.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/swJ9dZf/z4848093179395-7379c6dd22eabc9dcbf0ac3f1d06c6a3.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/6mZJnGB/z4848093178092-81cec955d3b236f2cdf0f53054265b5d.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/gyj9cZ5/z4848093181060-fb010e5f5b2691a84d833596765a311a.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    }    
+                ]
+            },
+            {
+                type: 'tool',
+                data: [
+                    {
+                        imageUrl: "https://i.ibb.co/6rVDLdw/z4848094400777-71b296e42f62850c2132ed646966b9fb.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/fH1zWwW/z4848094413027-eef1a2ba2e455890c9861ee3a7330c66.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/XtgpsTs/z4848094413134-5c7a442fcb092626bd4e9895f1b8928b.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/wrhGBFY/z4848094415067-617d611fd3e0cea079fb527706ba7a04.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/vqcyfXF/z4848094428341-926ed36a761c6ee701282d32f86317e7.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    },
+                    {
+                        imageUrl: "https://i.ibb.co/G2qgM6m/z4848094435286-2b1b2bb347f3ad44df4041396e15568a.jpg",
+                        alt: "",
+                        audioUrl: ""
+                    }    
+                ]
+            }
+        ],
+        guides: [
             {
                 audioUrl: "",
                 alt: "Bé hãy chọn 1 bối cảnh!"
@@ -549,19 +825,31 @@ const levelData_9 = {
             },
             {
                 audioUrl: "",
-                alt: "Bé hãy chọn 1 vật dụng!"
+                alt: "Bé hãy chọn 1 đạo cụ!"
             },
             {
                 audioUrl: "",
                 alt: "Bé hãy tự sáng tạo câu chuyện của mình!"
             }
         ],
-        help: [
-            {
+        reviews_speech: {
+            right: {
                 audioUrl: "",
-                alt: "Bé hãy tự sáng tạo câu chuyện của mình!"
+                alt: ""
+            },
+            wrong: {
+                audioUrl: "",
+                alt: ""
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Wow! Câu chuyện  của con thật tuyệt vời! Con có một trí nhớ rất siêu phàm!"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Câu chuyện của con rất thú vị, và hãy luyện tập để câu chuyện được hay hơn nữa nha!"
             }
-        ],
+        },
         tips: [
             {
                 audioUrl: "",
@@ -587,91 +875,102 @@ const levelData_10 = {
     levelContent: {
         imageUrl: "https://i.ibb.co/jM5CFg0/z4848375029952-6d14e3f17b0cf3aeab8e73bcd8581c3d.jpg",
         videoUrl: "",
+        main: {
+            audioUrl: "",
+            alt: "Cô bé quàng khăn đỏ"
+        },
         story: {
             picture_story: [
                 {
-                    index: 1,
                     imageUrl: "https://i.ibb.co/kBNcHnm/1.jpg",
                     audioUrl: "",
-                    text: "Ngày xửa, ngày xưa, có một cô bé thường hay quàng chiếc khăn màu đỏ, vì vậy, mọi người gọi cô là cô bé quàng khăn đỏ. Một hôm, mẹ cô bảo cô mang bánh sang biếu bà ngoại. Trước khi đi, mẹ cô dặn: Con đi thì đi đường thẳng, đừng đi đường vòng qua rừng mà chó sói ăn thịt con đấy."
+                    alt: "Ngày xửa, ngày xưa, có một cô bé thường hay quàng chiếc khăn màu đỏ, vì vậy, mọi người gọi cô là cô bé quàng khăn đỏ. Một hôm, mẹ cô bảo cô mang bánh sang biếu bà ngoại. Trước khi đi, mẹ cô dặn: Con đi thì đi đường thẳng, đừng đi đường vòng qua rừng mà chó sói ăn thịt con đấy."
                 },
                 {
-                    index: 2,
                     imageUrl: "https://i.ibb.co/y0HMnW5/2.jpg",
                     audioUrl: "",
-                    text: "Đi được một quãng thì gặp Sóc, Sóc nhắc: Cô bé quàng khăn đỏ ơi, lúc nãy tôi nghe mẹ cô dặn đi đường thẳng, đừng đi đường vòng cơ mà. Sao cô lại đi đường này?   Cô bé không trả lời Sóc. Cô cứ đi theo đường vòng qua rừng. Vừa đi, cô vừa hái hoa, bắt bướm"
+                    alt: "Đi được một quãng thì gặp Sóc, Sóc nhắc: Cô bé quàng khăn đỏ ơi, lúc nãy tôi nghe mẹ cô dặn đi đường thẳng, đừng đi đường vòng cơ mà. Sao cô lại đi đường này?   Cô bé không trả lời Sóc. Cô cứ đi theo đường vòng qua rừng. Vừa đi, cô vừa hái hoa, bắt bướm"
                 },
                 {
-                    index: 3,
                     imageUrl: "https://i.ibb.co/VtbSK6F/3.jpg",
                     audioUrl: "",
-                    text: "Vào đến cửa rừng thì cô gặp chó sói. Con chó sói rất to đến trước mặt cô. Nó cất giọng ồm ồm hỏi: Này, cô bé đi đâu thế?Nghe chó sói hỏi, cô bé quàng khăn đỏ sợ lắm, nhưng cũng đành bạo dạn trả lời: Tôi đi sang nhà bà ngoại tôi."
+                    alt: "Vào đến cửa rừng thì cô gặp chó sói. Con chó sói rất to đến trước mặt cô. Nó cất giọng ồm ồm hỏi: Này, cô bé đi đâu thế?Nghe chó sói hỏi, cô bé quàng khăn đỏ sợ lắm, nhưng cũng đành bạo dạn trả lời: Tôi đi sang nhà bà ngoại tôi."
                 },
                 {
-                    index: 4,
                     imageUrl: "https://i.ibb.co/q00pDTd/4.jpg",
                     audioUrl: "",
-                    text: "Nghe cô bé nói đi sang bà ngoại, chó sói nghĩ bụng: À, thì ra nó lại còn có bà ngoại nữa, thế thì mình phải ăn thịt cả hai bà cháu. Nghĩ vậy nên chó sói lại hỏi: Nhà bà ngoại cô ở đâu? Ở bên kia khu rừng. Cái nhà có ống khói đấy, cứ đẩy cửa là vào được ngay."
+                    alt: "Nghe cô bé nói đi sang bà ngoại, chó sói nghĩ bụng: À, thì ra nó lại còn có bà ngoại nữa, thế thì mình phải ăn thịt cả hai bà cháu. Nghĩ vậy nên chó sói lại hỏi: Nhà bà ngoại cô ở đâu? Ở bên kia khu rừng. Cái nhà có ống khói đấy, cứ đẩy cửa là vào được ngay."
                 },
                 {
-                    index: 5,
                     imageUrl: "https://i.ibb.co/HgGLW5w/5.jpg",
                     audioUrl: "",
-                    text: "Nghe xong, chó sói bỏ cô bé quàng khăn đỏ ở đấy rồi chạy một mạch đến nhà bà ngoại cô bé. Nó đẩy cửa vào vồ lấy bà cụ rồi nuốt chửng ngay vào bụng. Xong xuôi, nó lên giường nằm đắp chăn giả là bà ngoại ốm. Lúc cô bé quàng khăn đỏ đến, cô thấy chó sói đắp chăn nằm trên giường, cô tưởng “bà ngoại” bị ốm thật, cô hỏi: Bà ơi! Bà ốm đã lâu chưa? Sói không đáp giả vờ rên hừ… hừ… Bà ơi, mẹ cháu bảo mang bánh sang biếu bà. Thế à, thế thì bà cám ơn cháu và mẹ cháu. Cháu ngoan quá. Cháu lại đây với bà. Cô bé quàng khăn đỏ chạy ngay đến cạnh giường, nhưng cô ngạc nhiên lùi lại hỏi; – Bà ơi! Sao hôm nay tai bà dài thế? Tai bà dài để bà nghe cháu nói được rõ hơn. Chó sói đáp Thế còn mắt bà, sao hôm nay mắt bà to thế? Mắt bà to để bà nhìn cháu được rõ hơn. Chưa tin, cô bé quàng khăn đỏ lại hỏi: Thế còn mồm bà, sao hôm nay mồm bà to thế? Mồm bà to để bà ăn thịt cháu đấy. Sói nói xong liền nhảy ra khỏi giường, nuốt chửng em bé Khăn Đỏ đáng thương."
+                    alt: "Nghe xong, chó sói bỏ cô bé quàng khăn đỏ ở đấy rồi chạy một mạch đến nhà bà ngoại cô bé. Nó đẩy cửa vào vồ lấy bà cụ rồi nuốt chửng ngay vào bụng. Xong xuôi, nó lên giường nằm đắp chăn giả là bà ngoại ốm. Lúc cô bé quàng khăn đỏ đến, cô thấy chó sói đắp chăn nằm trên giường, cô tưởng “bà ngoại” bị ốm thật, cô hỏi: Bà ơi! Bà ốm đã lâu chưa? Sói không đáp giả vờ rên hừ… hừ… Bà ơi, mẹ cháu bảo mang bánh sang biếu bà. Thế à, thế thì bà cám ơn cháu và mẹ cháu. Cháu ngoan quá. Cháu lại đây với bà. Cô bé quàng khăn đỏ chạy ngay đến cạnh giường, nhưng cô ngạc nhiên lùi lại hỏi; – Bà ơi! Sao hôm nay tai bà dài thế? Tai bà dài để bà nghe cháu nói được rõ hơn. Chó sói đáp Thế còn mắt bà, sao hôm nay mắt bà to thế? Mắt bà to để bà nhìn cháu được rõ hơn. Chưa tin, cô bé quàng khăn đỏ lại hỏi: Thế còn mồm bà, sao hôm nay mồm bà to thế? Mồm bà to để bà ăn thịt cháu đấy. Sói nói xong liền nhảy ra khỏi giường, nuốt chửng em bé Khăn Đỏ đáng thương."
                 },
                 {
-                    index: 6,
                     imageUrl: "https://i.ibb.co/HgGLW5w/5.jpg",
                     audioUrl: "",
-                    text: "Sói đã no nê lại nằm xuống giường ngủ ngáy o o. May sao, lúc đó bác thợ săn đi ngang thấy thế. Bác giơ súng lên định bắn. Nhưng bác chợt nghĩ ra là chắc sói đã ăn thịt bà lão, và tuy vậy vẫn còn có cơ cứu bà. Bác nghĩ không nên bắn mà nên lấy kéo rạch bụng con sói đang ngủ ra. Vừa rạch được vài mũi thì thấy chiếc khăn quàng đỏ chóe, rạch được vài mũi nữa thì cô bé nhảy ra kêu: Trời ơi! Cháu sợ quá! Trong bụng sói, tối đen như mực. Bà lão cũng còn sống chui ra, thở hổn hển. Khăn đỏ vội đi nhặt đá to nhét đầy bụng sói. Sói tỉnh giấc muốn nhảy lên, nhưng đá nặng quá, nó ngã khuỵu xuống, lăn ra chết. Từ dạo ấy, cô bé quàng khăn đỏ không bao giờ dám làm sai lời mẹ dặn."
+                    alt: "Sói đã no nê lại nằm xuống giường ngủ ngáy o o. May sao, lúc đó bác thợ săn đi ngang thấy thế. Bác giơ súng lên định bắn. Nhưng bác chợt nghĩ ra là chắc sói đã ăn thịt bà lão, và tuy vậy vẫn còn có cơ cứu bà. Bác nghĩ không nên bắn mà nên lấy kéo rạch bụng con sói đang ngủ ra. Vừa rạch được vài mũi thì thấy chiếc khăn quàng đỏ chóe, rạch được vài mũi nữa thì cô bé nhảy ra kêu: Trời ơi! Cháu sợ quá! Trong bụng sói, tối đen như mực. Bà lão cũng còn sống chui ra, thở hổn hển. Khăn đỏ vội đi nhặt đá to nhét đầy bụng sói. Sói tỉnh giấc muốn nhảy lên, nhưng đá nặng quá, nó ngã khuỵu xuống, lăn ra chết. Từ dạo ấy, cô bé quàng khăn đỏ không bao giờ dám làm sai lời mẹ dặn."
+                }
+            ],
+            picture_elements: [
+                {
+                    imageUrl: "https://i.ibb.co/WsxsBwP/co-kha-n-o.jpg",
+                    audioUrl: "",
+                    alt: "cô bé quàng khăn đỏ"
+                },
+                {
+                    imageUrl: "https://i.ibb.co/MSS4H4j/gio-qua.jpg",
+                    audioUrl: "",
+                    alt: "giỏ bánh"
+                },
+                {
+                    imageUrl: "https://i.ibb.co/3MZsftL/ba.jpg",
+                    audioUrl: "",
+                    alt: "bà"
                 }
             ],
             map_story: [
                 {
-                    index: 1,
-                    imageUrl: "",
+                    type: 'text',
                     audioUrl: "",
-                    text: "Một ngày"
+                    alt: "Một ngày"
                 },
                 {
-                    index: 2,
+                    type: 'picture',
                     imageUrl: "https://i.ibb.co/WsxsBwP/co-kha-n-o.jpg",
                     audioUrl: "",
-                    text: "Cô bé quàng khăn đỏ"
+                    alt: "cô bé quàng khăn đỏ"
                 },
                 {
-                    index: 3,
-                    imageUrl: "",
+                    type: 'text',
                     audioUrl: "",
-                    text: "được mẹ"
+                    alt: "được mẹ nhờ mang"
                 },
                 {
-                    index: 4,
+                    type: 'picture',
                     imageUrl: "https://i.ibb.co/MSS4H4j/gio-qua.jpg",
                     audioUrl: "",
-                    text: "nhờ mang giỏ táo"
+                    alt: "giỏ bánh"
                 },
                 {
-                    index: 5,
-                    imageUrl: "",
+                    type: 'text',
                     audioUrl: "",
-                    text: "sang cho"
+                    alt: "sang cho"
                 },
                 {
-                    index: 6,
+                    type: 'picture',
                     imageUrl: "https://i.ibb.co/3MZsftL/ba.jpg",
                     audioUrl: "",
-                    text: "bà"
+                    alt: "bà"
                 },
                 {
-                    index: 7,
-                    imageUrl: "",
+                    type: 'text',
                     audioUrl: "",
-                    text: "vì bà bị ốm nặng."
-                }
+                    alt: "vì bà bị ốm nặng."
+                },
             ]
         },
-        questions: [
+        guides: [
             {
                 audioUrl: "",
                 alt: "Con có yêu bà không?"
@@ -679,9 +978,7 @@ const levelData_10 = {
             {
                 audioUrl: "",
                 alt: "Con đã giúp bà được những việc gì nào?"
-            }
-        ],
-        guide: [
+            },
             {
                 audioUrl: "",
                 alt: "Con ạ, có một cô bé được mẹ giao nhiệm vụ mang bánh đến thăm bà nhưng cô bé không nghe lời mẹ dặn nên chút nữa là bị chó sói ăn thịt đấy. Vậy câu chuyện xảy ra như thế nào thì chúng ta cùng đến với câu chuyện “Cô bé quàng khăn đỏ” nhé!"
@@ -695,12 +992,24 @@ const levelData_10 = {
                 alt: "Bạn Sóc Nâu muốn nghe lại câu chuyện ấy, bé hãy kể lại cho bạn Sóc Nâu nghe nào!"
             }
         ],
-        help: [
-            {
+        reviews_speech: {
+            right: {
                 audioUrl: "",
-                alt: "Bé hãy yêu quý ông bà nhé!"
+                alt: "Con đọc chính xác"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Con đọc chưa chính xác, con hãy đọc lại"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Wow! Câu chuyện  của con thật tuyệt vời! Con có một trí nhớ rất siêu phàm!"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Câu chuyện của con rất thú vị, và hãy luyện tập để câu chuyện được hay hơn nữa nha!"
             }
-        ],
+        },
         tips: [
             {
                 audioUrl: "",
@@ -715,7 +1024,7 @@ const levelData_10 = {
 // GAME 11: Đoạn: Kể chuyện sáng tạo theo tranh
 const levelData_11 = {
     gameId: "11",
-    title: "Chim sẻ đi nắng",
+    title: "Bộ tranh 1",
     thumbnail_url: "https://i.ibb.co/tPH5cPK/1.jpg",
     description: "Mô tả cấp độ",
     category: "Động vật",
@@ -726,40 +1035,50 @@ const levelData_11 = {
     levelContent: {
         imageUrl: "",
         videoUrl: "",
-        story: [
+        main: {
+            audioUrl: "",
+            alt: "Bộ tranh 1"
+        },
+        pictures: [
             {
-                index: 1,
-                imageUrl: "https://i.ibb.co/tPH5cPK/1.jpg",
-                alt: "Cậu bé nhặt được 1 bạn chim sẻ"
+                imageUrl: "https://i.ibb.co/tPH5cPK/1.jpg"
             },
             {
-                index: 2,
-                imageUrl: "https://i.ibb.co/6BC03Vw/2.jpg",
-                alt: "Cậu bé mang chim sẻ về nhà"
+                imageUrl: "https://i.ibb.co/6BC03Vw/2.jpg"
             },
             {
-                index: 3,
-                imageUrl: "https://i.ibb.co/Xz7HP7J/3.jpg",
-                alt: "Cậu bé cho chim sẻ ăn"
+                imageUrl: "https://i.ibb.co/Xz7HP7J/3.jpg"
             },
             {
-                index: 4,
-                imageUrl: "https://i.ibb.co/kSvwMLS/4.jpg",
-                alt: "Chim sẻ muốn được chơi cùng các bạn"
+                imageUrl: "https://i.ibb.co/kSvwMLS/4.jpg"
             },
             {
-                index: 5,
-                imageUrl: "https://i.ibb.co/svC3JvV/5.jpg",
-                alt: "Cậu bé thả chim sẻ bay đi"
+                imageUrl: "https://i.ibb.co/svC3JvV/5.jpg"
             }
         ],
-        question: {
-            audioUrl: "",
-            alt: "Con hãy sắp xếp các hình cho đúng thứ tự"
-        },
-        help: {
-            audioUrl: "",
-            alt: "Bé hãy yêu quý các bạn động vật nhé!"
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy tự sáng tạo câu chuyện của mình!"
+            }
+        ],
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: ""
+            },
+            wrong: {
+                audioUrl: "",
+                alt: ""
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Wow! Câu chuyện  của con thật tuyệt vời! Con có một trí nhớ rất siêu phàm!"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Câu chuyện của con rất thú vị, và hãy luyện tập để câu chuyện được hay hơn nữa nha!"
+            }
         },
         tips: {
             audioUrl: "",
@@ -878,8 +1197,8 @@ export async function createDatabase() {
       //await setDoc(docRef, gameData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
       //const docRef = await addDoc(collection(db, "levels"), levelData)
-      const docRef = doc(db, "levels", "1_1") // 1_1: game1 level1
-      await setDoc(docRef, levelData_1)
+      //const docRef = doc(db, "levels", "11_1") // 1_1: game1 level1
+      //await setDoc(docRef, levelData_11)
 
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)
@@ -891,7 +1210,7 @@ export async function createDatabase() {
       //const docRef = await addDoc(collection(db, "surveyQuestions"), surveyQuestionData)
       //const docRef = await addDoc(collection(db, "surveyResponse"), surveyResponseData)
       //const docRef = await addDoc(collection(db, "proposedPlaySchedule"), proposedPlayScheduleData)
-      console.log("Document written with ID: ", docRef.id);
+      //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
