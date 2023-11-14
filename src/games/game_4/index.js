@@ -19,6 +19,8 @@ import {
 } from "../../utils/playSound"
 
 export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
+    level.levelContent.guides[0].alt = level.levelContent.guides[0].alt.replaceAll(/\\n/g, "\n")
+
     const [guideIndex, setGuideIndex] = useState(0)
 
     const [countWrongAnswer, setCountWrongAnswer] = useState(0)
@@ -53,15 +55,11 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
     // ONLOAD
     useEffect(() => {
-        const timeOutId_main = setTimeout(() => {
-            playMain({ level, playSound })
-        }, 1000)
         const timeOutId_question = setTimeout(() => {
             playGuide({ level, index: 0, playSound })
         }, 2000)
 
         return (() => {
-            clearTimeout(timeOutId_main)
             clearTimeout(timeOutId_question)
 
             if (sound) {sound.unloadAsync()}
@@ -108,6 +106,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState()
 
     function handleSelectAnswer(index) {
+        playAnswer({ level, index, playSound })
         setSelectedAnswerIndex(index)
     }
 
@@ -163,9 +162,9 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
             {
                 showAnswers && (
                     <View>
-                        <TouchableOpacity onPress={() => playQuestion({ level, index: 0, playSound })} style={styles.container}>
+                        <TouchableOpacity onPress={() => playGuide({ level, index: 0, playSound })} style={styles.container}>
                             <AntDesign name="questioncircle" size={50} color="yellow" />
-                            <Text>{level.levelContent.questions[0].alt}</Text>
+                            <Text>{level.levelContent.guides[0].alt}</Text>
                         </TouchableOpacity>
                         {
                             level.levelContent.answers.map((answer, index) => (
@@ -184,10 +183,12 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
             }
             {
                 showCorrectAnswer && (
-                    <Image 
-                        style={styles.image} 
-                        source={{ uri: level.levelContent.answers[level.levelContent.correctIndex].imageUrl }} 
-                    />
+                    <View>
+                        <Image 
+                            style={styles.image} 
+                            source={{ uri: level.levelContent.answers[level.levelContent.correctIndex].imageUrl }} 
+                        />
+                    </View>
                 )
             }
             <AIAssistant 

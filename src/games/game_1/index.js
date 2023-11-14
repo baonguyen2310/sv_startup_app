@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimensions, Alert } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimensions } from "react-native";
 import { Audio, Video, ResizeMode } from "expo-av"
 import { useState, useEffect } from "react"
 import { AntDesign } from '@expo/vector-icons'
@@ -7,7 +7,16 @@ import * as Speech from 'expo-speech'
 import AIAssistant from "../../components/AIAssitant"
 import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
-import CompleteModal from "../../components/CompleteModal";
+import CompleteModal from "../../components/CompleteModal"
+import { 
+    playMain,
+    playQuestion,
+    playAnswer,
+    playGuide,
+    playReviewAnswer,
+    playReviewSpeech,
+    playTip
+} from "../../utils/playSound"
 
 export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
     // 1 - Nếu có nhiều sound thì nên tạo và giải phóng mỗi lần vì giữ tốn RAM
@@ -19,6 +28,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     const [showCompleteModal, setShowCompleteModal] = useState(false)
     
 
+    // PLAYSOUND
     const [sound, setSound] = useState() // dùng 1 sound duy nhất để không bị chồng lên nhau
 
     async function playSound(uri) {
@@ -37,111 +47,59 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     }, [sound])
 
 
+    // ONLOAD
     useEffect(() => {
-        const timeOutId = setTimeout(() => {
-            playHelp()
+        const timeOutId_main = setTimeout(() => {
+            playMain({ level, playSound })
         }, 1000)
+        const timeOutId_guide = setTimeout(() => {
+            playGuide({ level, index: 0, playSound })
+        }, 2000)
 
 
         return (() => {
-            clearTimeout(timeOutId)
+            clearTimeout(timeOutId_main)
+            clearTimeout(timeOutId_guide)
 
             if (sound) {sound.unloadAsync()}
             Speech.stop()
         })
     }, [])
 
+
+    // ONSPEECHRESULT
     useEffect(() => {
         if (speechResult != "") {
-            if (checkSpeechAnswer(speechResult, level.levelContent.word.alt)) {
-                Speech.speak(level.levelContent.complete.right.alt)
-                handleComplete()
+            if (checkSpeechAnswer(speechResult.result, level.levelContent.main.alt)) {
+                playReviewSpeech({ level, status:'right', playSound })
+                setTimeout(() => {
+                    playTip({ level, index: 0, playSound })
+                }, 2000)
+                setTimeout(() => {
+                    setShowCompleteModal(true)
+                    playReviewSpeech({ level, status: 'complete', playSound })
+                }, 2000)
             } else {
                 if (countWrong < maxWrong) {
-                    playGuide()
+                    playReviewSpeech({ level, status: 'wrong', playSound })
                     setCountWrong(prev => prev + 1)
                 } else {
-                    handleComplete()
-                    Speech.speak(level.levelContent.complete.wrong.alt)
+                    setTimeout(() => {
+                        playTip({ level, index: 0, playSound })
+                    }, 2000)
+                    setTimeout(() => {
+                        setShowCompleteModal(true)
+                        playReviewSpeech({ level, status: 'uncomplete', playSound })
+                    }, 2000)
                 }
             }
         }
-    }, [speechResult]) // bug: chỉ khi đọc khác lần trước thì mới check
+    }, [speechResult])
 
-    function handleComplete() {
-        setShowCompleteModal(true)
-        //navigation.navigate('Reward')
-        // Alert.alert(
-        //     title="Thông báo",
-        //     message=`Bé đã hoàn thành màn chơi, bé nhận được ${5-countWrong} sao`,
-        //     buttons=[
-        //         {
-        //             text: "Chọn màn chơi", 
-        //             onPress: async () => {
-        //                 navigation.goBack()
-        //             }
-        //         }
-        //     ],
-        //     options={
-        //         cancelable: false
-        //     }
-        // )
-    }
 
+    // AI ASSISTANT
     const { height, width } = useWindowDimensions()
     const isPortrait = height > width
-
-    const sentenceList = [
-        level.levelContent.help.alt
-        //level.levelContent.tips?.alt
-    ]
-
-    function playHelp() {
-        if (level.levelContent.help.audioUrl != "") {
-            return playSound(level.levelContent.help.audioUrl)
-        }
-        Speech.speak(level.levelContent.help.alt), {
-            voice: "vi-VN-language",
-            rate: 1,
-            pitch: 1
-        }
-    }
-
-    function playGuide() {
-        if (level.levelContent.guide.audioUrl != "") {
-            return playSound(level.levelContent.guide.audioUrl)
-        }
-        Speech.speak(level.levelContent.guide.alt), {
-            voice: "vi-VN-language",
-            rate: 1,
-            pitch: 1
-        }
-    }
-
-    function playWord() {
-        if (level.levelContent.word.audioUrl != "") {
-            return playSound(level.levelContent.help.audioUrl)
-        }
-        Speech.speak(level.levelContent.word.alt), {
-            voice: "vi-VN-language",
-            rate: 1,
-            pitch: 1
-        }
-    }
-
-    async function playQuestion() {
-        Speech.speak(level.levelContent.question.alt, {
-            voice: "vi-vn-x-vif-local",
-            //rate: 0.75,
-            //pitch: 1.1
-        })
-        const voices = await Speech.getAvailableVoicesAsync()
-        //console.log(voices)
-    }
-
-    function playAnswer() {
-        Speech.speak(level.levelContent.answer.alt)
-    }
 
     return (
         <View>
@@ -153,35 +111,21 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                 navigation={navigation}
             />
             <Microphone setSpeechResult={setSpeechResult} />
-            <Text style={styles.text}>Bé: {speechResult}</Text>
+            <Text style={styles.text}>Bé: {speechResult.result}</Text>
             <Text>{countWrong}</Text>
-            <TouchableOpacity onPress={playWord}>
-                <Text style={styles.text}>{level.levelContent.word.alt}</Text>
+            <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
+                <Text style={styles.text}>{level.levelContent.main.alt}</Text>
                 <Image 
                     //source={require("./meo.jpg")} 
                     source={{ uri: level.levelContent.imageUrl }}
                     style={styles.image}
                 />
             </TouchableOpacity>
-            <TouchableOpacity onPress={playQuestion} style={styles.container}>
-                <AntDesign name="questioncircle" size={50} color="yellow" />
-                <Text>{level.levelContent.question.alt}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={playAnswer} style={styles.container}>
-                <MaterialCommunityIcons name="baby-face" size={50} color="green" />
-                <Text>{level.levelContent.answer.alt}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={playSound}>
-                <AntDesign name="sound" size={40} color="black" />
-            </TouchableOpacity>
-            <Video
-                //source={{ uri: '' }}
-                source={require('./meo.mp4')}
-                useNativeControls
-                style={styles.video}
-                resizeMode={ResizeMode.CONTAIN}
+            <AIAssistant 
+                height={height} 
+                isPortrait={isPortrait} 
+                onPress={() => playGuide({ level, index: 0, playSound })}
             />
-            <AIAssistant height={height} isPortrait={isPortrait} sentenceList={sentenceList} />
         </View>
     )
 }

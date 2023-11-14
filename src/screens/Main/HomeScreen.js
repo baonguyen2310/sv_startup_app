@@ -71,7 +71,7 @@ export default function HomeScreen({ navigation }) {
       <ScrollView >
         <Text style={styles.primary}>Xin chào bé {user.childName}!</Text>
         <Text style={styles.primary}>Cùng chơi nào!</Text>
-        {/* <Button 
+        <Button 
           title="BabylonTextToSpeechWebView" 
           onPress={()=>navigation.navigate('BabylonTextToSpeech')}
         />
@@ -80,9 +80,9 @@ export default function HomeScreen({ navigation }) {
           onPress={() => {
             createDatabase();
           }}
-        /> */}
+        />
         <View style={styles.container}>
-          {gameList.map((game, index) => {
+          {gameList.filter((value) => value.status == 'active').map((game, index) => {
             return (
               <TouchableOpacity
                 key={game.id}

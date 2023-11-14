@@ -1,6 +1,7 @@
 import GameBody_1 from "./game_1"
 import GameBody_2 from "./game_2"
 import GameBody_3 from "./game_3"
+import GameBody_4 from "./game_4"
 import GameBody_5 from "./game_5"
 import GameBody_6 from "./game_6"
 import GameBody_7 from "./game_7"
@@ -21,6 +22,10 @@ const gameBodyList = [
     {
         gameId: "3",
         component: GameBody_3
+    },
+    {
+        gameId: "4",
+        component: GameBody_4
     },
     {
         gameId: "5",

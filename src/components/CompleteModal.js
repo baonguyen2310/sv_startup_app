@@ -12,7 +12,7 @@ export default function CompleteModal({ modalVisible, setModalVisible, message, 
     if (modalVisible) {
       timeOutId = setTimeout(() => {
         setShowLevelSelection(true)
-      }, 5000)
+      }, 3000)
     }
 
     return (() => {

@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button, ScrollView } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button } from "react-native"
 import { useState, useEffect } from "react"
 import Draggable from "react-native-draggable"
 import { Audio, Video, ResizeMode } from "expo-av"
@@ -7,49 +7,110 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech'
 import AIAssistant from "../../components/AIAssitant"
+import { checkSpeechAnswer } from "../../utils"
+import Microphone from "../../components/Microphone"
+import CompleteModal from "../../components/CompleteModal"
+import { 
+    playMain,
+    playQuestion,
+    playAnswer,
+    playGuide,
+    playReviewAnswer,
+    playReviewSpeech,
+    playTip
+} from "../../utils/playSound"
+
 import { generateRandomColors } from '../../utils/randomColor'
 import { getBoxes, calculateDistance } from '../../utils/randomCoordinate'
 
-export default function GameBody({ time, requireScore, level }) {
-    const [boxes, setBoxes] = useState([])
 
-    // const [sound, setSound] = useState() 
 
-    // async function playSound() {
-    //     const { sound } = await Audio.Sound.createAsync(require("./doi.wav"))
-    //     setSound(sound)
-    //     await sound.playAsync()
-    // }
+export default function GameBody({ time, requireScore, level, navigation }) {
+    const [guideIndex, setGuideIndex] = useState(0)
 
-    // useEffect(() => {
-    //     return sound 
-    //     ? () => {
-    //         sound.unloadAsync()
-    //     }
-    //     : undefined
-    // }, [sound])
+    const [countWrongAnswer, setCountWrongAnswer] = useState(0)
+    const maxWrongAnswer = 2
 
+    const [showMicrophone, setShowMicrophone] = useState(false)
+    const [speechResult, setSpeechResult] = useState("")
+    const [countWrongSpeech, setCountWrongSpeech] = useState(0)
+    const maxWrongSpeech = 3
+    const [showCompleteModal, setShowCompleteModal] = useState(false)
+
+    // PLAYSOUND
+    const [sound, setSound] = useState() // dùng 1 sound duy nhất để không bị chồng lên nhau
+
+    async function playSound(uri) {
+        //const { sound } = await Audio.Sound.createAsync(require("./meoAudio.wav"))
+        const { sound } = await Audio.Sound.createAsync({ uri: uri })
+        setSound(sound)
+        await sound.playAsync()
+    }
+
+    useEffect(() => {
+        return sound 
+        ? () => {
+            sound.unloadAsync()
+        }
+        : undefined
+    }, [sound])
+
+    // ONLOAD
+    useEffect(() => {
+        const timeOutId_main = setTimeout(() => {
+            playMain({ level, playSound })
+        }, 1000)
+        const timeOutId_question = setTimeout(() => {
+            playGuide({ level, index: 0, playSound })
+        }, 2000)
+
+        return (() => {
+            clearTimeout(timeOutId_main)
+            clearTimeout(timeOutId_question)
+
+            if (sound) {sound.unloadAsync()}
+            Speech.stop()
+        })
+    }, [])
+
+
+    // ONSPEECHRESULT
+    useEffect(() => {
+        if (speechResult != "") {
+            if (checkSpeechAnswer(speechResult.result, level.levelContent.main.alt)) {
+                playReviewSpeech({ level, status:'right', playSound })
+                setTimeout(() => {
+                    playTip({ level, index: 0, playSound })
+                }, 2000)
+                setTimeout(() => {
+                    setShowCompleteModal(true)
+                    playReviewSpeech({ level, status: 'complete', playSound })
+                }, 2000)
+            } else {
+                if (countWrongSpeech < maxWrongSpeech) {
+                    playReviewSpeech({ level, status: 'wrong', playSound })
+                    setCountWrongSpeech(prev => prev + 1)
+                } else {
+                    setTimeout(() => {
+                        playTip({ level, index: 0, playSound })
+                    }, 2000)
+                    setTimeout(() => {
+                        setShowCompleteModal(true)
+                        playReviewSpeech({ level, status: 'uncomplete', playSound })
+                    }, 2000)
+                }
+            }
+        }
+    }, [speechResult])
+
+    // AI ASSISTANT
     const { height, width } = useWindowDimensions()
     const isPortrait = height > width
 
-    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState()
+    // SENTENCE
+    const [boxes, setBoxes] = useState([])
 
-    const sentenceList = [
-        level.levelContent.help.alt
-        //level.levelContent.tips?.alt
-    ]
-
-    useEffect(() => {
-        setTimeout(() => {
-            playWord()
-        }, 2000)
-
-        // setInterval(() => {
-        //     playWord()
-        // }, 20000)
-    }, [])
-
-    const sentence = level.levelContent.sentence.alt
+    const sentence = level.levelContent.main.alt
     const wordList = sentence.split(" ")
     const shuffledWordList = shuffleArray(wordList)
     const randomColorList = generateRandomColors(wordList.length)
@@ -64,36 +125,14 @@ export default function GameBody({ time, requireScore, level }) {
             })
         })
         setBoxes(newBoxes)
-        console.log(newBoxes)
-        console.log(wordList)
-        console.log(shuffledWordList)
-        console.log(randomColorList)
     }, [])
-
-    function playWord() {
-        Speech.speak(level.levelContent.sentence.alt), {
-            voice: "vi-VN-language",
-            rate: 1,
-            pitch: 1
-        }
-    }
-
-    async function playQuestion() {
-        Speech.speak(level.levelContent.question.alt, {
-            voice: "vi-vn-x-vif-local",
-            rate: 0.75,
-            //pitch: 1.1
-        })
-        const voices = await Speech.getAvailableVoicesAsync()
-        //console.log(voices)
-    }
 
     function handleSelect(word) {
         Speech.speak(word)
     }
 
     function handleSubmit() {
-        const sentence = level.levelContent.sentence.alt
+        const sentence = level.levelContent.main.alt
         const wordList = sentence.split(" ")
         const wordListAnswer = []
         boxes.forEach((box) => {
@@ -102,26 +141,53 @@ export default function GameBody({ time, requireScore, level }) {
 
         if (arraysAreEqual(wordList, wordListAnswer)) {
             alert('Bé đã trả lời đúng!')
-            Speech.speak('Bé đã trả lời đúng!')
+            playReviewAnswer({ level, status: 'right', playSound })
+            playGuide({ level, index: 1, playSound })
+            setGuideIndex(1)
+            setShowMicrophone(true)
         } else {
-            alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
-            Speech.speak('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+            if (countWrongAnswer < maxWrongAnswer) {
+                alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+                playReviewAnswer({ level, status: 'wrong', playSound })
+                setCountWrongAnswer(prev => prev + 1)
+            } else {
+                setTimeout(() => {
+                    setShowCompleteModal(true)
+                    playReviewAnswer({ level, status: 'uncomplete', playSound })
+                }, 2000)
+            }
         }
     }
 
     return (
         <View>
-            <TouchableOpacity onPress={playWord}>
-                <Text style={styles.text}>{level.levelContent.sentence.alt}</Text>
+            <CompleteModal
+                modalVisible={showCompleteModal}
+                setModalVisible={setShowCompleteModal}
+                message={"Bé đã hoàn thành màn chơi với số sao là"}
+                star={ 
+                    countWrongAnswer == maxWrongAnswer 
+                    ? 2
+                    : Math.round((5 - countWrongAnswer + 5 - countWrongSpeech)/2)
+                }
+                navigation={navigation}
+            />
+            {
+                showMicrophone && (
+                    <Microphone setSpeechResult={setSpeechResult} />
+                )
+            }
+            <Text style={styles.text}>Bé: {speechResult.result}</Text>
+            <Text>{countWrongSpeech}</Text>
+            <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
                 <Image 
-                    //source={require("./doi.jpg")} 
                     source={{ uri: level.levelContent.imageUrl }}
                     style={styles.image}
                 />
             </TouchableOpacity>
-            <TouchableOpacity onPress={playQuestion} style={styles.container}>
-                <AntDesign name="questioncircle" size={24} color="yellow" />
-                <Text>{level.levelContent.question.alt}</Text>
+            <TouchableOpacity onPress={() => playGuide({ level, index: 0, playSound })} style={styles.container}>
+                <AntDesign name="questioncircle" size={50} color="yellow" />
+                <Text>{level.levelContent.guides[0].alt}</Text>
             </TouchableOpacity>
             <View style={styles.game}>
             {
@@ -159,7 +225,7 @@ export default function GameBody({ time, requireScore, level }) {
                             onDragRelease={(e, gestureState) => {
                                 const x = e.nativeEvent.pageX - e.nativeEvent.locationX
                                 const y = e.nativeEvent.pageY - e.nativeEvent.locationY-300
-                                console.log(`X: ${x}, Y: ${y}`)
+                                //console.log(`X: ${x}, Y: ${y}`)
                                 minDistance = calculateDistance(x, y, boxes[0].x, boxes[0].y)
                                 minDistanceIndex = 0
                                 for (let i = 0; i < boxes.length; i++) {
@@ -168,7 +234,7 @@ export default function GameBody({ time, requireScore, level }) {
                                         minDistanceIndex = i
                                     }
                                 }
-                                console.log(minDistanceIndex)
+                                //console.log(minDistanceIndex)
 
                                 // swap 2 box: swap chữ và swap màu
                                 const newBoxes = [...boxes]
@@ -188,8 +254,12 @@ export default function GameBody({ time, requireScore, level }) {
                 })
             }
             </View>
-            <Button style={styles.button} title="Trả lời" onPress={handleSubmit} />
-            <AIAssistant height={height} isPortrait={isPortrait} sentenceList={sentenceList} />
+            <Button title="Trả lời" onPress={handleSubmit} />
+            <AIAssistant 
+                height={height} 
+                isPortrait={isPortrait} 
+                onPress={() => playGuide({ level, index: guideIndex, playSound })}
+            />
         </View>
     )
 }

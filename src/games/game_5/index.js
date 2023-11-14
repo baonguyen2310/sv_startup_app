@@ -2,98 +2,200 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimen
 import { Audio, Video, ResizeMode } from "expo-av"
 import { useState, useEffect } from "react"
 import { AntDesign } from '@expo/vector-icons'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Speech from 'expo-speech'
 import AIAssistant from "../../components/AIAssitant"
+import { checkSpeechAnswer } from "../../utils"
+import Microphone from "../../components/Microphone"
+import CompleteModal from "../../components/CompleteModal"
+import { 
+    playMain,
+    playQuestion,
+    playAnswer,
+    playGuide,
+    playReviewAnswer,
+    playReviewSpeech,
+    playTip
+} from "../../utils/playSound"
 
-export default function GameBody({ time = 30, requireScore = 100, level }) {
-    // 1 - Nếu có nhiều sound thì nên tạo và giải phóng mỗi lần vì giữ tốn RAM
-    // 2 - Nếu có ít sound mà hay dùng nhiều thì tạo 1 lần vì tạo tốn thời gian và CPU
+export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
+    const [guideIndex, setGuideIndex] = useState(0)
 
-    const { height, width } = useWindowDimensions()
-    const isPortrait = height > width
+    const [countWrongAnswer, setCountWrongAnswer] = useState(0)
+    const maxWrongAnswer = 2
+    const [showAnswers, setShowAnswers] = useState(true)
+    const [showCorrectAnswer, setShowCorrectAnswer] = useState(false)
 
-    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState()
+    const [showMicrophone, setShowMicrophone] = useState(false)
+    const [speechResult, setSpeechResult] = useState("")
+    const [countWrongSpeech, setCountWrongSpeech] = useState(0)
+    const maxWrongSpeech = 3
+    const [showCompleteModal, setShowCompleteModal] = useState(false)
 
-    const sentenceList = [
-        level.levelContent.help.alt
-        //level.levelContent.tips?.alt
-    ]
+    // PLAYSOUND
+    const [sound, setSound] = useState() // dùng 1 sound duy nhất để không bị chồng lên nhau
+
+    async function playSound(uri) {
+        //const { sound } = await Audio.Sound.createAsync(require("./meoAudio.wav"))
+        const { sound } = await Audio.Sound.createAsync({ uri: uri })
+        setSound(sound)
+        await sound.playAsync()
+    }
 
     useEffect(() => {
-        setTimeout(() => {
-            playWord()
+        return sound 
+        ? () => {
+            sound.unloadAsync()
+        }
+        : undefined
+    }, [sound])
+
+
+    // ONLOAD
+    useEffect(() => {
+        const timeOutId_main = setTimeout(() => {
+            playMain({ level, playSound })
+        }, 1000)
+        const timeOutId_question = setTimeout(() => {
+            playGuide({ level, index: 0, playSound })
         }, 2000)
 
-        // setInterval(() => {
-        //     playWord()
-        // }, 20000)
+        return (() => {
+            clearTimeout(timeOutId_main)
+            clearTimeout(timeOutId_question)
+
+            if (sound) {sound.unloadAsync()}
+            Speech.stop()
+        })
     }, [])
 
-    //console.log(level.levelContent.imageUrl)
 
-    function playWord() {
-        Speech.speak(level.levelContent.sentence.alt), {
-            voice: "vi-VN-language",
-            rate: 1,
-            pitch: 1
+    // ONSPEECHRESULT
+    useEffect(() => {
+        if (speechResult != "") {
+            if (checkSpeechAnswer(speechResult.result, level.levelContent.answers[level.levelContent.correctIndex].alt)) {
+                playReviewSpeech({ level, status:'right', playSound })
+                setTimeout(() => {
+                    playTip({ level, index: 0, playSound })
+                }, 2000)
+                setTimeout(() => {
+                    setShowCompleteModal(true)
+                    playReviewSpeech({ level, status: 'complete', playSound })
+                }, 2000)
+            } else {
+                if (countWrongSpeech < maxWrongSpeech) {
+                    playReviewSpeech({ level, status: 'wrong', playSound })
+                    setCountWrongSpeech(prev => prev + 1)
+                } else {
+                    setTimeout(() => {
+                        playTip({ level, index: 0, playSound })
+                    }, 2000)
+                    setTimeout(() => {
+                        setShowCompleteModal(true)
+                        playReviewSpeech({ level, status: 'uncomplete', playSound })
+                    }, 2000)
+                }
+            }
         }
-    }
+    }, [speechResult])
 
-    async function playQuestion() {
-        Speech.speak(level.levelContent.question.alt, {
-            voice: "vi-vn-x-vif-local",
-            rate: 0.75,
-            //pitch: 1.1
-        })
-        const voices = await Speech.getAvailableVoicesAsync()
-        //console.log(voices)
-    }
+    // AI ASSISTANT
+    const { height, width } = useWindowDimensions()
+    const isPortrait = height > width
+    
 
-    function handleSelect(answer) {
-        Speech.speak(answer.alt)
-        setSelectedAnswerIndex(answer.index)
-        console.log(answer.index)
+    // ANSWER
+    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState()
+
+    function handleSelectAnswer(index) {
+        playAnswer({ level, index, playSound })
+        setSelectedAnswerIndex(index)
     }
 
     function handleSubmit() {
         if (selectedAnswerIndex == level.levelContent.correctIndex) {
             alert('Bé đã trả lời đúng!')
-            Speech.speak('Bé đã trả lời đúng!')
+            playReviewAnswer({ level, status: 'right', playSound })
+            setTimeout(() => {
+                setShowAnswers(false)
+                setShowCorrectAnswer(true)
+            }, 2000)
+            playGuide({ level, index: 1, playSound })
+            setGuideIndex(1)
+            setShowMicrophone(true)
         } else {
-            alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
-            Speech.speak('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+            if (countWrongAnswer < maxWrongAnswer) {
+                alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+                playReviewAnswer({ level, status: 'wrong', playSound })
+                setCountWrongAnswer(prev => prev + 1)
+            } else {
+                setTimeout(() => {
+                    setShowCompleteModal(true)
+                    playReviewAnswer({ level, status: 'uncomplete', playSound })
+                }, 2000)
+            }
         }
     }
 
     return (
         <View>
-            <TouchableOpacity onPress={playWord}>
-                <Text style={styles.text}>{level.levelContent.sentence.alt}</Text>
+            <CompleteModal
+                modalVisible={showCompleteModal}
+                setModalVisible={setShowCompleteModal}
+                message={"Bé đã hoàn thành màn chơi với số sao là"}
+                star={ 
+                    countWrongAnswer == maxWrongAnswer 
+                    ? 2
+                    : Math.round((5 - countWrongAnswer + 5 - countWrongSpeech)/2)
+                }
+                navigation={navigation}
+            />
+            {
+                showMicrophone && (
+                    <Microphone setSpeechResult={setSpeechResult} />
+                )
+            }
+            <Text style={styles.text}>Bé: {speechResult.result}</Text>
+            <Text>{countWrongSpeech}</Text>
+            <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
                 <Image 
-                    //source={require("./meo.jpg")} 
                     source={{ uri: level.levelContent.imageUrl }}
                     style={styles.image}
                 />
             </TouchableOpacity>
-            <TouchableOpacity onPress={playQuestion} style={styles.container}>
-                <AntDesign name="questioncircle" size={50} color="yellow" />
-                <Text>{level.levelContent.question.alt}</Text>
-            </TouchableOpacity>
             {
-                level.levelContent.answers.map((answer) => (
-                    <TouchableOpacity 
-                        style={answer.index == selectedAnswerIndex ? styles.isSelected : styles.answer} 
-                        key={answer.index} 
-                        onPress={() => handleSelect(answer)} 
-                    >
-                        <MaterialCommunityIcons name="baby-face" size={50} color="green" />
-                        <Text>{answer.alt}</Text>
-                    </TouchableOpacity>
-                ))
+                showAnswers && (
+                    <View>
+                        <TouchableOpacity onPress={() => playQuestion({ level, index: 0, playSound })} style={styles.container}>
+                            <AntDesign name="questioncircle" size={50} color="yellow" />
+                            <Text>{level.levelContent.questions[0].alt}</Text>
+                        </TouchableOpacity>
+                        {
+                            level.levelContent.answers.map((answer, index) => (
+                                <TouchableOpacity 
+                                    style={index == selectedAnswerIndex ? styles.isSelected : styles.answer} 
+                                    key={index} 
+                                    onPress={() => handleSelectAnswer(index)} 
+                                >
+                                    <MaterialCommunityIcons name="baby-face" size={50} color="green" />
+                                    <Text>{answer.alt}</Text>
+                                </TouchableOpacity>
+                            ))
+                        }
+                        <Button title="Trả lời" onPress={handleSubmit} />
+                    </View>
+                )
             }
-            <Button title="Trả lời" onPress={handleSubmit} />
-            <AIAssistant height={height} isPortrait={isPortrait} sentenceList={sentenceList} />
+            {
+                showCorrectAnswer && (
+                    <Text>{level.levelContent.answers[level.levelContent.correctIndex].alt}</Text>
+                )
+            }
+            <AIAssistant 
+                height={height} 
+                isPortrait={isPortrait} 
+                onPress={() => playGuide({ level, index: guideIndex, playSound })}
+            />
         </View>
     )
 }
