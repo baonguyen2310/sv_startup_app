@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button, ScrollView, ActivityIndicator } from "react-native"
 import { useState, useEffect } from "react"
 import { Audio, Video, ResizeMode } from "expo-av"
 import { arraysAreEqual } from "../../utils"
@@ -18,6 +18,7 @@ import {
     playReviewSpeech,
     playTip
 } from "../../utils/playSound"
+import ChatGPTServices from "../../services/api/ChatGPTServices"
 
 function Box({ box }) {
     return (
@@ -88,7 +89,11 @@ export default function GameBody({ time, requireScore, level, navigation }) {
     // Object.keys không đảm bảo thứ tự của các key
     // 1 số hàm khá hay: Object.fromEntries, Object.entries
     const [cardSetTurnIndex, setCardSetTurnIndex] = useState(0)
-    const [selectedBoxStory, setSelectedBoxStory] = useState([ ...level.levelContent.cardSet ])
+    const [selectedBoxStory, setSelectedBoxStory] = useState(
+        level.levelContent.cardSet.map((value) => (
+            { type: value.type, selectedBoxIndex: 0 }
+        ))
+    )
 
     // BOX
     const [selectedBoxIndex, setSelectedBoxIndex] = useState()
@@ -117,12 +122,20 @@ export default function GameBody({ time, requireScore, level, navigation }) {
         }
     }
 
-    function handleSubmit() {
+    const [loading, setLoading] = useState(false)
+
+    async function handleSubmit() {
         if (speechResult != "") {
+            setLoading(true)
+            //const reviewStory = await ChatGPTServices.reviewStory({ story: "Dạo ở xứ sở Mây, có chú gấu tên là Bông. Bông muốn làm bạn với những chú cún sói biết nói, nhưng chúng lại thích húc cùng mèo hổ. Chú gấu buồn quá, nhưng mỗi khi nhớ đến bóng mây trắng, Bông biến thành siêu gấu có cánh bay lượn trên trời. " })
+            const reviewStory = await ChatGPTServices.reviewStory({ story: speechResult.result })
+            console.log(reviewStory.choices[0].message.content)
+            Speech.speak(reviewStory.choices[0].message.content)
+            setLoading(false)
             setTimeout(() => {
                 setShowCompleteModal(true)
                 playReviewSpeech({ level, status: 'complete', playSound })
-            }, 2000)
+            }, 10000)
         }
     }
 
@@ -140,7 +153,9 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     <Microphone setSpeechResult={setSpeechResult} />
                 )
             }
-            <Text style={styles.text}>Bé: {speechResult.result}</Text>
+            <ScrollView style={{ height: 200 }}>
+                <Text style={styles.text}>Bé: {speechResult.result}</Text>
+            </ScrollView>
             <Text style={styles.text}>{level.levelContent.main.alt}</Text>
             {
                 showGuide && (
@@ -173,7 +188,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
             }
             {
                 showSelectedBoxStory && (
-                    <View style={styles.game}>
+                    <View style={styles.selectedBoxStory}>
                         <Text>Bối cảnh</Text>
                         <Box box={level.levelContent.cardSet[0].data[selectedBoxStory[0].selectedBoxIndex]} />
                         <Text>Nhân vật chính</Text>
@@ -187,6 +202,13 @@ export default function GameBody({ time, requireScore, level, navigation }) {
             }
             <Button style={styles.button} title="Lưu câu chuyện" />
             <Button style={styles.button} title="Hoàn thành" onPress={handleSubmit}/>
+            {
+                loading && (
+                    <View style={styles.loaderContainer}>
+                        <ActivityIndicator size="large" color="#00ff00" />
+                    </View>
+                )
+            }
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
@@ -251,5 +273,19 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap: 'wrap',
         alignItems: 'center'
-    }
+    },
+    selectedBoxStory: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    loaderContainer: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)', // Một màu trắng có độ trong suốt để làm nền cho ActivityIndicator
+      },
 })
