@@ -4,11 +4,6 @@ const pinkTheme = {
         secondary: "#FFA1CF",
         text: "#FFFFFF",
         background: "#FFEEF7",
-        error: "",
-        success: "",
-        warning: "",
-        info: "",
-        link: "",
         border: "#A7FFE4"
     },
     typography: {

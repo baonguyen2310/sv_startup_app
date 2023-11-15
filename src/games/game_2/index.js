@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimensions } from "react-native";
 import { Audio, Video, ResizeMode } from "expo-av"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { AntDesign } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Speech from 'expo-speech'
@@ -18,6 +18,8 @@ import {
     playTip
 } from "../../utils/playSound"
 
+import HistoryServices from "../../services/firebase/HistoryServices"
+
 export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
     const [guideIndex, setGuideIndex] = useState(0)
 
@@ -31,6 +33,9 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     const [countWrongSpeech, setCountWrongSpeech] = useState(0)
     const maxWrongSpeech = 3
     const [showCompleteModal, setShowCompleteModal] = useState(false)
+
+    const startTime = useRef(null)
+    const stars = countWrongAnswer == maxWrongAnswer ? 2 : Math.round((5 - countWrongAnswer + 5 - countWrongSpeech)/2)
 
     // PLAYSOUND
     const [sound, setSound] = useState() // dùng 1 sound duy nhất để không bị chồng lên nhau
@@ -53,6 +58,8 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
     // ONLOAD
     useEffect(() => {
+        startTime.current = new Date()
+
         const timeOutId_main = setTimeout(() => {
             playMain({ level, playSound })
         }, 1000)
@@ -78,9 +85,21 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                 setTimeout(() => {
                     playTip({ level, index: 0, playSound })
                 }, 2000)
-                setTimeout(() => {
+                setTimeout(async () => {
                     setShowCompleteModal(true)
                     playReviewSpeech({ level, status: 'complete', playSound })
+
+                    await HistoryServices.postHistory({
+                        levelId: level.id,
+                        gameId: level.gameId,
+                        startTime: startTime.current,
+                        endTime: new Date(),
+                        completed: true,
+                        stars: stars,
+                        moreInfo: {
+                            maxWrongAnswer, maxWrongSpeech, countWrongAnswer, countWrongSpeech
+                        }
+                    })
                 }, 2000)
             } else {
                 if (countWrongSpeech < maxWrongSpeech) {
@@ -90,9 +109,21 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                     setTimeout(() => {
                         playTip({ level, index: 0, playSound })
                     }, 2000)
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         setShowCompleteModal(true)
                         playReviewSpeech({ level, status: 'uncomplete', playSound })
+
+                        await HistoryServices.postHistory({
+                            levelId: level.id,
+                            gameId: level.gameId,
+                            startTime: startTime,
+                            endTime: new Date(),
+                            completed: false,
+                            stars: stars,
+                            moreInfo: {
+                                maxWrongAnswer, maxWrongSpeech, countWrongAnswer, countWrongSpeech
+                            }
+                        })
                     }, 2000)
                 }
             }
@@ -143,11 +174,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
                 message={"Bé đã hoàn thành màn chơi với số sao là"}
-                star={ 
-                    countWrongAnswer == maxWrongAnswer 
-                    ? 2
-                    : Math.round((5 - countWrongAnswer + 5 - countWrongSpeech)/2)
-                }
+                star={ stars }
                 navigation={navigation}
             />
             {

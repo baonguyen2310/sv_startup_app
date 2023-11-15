@@ -1,4 +1,4 @@
-const OPENAI_API_KEY = "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"
+const OPENAI_API_KEY = "sk-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"
 
 class ChatGPTServices {
     static async reviewStory({ story }) {
