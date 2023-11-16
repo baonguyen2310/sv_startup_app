@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { LineChart, ProgressChart } from 'react-native-chart-kit';
+import HistoryServices from '../../services/firebase/HistoryServices'
 
-function ScoreChart({ data }) {
+function StarChart({ starData, starLabel }) {
   const chartConfig = {
     backgroundGradientFrom: 'white',
     backgroundGradientTo: 'white',
@@ -13,29 +15,54 @@ function ScoreChart({ data }) {
     <View>
       <LineChart
         data={{
-          labels: ['1', '2', '3', '4', '5', '6'], // Các nhãn trên trục x
+          labels: starLabel,
           datasets: [
             {
-              data: data, // Dữ liệu điểm số
+              data: starData,
             },
           ],
         }}
-        width={320} // Chiều rộng của biểu đồ
-        height={220} // Chiều cao của biểu đồ
+        width={350}
+        height={200}
         chartConfig={chartConfig}
       />
     </View>
   );
 }
 
-
-const scoreData = [80, 85, 90, 75, 95, 88];
 const data = {
   labels: ["game1", "game2", "game3"], // optional
   data: [0.4, 0.6, 0.8]
 };
 
 export default function StatisticScreen() {
+  const [histories, setHistories] = useState([])
+  useEffect (() => {
+    async function fetchData() {
+      try {
+        const histories = await HistoryServices.getHistoryByUserId()
+        setHistories(histories)
+      } catch (error) {
+        setHistories([])
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const starData = histories.map((history, index) => {
+    return (
+      history.stars
+    )
+  })
+
+  const starLabel = histories.map((history, index) => {
+    return (
+      index
+    )
+  })
+
+
   const chartConfig= {
     backgroundColor: "#e26a00",
     backgroundGradientFrom: "#fb8c00",
@@ -56,14 +83,14 @@ export default function StatisticScreen() {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Thống kê</Text>
-      <Text style={styles.content}>Số điểm của người chơi</Text>
-      <ScoreChart data={scoreData} />
+      <Text style={styles.content}>Số sao của người chơi mỗi màn</Text>
+      <StarChart starData={starData} starLabel={starLabel} />
       <Text style={styles.content}>Điểm mạnh yếu của người chơi</Text>
       <ProgressChart
         data={data}
-        width={300}
-        height={220}
-        strokeWidth={16}
+        width={350}
+        height={200}
+        strokeWidth={20}
         radius={32}
         chartConfig={chartConfig}
         hideLegend={false}
