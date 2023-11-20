@@ -13,6 +13,7 @@ import GameItem from "../../components/GameItem";
 import { createDatabase } from "../../services/firebase/firestore";
 import GameServices from "../../services/firebase/GameServices";
 import Layout from "../../layout";
+import useTheme from "../../themes";
 
 const gameListInitial = [
   {
@@ -36,6 +37,8 @@ const gameListInitial = [
 ];
 
 export default function HomeScreen({ navigation }) {
+  const theme = useTheme()
+
   const { user } = useSelector((state) => state.userReducer);
   const sentenceList = [
     `Xin chào bé ${user.childName}! Chị sẽ hướng dẫn bé chơi nha!`,
@@ -69,9 +72,10 @@ export default function HomeScreen({ navigation }) {
         <Image source={ require('../../assets/images/start.gif') } />
       </View>
       <ScrollView >
-        <Text style={styles.primary}>Xin chào bé {user.childName}!</Text>
+        <Text style={[styles.primary, theme.primaryText]}>Chào bé {user.childName}!</Text>
         <Text style={styles.primary}>Cùng chơi nào!</Text>
-        <Button 
+
+        {/* <Button 
           title="BabylonTextToSpeechWebView" 
           onPress={()=>navigation.navigate('BabylonTextToSpeech')}
         />
@@ -80,14 +84,14 @@ export default function HomeScreen({ navigation }) {
           onPress={() => {
             createDatabase();
           }}
-        />
+        /> */}
         <View style={styles.container}>
           {gameList.filter((value) => value.status == 'active').map((game, index) => {
             return (
               <TouchableOpacity
                 key={game.id}
                 onPress={() =>
-                  handlePress({ gameId: game.id, gameName: game.gameName })
+                  handlePress({ gameId: game.id, gameName: game.gameName.replace(/\\n/g, "\n") })
                 }
               >
                 <GameItem game={game} />
@@ -101,8 +105,11 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingBottom: 200
+  },
   primary: {
-    color: "#3AA6B9",
+    color: "#F875AA",
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center"

@@ -5,7 +5,8 @@ import useTheme from "../themes"
 export default function Layout({ 
     children,
     hasAIAssistant = true, 
-    sentenseList = [] 
+    sentenseList = [],
+    styleCustom
 }) {
     const theme = useTheme()
 
@@ -13,7 +14,7 @@ export default function Layout({
     const isPortrait = height > width
 
     return (
-        <View style={{ ...theme.container, height: height, padding: 10 }}>
+        <View style={{ ...theme.container, height: height, padding: 0, ...styleCustom }}>
             {children}
             {
                 hasAIAssistant ? 

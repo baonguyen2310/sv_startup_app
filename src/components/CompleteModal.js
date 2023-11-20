@@ -1,15 +1,36 @@
 import { useState, useEffect } from 'react'
-import {Modal, StyleSheet, Text, Pressable, View} from 'react-native'
+import {Modal, StyleSheet, Text, Pressable, View, Image, ImageBackground} from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import StarRating from 'react-native-star-rating'
+import { Audio } from "expo-av"
 
 export default function CompleteModal({ modalVisible, setModalVisible, message, star, navigation }) {
+  // PLAYSOUND CLAP
+  const [sound, setSound] = useState() // dùng 1 sound duy nhất để không bị chồng lên nhau
+
+  async function playSound() {
+      //const { sound } = await Audio.Sound.createAsync(require("./meoAudio.wav"))
+      const { sound } = await Audio.Sound.createAsync(require("../assets/sounds/clap.mp3"))
+      setSound(sound)
+      await sound.playAsync()
+  }
+
+  useEffect(() => {
+      return sound 
+      ? () => {
+          sound.unloadAsync()
+      }
+      : undefined
+  }, [sound])
+
   const [showLevelSelection, setShowLevelSelection] = useState(false)
 
   useEffect(() => {
     let timeOutId
 
     if (modalVisible) {
+      playSound()
+
       timeOutId = setTimeout(() => {
         setShowLevelSelection(true)
       }, 3000)
@@ -34,6 +55,14 @@ export default function CompleteModal({ modalVisible, setModalVisible, message, 
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <View style={{ zIndex: 1, height: "100%", position: "absolute", pointerEvents: "none", right: 0, top: 0 }}>
+              <Image style={styles.imageSmall} source={ require('../assets/images/firework_4.gif') } />
+              <Image style={styles.imageSmall} source={ require('../assets/images/start.gif') } />
+            </View>
+            <View style={{ zIndex: 1, height: "100%", position: "absolute", pointerEvents: "none", left: 0, top: 0 }}>
+              <Image style={styles.imageSmall} source={ require('../assets/images/firework_3.gif') } />
+              <Image style={styles.imageSmall} source={ require('../assets/images/start.gif') } />
+            </View>
             <Text style={styles.modalText}>{message}</Text>
             <StarRating
               disabled={false}
@@ -92,6 +121,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: "90%",
+    height: 250,
+    justifyContent: "center"
   },
   button: {
     borderRadius: 20,
@@ -102,7 +134,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    marginTop: 10,
+    backgroundColor: 'pink',
   },
   textStyle: {
     color: 'white',
@@ -112,9 +145,15 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    color: '#FF3FA4',
+    fontWeight: "bold",
   },
   starList: {
     flexDirection: 'row',
     justifyContent: 'space-around'
-  }
+  },
+  imageSmall: {
+    width: 200,
+    height: 200
+  },
 })

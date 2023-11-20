@@ -78,11 +78,11 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     const isPortrait = height > width
 
     return (
-        <View>
+        <View style={{ padding: 10 }}>
             <CompleteModal
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
-                message={"Bé đã hoàn thành màn chơi với số sao là"}
+                message={"Bé đã hoàn thành màn chơi"}
                 star={ 5 }
                 navigation={navigation}
             />
@@ -91,11 +91,17 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                     <Microphone setSpeechResult={setSpeechResult} />
                 )
             }
-            <Text style={styles.text}>Bé: {speechResult.result}</Text>
-            <Text>{level.levelContent.main.alt}</Text>
+            <View style={styles.header}>
+                <Text style={styles.text}>{level.levelContent.main.alt}</Text>
+                <TouchableOpacity>
+                    <Image style={styles.imageSave} source={require("../../assets/images/save.png")} />
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.question}>{level.levelContent.guides[0].alt}</Text>
             <SlideShow dataSource={level.levelContent.pictures} />
-            <Button style={styles.button} title="Lưu câu chuyện" />
-            <Button style={styles.button} title="Hoàn thành" />
+            <View style={{ alignItems: "center" }}>
+                <Text style={styles.text_secondary}>Bé: {speechResult.result}</Text>
+            </View>
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
@@ -110,13 +116,57 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: "100%",
+        borderRadius: 20,
+        marginVertical: 5,
+        padding: 10,
+        borderWidth: 2,
+        borderColor: 'pink',
+    },
     text: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        textAlign: "center",
+        color: '#FF3FA4',
+    },
+    text_secondary: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 5,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
+    },
+    question: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "#313866",
+        borderRadius: 20,
+        marginBottom: 5,
+        color: 'pink',
+        borderWidth: 2,
+        borderColor: 'pink',
+        padding: 20,
+        textAlignVertical: "center"
     },
     image: {
         width: 200,
         height: 200
+    },
+    imageSave: {
+        width: 60,
+        height: 60
     },
     video: {
         width: 300,

@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, ImageBackground } from "react-native"
 import { useState, useEffect } from "react"
 import Draggable from "react-native-draggable"
 import { Audio, Video, ResizeMode } from "expo-av"
@@ -10,6 +10,7 @@ import AIAssistant from "../../components/AIAssitant"
 import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
 import CompleteModal from "../../components/CompleteModal"
+import SubmitButton from "../../components/SubmitButton"
 import { 
     playMain,
     playQuestion,
@@ -140,14 +141,14 @@ export default function GameBody({ time, requireScore, level, navigation }) {
         })
 
         if (arraysAreEqual(wordList, wordListAnswer)) {
-            alert('Bé đã trả lời đúng!')
+            //alert('Con đã sắp xếp chính xác!')
             playReviewAnswer({ level, status: 'right', playSound })
             playGuide({ level, index: 1, playSound })
             setGuideIndex(1)
             setShowMicrophone(true)
         } else {
             if (countWrongAnswer < maxWrongAnswer) {
-                alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+                //alert('Con sắp xếp các từ chưa chính xác!')
                 playReviewAnswer({ level, status: 'wrong', playSound })
                 setCountWrongAnswer(prev => prev + 1)
             } else {
@@ -160,11 +161,11 @@ export default function GameBody({ time, requireScore, level, navigation }) {
     }
 
     return (
-        <View>
+        <ImageBackground source={require("../../assets/images/background_game.jpg")} resizeMode="cover" style={styles.containerBackground}>
             <CompleteModal
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
-                message={"Bé đã hoàn thành màn chơi với số sao là"}
+                message={"Bé đã hoàn thành màn chơi"}
                 star={ 
                     countWrongAnswer == maxWrongAnswer 
                     ? 2
@@ -177,19 +178,32 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     <Microphone setSpeechResult={setSpeechResult} />
                 )
             }
-            <Text style={styles.text}>Bé: {speechResult.result}</Text>
-            <Text>{countWrongSpeech}</Text>
             <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
                 <Image 
                     source={{ uri: level.levelContent.imageUrl }}
                     style={styles.image}
                 />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => playGuide({ level, index: 0, playSound })} style={styles.container}>
-                <AntDesign name="questioncircle" size={50} color="yellow" />
-                <Text>{level.levelContent.guides[0].alt}</Text>
-            </TouchableOpacity>
-            <View style={styles.game}>
+            {
+                !showMicrophone && (
+                    <TouchableOpacity onPress={() => playGuide({ level, index: 0, playSound })} style={styles.container}>
+                        <Text style={styles.question}>{level.levelContent.guides[0].alt}</Text>
+                    </TouchableOpacity>
+                )
+            }
+            {
+                showMicrophone && (
+                    <Text style={styles.question}>{level.levelContent.main.alt}</Text>
+                )
+            }
+            {
+                showMicrophone && (
+                    <Text style={styles.text}>Bé: {speechResult.result}</Text>
+                )
+            }
+            {
+                !showMicrophone && (
+                    <View style={styles.game}>
             {
                 boxes.map((box, index) => {
                     return (
@@ -224,7 +238,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                             onShortPressRelease={()=>handleSelect(box.word)}
                             onDragRelease={(e, gestureState) => {
                                 const x = e.nativeEvent.pageX - e.nativeEvent.locationX
-                                const y = e.nativeEvent.pageY - e.nativeEvent.locationY-300
+                                const y = e.nativeEvent.pageY - e.nativeEvent.locationY-400
                                 //console.log(`X: ${x}, Y: ${y}`)
                                 minDistance = calculateDistance(x, y, boxes[0].x, boxes[0].y)
                                 minDistanceIndex = 0
@@ -253,28 +267,64 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     )
                 })
             }
+                <View style={{ alignItems: "center", width: "100%", top: "80%" }}>
+                    <SubmitButton onPress={handleSubmit} />
+                </View>
             </View>
-            <Button title="Trả lời" onPress={handleSubmit} />
+                )
+            }
+            
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
                 onPress={() => playGuide({ level, index: guideIndex, playSound })}
             />
-        </View>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
+    containerBackground: {
+        backgroundColor: "skyblue",
+        height: "100%",
+        padding: 10
+    },
     container: {
         flexDirection: 'row'
     },
+    question: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "#313866",
+        borderRadius: 20,
+        marginTop: 5,
+        color: 'pink',
+        borderWidth: 2,
+        borderColor: 'pink',
+        padding: 20,
+        textAlignVertical: "center"
+    },
     text: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
     },
     image: {
-        width: 200,
-        height: 100
+        width: "100%",
+        height: 200,
+        borderWidth: 10,
+        borderColor: 'pink',
+        borderRadius: 20
     },
     video: {
         width: 300,
@@ -288,7 +338,7 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center'
     },
     game: {
-        height: "70%"
+        height: "40%"
     },
     button: {
         

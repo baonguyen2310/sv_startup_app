@@ -19,12 +19,12 @@ export default function GameScreen({ route, navigation }) {
 
     return (
         <Layout hasAIAssistant={false}>
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <Text>Trò chơi: {gameName}</Text>
                 <Text>Level: {level.id}</Text>
                 <Text>Time: 30s</Text>
                 <Text>Score: 100</Text>
-            </View>
+            </View> */}
             <View style={styles.body}>
                 <GameBodyComponent time={60} requireScore={80} level={level} navigation={navigation}/>
             </View>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     body: {
         width: "100%",
-        height: "80%",
-        backgroundColor: "skyblue"
+        height: "100%",
+        // backgroundColor: "skyblue"
     }
 })

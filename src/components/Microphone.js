@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import Voice from '@react-native-voice/voice'
 import { FontAwesome5 } from '@expo/vector-icons'
 
@@ -36,16 +36,30 @@ export default function Microphone({ setSpeechResult }) {
 
     return(
         <TouchableOpacity onPress={startSpeechToText} style={styles.container}>
-            <FontAwesome5 
+            {/* <FontAwesome5 
                 name="microphone-alt" 
-                size={60} 
-                color={ isStartSpeechToText ? "#45FFCA" : "#FAF3F0" }/>
+                size={80} 
+                color={ isStartSpeechToText ? "#45FFCA" : "#FAF3F0" }/> */}
+            {
+                isStartSpeechToText ?
+                <Image source={require("../assets/images/microphone_start.png")} style={styles.image}/> :
+                <Image source={require("../assets/images/microphone_stop.png")} style={styles.image}/>
+            }
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        
+        position: 'absolute',
+        top: 550,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    image: {
+        width: 250,
+        height: 300,
+        resizeMode: "stretch"
     }
 })

@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimensions } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Image, Button, useWindowDimensions, ImageBackground } from "react-native";
 import { Audio, Video, ResizeMode } from "expo-av"
 import { useState, useEffect } from "react"
 import { AntDesign } from '@expo/vector-icons'
@@ -102,17 +102,14 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     const isPortrait = height > width
 
     return (
-        <View>
+        <ImageBackground source={{ uri: "https://i.ibb.co/TMs0FP4/game-1.jpg" }} resizeMode="cover" style={styles.containerBackground}>
             <CompleteModal
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
-                message={"Bé đã hoàn thành màn chơi với số sao là"}
+                message={"Bé đã hoàn thành màn chơi!"}
                 star={5-countWrong}
                 navigation={navigation}
             />
-            <Microphone setSpeechResult={setSpeechResult} />
-            <Text style={styles.text}>Bé: {speechResult.result}</Text>
-            <Text>{countWrong}</Text>
             <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
                 <Text style={styles.text}>{level.levelContent.main.alt}</Text>
                 <Image 
@@ -121,27 +118,47 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                     style={styles.image}
                 />
             </TouchableOpacity>
+            <Text style={styles.text}>Bé đã đọc: {speechResult.result}</Text>
+            <Microphone setSpeechResult={setSpeechResult} />
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
                 onPress={() => playGuide({ level, index: 0, playSound })}
             />
-        </View>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
+    containerBackground: {
+        backgroundColor: "skyblue",
+        height: "100%",
+        padding: 10
+    },
     container: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     text: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
     },
     image: {
-        width: 200,
-        height: 200
+        width: "100%",
+        height: 200,
+        borderWidth: 10,
+        borderColor: 'pink',
+        borderRadius: 20
     },
     video: {
         width: 300,

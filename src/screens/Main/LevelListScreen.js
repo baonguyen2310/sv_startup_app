@@ -12,7 +12,6 @@ export default function LevelListScreen({ navigation, route }) {
   return (
     <Layout>
       <Text style={styles.primary}>{gameName}</Text>
-      <Text style={styles.secondary}>Chủ đề: {category}</Text>
       <View style={{ zIndex: 1, height: "100%", position: "absolute", pointerEvents: "none", left: 0, bottom: -600 }}>
         <Image style={styles.imageSmall} source={ require('../../assets/images/planet_3.gif') } />
         <Image style={styles.imageSmall} source={ require('../../assets/images/start.gif') } />

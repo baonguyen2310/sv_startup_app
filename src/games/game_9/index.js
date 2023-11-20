@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button, ScrollView, ActivityIndicator } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button, ScrollView, ActivityIndicator, ImageBackground } from "react-native"
 import { useState, useEffect } from "react"
 import { Audio, Video, ResizeMode } from "expo-av"
 import { arraysAreEqual } from "../../utils"
@@ -9,6 +9,7 @@ import AIAssistant from "../../components/AIAssitant"
 import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
 import CompleteModal from "../../components/CompleteModal"
+import SubmitButton from "../../components/SubmitButton"
 import { 
     playMain,
     playQuestion,
@@ -127,6 +128,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
     async function handleSubmit() {
         if (speechResult != "") {
             setLoading(true)
+            
             //const reviewStory = await ChatGPTServices.reviewStory({ story: "Dạo ở xứ sở Mây, có chú gấu tên là Bông. Bông muốn làm bạn với những chú cún sói biết nói, nhưng chúng lại thích húc cùng mèo hổ. Chú gấu buồn quá, nhưng mỗi khi nhớ đến bóng mây trắng, Bông biến thành siêu gấu có cánh bay lượn trên trời. " })
             const reviewStory = await ChatGPTServices.reviewStory({ story: speechResult.result })
             console.log(reviewStory.choices[0].message.content)
@@ -140,7 +142,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
     }
 
     return (
-        <View>
+        <ImageBackground source={require("../../assets/images/background_game.jpg")} resizeMode="cover" style={styles.containerBackground}>
             <CompleteModal
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
@@ -153,14 +155,11 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     <Microphone setSpeechResult={setSpeechResult} />
                 )
             }
-            <ScrollView style={{ height: 200 }}>
-                <Text style={styles.text}>Bé: {speechResult.result}</Text>
-            </ScrollView>
-            <Text style={styles.text}>{level.levelContent.main.alt}</Text>
+            {/* <Text style={styles.text}>{level.levelContent.main.alt}</Text> */}
             {
-                showGuide && (
+                showGuide && !showMicrophone && (
                     <View style={styles.guideContainer}>
-                        <Text>{level.levelContent.guides[guideIndex].alt}</Text>
+                        <Text style={styles.question}>{level.levelContent.guides[guideIndex].alt}</Text>
                     </View>
                 )
             }
@@ -172,7 +171,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                                 level.levelContent.cardSet[cardSetTurnIndex].data.map((box, index) => {
                                     return (
                                         <TouchableOpacity 
-                                            style={{ borderWidth: selectedBoxIndex == index ? 5 : 0 }} 
+                                            style={selectedBoxIndex == index ? styles.isSelected : styles.isUnSelected} 
                                             onPress={() => handleSelect(index)} 
                                             key={index}
                                         >
@@ -182,30 +181,49 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                                 })
                             }
                         </View>
-                        <Button title="Tiếp theo" onPress={handleNext} />
+                        <SubmitButton onPress={handleNext} />
                     </View>
                 )
             }
             {
                 showSelectedBoxStory && (
-                    <View style={styles.selectedBoxStory}>
-                        <Text>Bối cảnh</Text>
-                        <Box box={level.levelContent.cardSet[0].data[selectedBoxStory[0].selectedBoxIndex]} />
-                        <Text>Nhân vật chính</Text>
-                        <Box box={level.levelContent.cardSet[1].data[selectedBoxStory[1].selectedBoxIndex]} />
-                        <Text>Nhân vật phụ</Text>
-                        <Box box={level.levelContent.cardSet[2].data[selectedBoxStory[2].selectedBoxIndex]} />
-                        <Text>Đạo cụ</Text>
-                        <Box box={level.levelContent.cardSet[3].data[selectedBoxStory[3].selectedBoxIndex]} />
+                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                        <View>
+                            <View style={styles.boxSelected}>
+                                <Box box={level.levelContent.cardSet[0].data[selectedBoxStory[0].selectedBoxIndex]} />
+                            </View>
+                            <View style={styles.boxSelected}>
+                                <Box box={level.levelContent.cardSet[1].data[selectedBoxStory[1].selectedBoxIndex]} />
+                            </View>
+                        </View>
+                        <View>
+                            <View style={styles.boxSelected}>
+                                <Box box={level.levelContent.cardSet[2].data[selectedBoxStory[2].selectedBoxIndex]} />
+                            </View>
+                            <View style={styles.boxSelected}>
+                                <Box box={level.levelContent.cardSet[3].data[selectedBoxStory[3].selectedBoxIndex]} />
+                            </View>
+                        </View>
                     </View>
                 )
             }
-            <Button style={styles.button} title="Lưu câu chuyện" />
-            <Button style={styles.button} title="Hoàn thành" onPress={handleSubmit}/>
             {
                 loading && (
                     <View style={styles.loaderContainer}>
-                        <ActivityIndicator size="large" color="#00ff00" />
+                        <Image style={{ width: 300, height: 300 }} source={require("../../assets/images/loading.gif")} />
+                    </View>
+                )
+            }
+            {
+                showMicrophone && (
+                    <View style={{ alignItems: "center" }}>
+                        <Text style={styles.text_secondary}>Bé: {speechResult.result}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <SubmitButton onPress={handleSubmit} />
+                            <TouchableOpacity>
+                                <Image style={styles.imageSave} source={require("../../assets/images/save.png")} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 )
             }
@@ -214,14 +232,16 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                 isPortrait={isPortrait} 
                 onPress={() => playGuide({ level, index: guideIndex, playSound })}
             />
-        </View>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
     boxListContainer: {
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        justifyContent: "center",
+        alignItems: "center"
     },
     boxContainer: {
 
@@ -230,16 +250,65 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100
     },
+    containerBackground: {
+        backgroundColor: "skyblue",
+        height: "100%",
+        padding: 10
+    },
     container: {
         flexDirection: 'row'
     },
+    question: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "#313866",
+        borderRadius: 20,
+        marginVertical: 10,
+        color: 'pink',
+        borderWidth: 2,
+        borderColor: 'pink',
+        padding: 20,
+        textAlignVertical: "center"
+    },
     text: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
+    },
+    text_secondary: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
     },
     image: {
-        width: 100,
-        height: 100
+        width: "100%",
+        height: 200,
+        borderWidth: 10,
+        borderColor: 'pink',
+        borderRadius: 20
+    },
+    imageSave: {
+        width: 110,
+        height: 110,
+        marginLeft: 20
     },
     video: {
         width: 300,
@@ -253,7 +322,9 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center'
     },
     game: {
-        height: "70%"
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center"
     },
     button: {
         
@@ -274,12 +345,9 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'center'
     },
-    selectedBoxStory: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
     loaderContainer: {
         position: 'absolute',
+        zIndex: 99,
         top: 0,
         bottom: 0,
         left: 0,
@@ -287,5 +355,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.3)', // Một màu trắng có độ trong suốt để làm nền cho ActivityIndicator
-      },
+    },
+    isSelected: {
+        backgroundColor: "pink",
+        color: '#FF3FA4',
+        borderWidth: 10,
+        //margin: 5,
+        borderColor: "#FF10F0"
+    },
+    isUnSelected: {
+        backgroundColor: "pink",
+        //margin: 5,
+        borderWidth: 10,
+        borderColor: "#F699CD"
+    },
+    boxSelected: {
+        backgroundColor: "pink",
+        margin: 5,
+        borderWidth: 10,
+        borderColor: "#F699CD"
+    },
 })

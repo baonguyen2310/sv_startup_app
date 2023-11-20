@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button, ScrollView } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet, Image, useWindowDimensions, Button, ScrollView, ImageBackground } from "react-native"
 import { useState, useEffect } from "react"
 import { Audio, Video, ResizeMode } from "expo-av"
 import { arraysAreEqual } from "../../utils"
@@ -9,6 +9,7 @@ import AIAssistant from "../../components/AIAssitant"
 import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
 import CompleteModal from "../../components/CompleteModal"
+import SubmitButton from "../../components/SubmitButton"
 import {
     playSoundOrAlt,
     playMain,
@@ -85,9 +86,9 @@ export default function GameBody({ time, requireScore, level, navigation }) {
         const timeOutId_guide_1 = setTimeout(() => {
             setGuideIndex(1)
             playGuide({ level, index: 1, playSound })
-            setShowGuide(false)
         }, 10000)
         const timeOutId_guide_2 = setTimeout(async () => {
+            setShowGuide(false)
             setGuideIndex(2)
             await playGuideAsync({ level, index: 2, playSound })
 
@@ -158,7 +159,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
     }
 
     return (
-        <View>
+        <ImageBackground source={require("../../assets/images/background_game.jpg")} resizeMode="cover" style={styles.containerBackground}>
             <CompleteModal
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
@@ -171,20 +172,15 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     <Microphone setSpeechResult={setSpeechResult} />
                 )
             }
-            <Text style={styles.text}>Bé: {speechResult.result}</Text>
             <Text style={styles.text}>{level.levelContent.main.alt}</Text>
             {
                 showGuide && (
-                    <View style={styles.guideContainer}>
-                        <Text>{level.levelContent.guides[guideIndex].alt}</Text>
-                    </View>
+                    <Text style={styles.question}>{level.levelContent.guides[guideIndex].alt}</Text>
                 )
             }
             {
                 showPicture && (
-                    <View style={styles.game}>
-                        <Image style={styles.picture} source={{ uri: level.levelContent.story.picture_story[pictureIndex].imageUrl}} />
-                    </View>
+                    <Image style={styles.image} source={{ uri: level.levelContent.story.picture_story[pictureIndex].imageUrl}} />
                 )
             }
             {
@@ -193,13 +189,13 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     {
                         level.levelContent.story.picture_elements.map((picture_element, index) => {
                             return (
-                                <TouchableOpacity key={index} onPress={() => handleSelectPictureElement(picture_element)} >
-                                    <Image source={{ uri: picture_element.imageUrl }} style={styles.image} />
+                                <TouchableOpacity style={styles.mapContainer} key={index} onPress={() => handleSelectPictureElement(picture_element)} >
+                                    <Image source={{ uri: picture_element.imageUrl }} style={styles.picture_element} />
                                 </TouchableOpacity>
                             )
                         })
                     }
-                    <Button title="Sẵn sàng" onPress={handleReady} />
+                    <SubmitButton onPress={handleReady} />
                     </View>
                 )
             }
@@ -211,13 +207,13 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                             if (value.type == "text") {
                                 return (
                                     <TouchableOpacity key={index} onPress={() => handleSelect(value, index)} >
-                                        <Text style={{ borderWidth: selectedMapIndex == index ? 5 : 0 }}>{value.alt}</Text> 
+                                        <Text style={styles.text_map}>{value.alt}</Text> 
                                     </TouchableOpacity>
                                 )
                             } else {
                                 return (
                                     <TouchableOpacity key={index} onPress={() => handleSelect(value, index)} >
-                                        <Image source={{ uri: value.imageUrl }} style={{ ...styles.image, borderWidth: selectedMapIndex == index ? 5 : 0 }} />
+                                        <Image source={{ uri: value.imageUrl }} style={styles.picture_map} />
                                     </TouchableOpacity>
                                 )
                             }
@@ -226,29 +222,102 @@ export default function GameBody({ time, requireScore, level, navigation }) {
                     </View>
                 )
             }
-            <Button style={styles.button} title="Lưu câu chuyện" />
-            <Button style={styles.button} title="Hoàn thành" onPress={handleSubmit}/>
+            {
+                showMicrophone && (
+                    <View style={{ alignItems: "center" }}>
+                        <Text style={styles.text_secondary}>Bé: {speechResult.result}</Text>
+                    </View>
+                )
+            }
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
                 onPress={() => playGuide({ level, index: guideIndex, playSound })}
             />
-        </View>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
+    containerBackground: {
+        backgroundColor: "skyblue",
+        height: "100%",
+        padding: 10
+    },
     container: {
         flexDirection: 'row'
     },
+    question: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "#313866",
+        borderRadius: 20,
+        marginVertical: 10,
+        color: 'pink',
+        borderWidth: 2,
+        borderColor: 'pink',
+        padding: 20,
+        textAlignVertical: "center"
+    },
     text: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
+    },
+    text_secondary: {
+        fontSize: 16,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
     },
     image: {
+        width: "100%",
+        height: 200,
+        borderWidth: 10,
+        borderColor: 'pink',
+        borderRadius: 20,
+        resizeMode: "stretch"
+    },
+    picture_element: {
+        width: 120,
+        height: 150,
+        resizeMode: "stretch"
+    },
+    picture_map: {
         width: 100,
         height: 100,
-        borderColor: "blue"
+        resizeMode: "stretch"
+    },
+    text_map: {
+        fontSize: 13,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        color: 'skyblue',
+        borderWidth: 2,
+        borderColor: 'pink'
     },
     video: {
         width: 300,
@@ -281,6 +350,7 @@ const styles = StyleSheet.create({
     mapContainer: {
         flexDirection:'row',
         flexWrap: 'wrap',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })

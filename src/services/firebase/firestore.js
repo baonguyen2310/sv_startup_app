@@ -169,7 +169,7 @@ const levelData_2 = {
                 alt: "Cây mía"
             }
         ],
-        correctIndex: 1,
+        correctIndex: 0,
         guides: [
             {
                 audioUrl: "",

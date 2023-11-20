@@ -3,7 +3,7 @@ const pinkTheme = {
         primary: "#FF9EAA", 
         secondary: "#FFA1CF",
         text: "#FFFFFF",
-        background: "#FFEEF7",
+        background: "#FFDFDF",
         border: "#A7FFE4"
     },
     typography: {

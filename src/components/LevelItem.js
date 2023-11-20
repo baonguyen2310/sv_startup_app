@@ -6,22 +6,25 @@ export default function LevelItem({ level }) {
 
     return (
         <View style={styles.container}>
-            <View style={{ width: "100%", height: "100%" }}>
-                <Text style={[theme.text, styles.text]}>{level.title}</Text>
+            <View style={{ 
+                width: "100%", 
+                height: "80%", 
+                width: 150,
+                height: 150,
+                borderWidth: 5,
+                borderRadius: 20,
+                borderColor: "#F699CD" 
+            }}>
                 <Image source={{ uri: level.thumbnail_url }} style={styles.image} />
             </View>
+            <Text style={styles.text}>{level.title}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: 150,
-        height: 150,
-        marginVertical: 10,
-        borderWidth: 5,
-        borderRadius: 20,
-        borderColor: "#F699CD"
+        
     },
     image: {
         width: "100%",
@@ -30,16 +33,11 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     text: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
         padding: 10,
         zIndex: 1,
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontSize: 24,
+        fontSize: 16,
         textShadowColor: '#FF4DA6',
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 40

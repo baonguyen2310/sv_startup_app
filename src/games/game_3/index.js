@@ -8,6 +8,7 @@ import AIAssistant from "../../components/AIAssitant"
 import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
 import CompleteModal from "../../components/CompleteModal"
+import SubmitButton from "../../components/SubmitButton"
 import { 
     playMain,
     playQuestion,
@@ -113,7 +114,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
     function handleSubmit() {
         if (selectedAnswerIndex == level.levelContent.correctIndex) {
-            alert('Bé đã trả lời đúng!')
+            //alert('Bé đã trả lời đúng!')
             playReviewAnswer({ level, status: 'right', playSound })
             setTimeout(() => {
                 setShowAnswers(false)
@@ -124,7 +125,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
             setShowMicrophone(true)
         } else {
             if (countWrongAnswer < maxWrongAnswer) {
-                alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
+                //alert('Câu trả lời của bé chưa chính xác, bé hãy chọn lại câu trả lời!')
                 playReviewAnswer({ level, status: 'wrong', playSound })
                 setCountWrongAnswer(prev => prev + 1)
             } else {
@@ -138,7 +139,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
 
     return (
-        <View>
+        <View style={styles.containerBackground}>
             <CompleteModal
                 modalVisible={showCompleteModal}
                 setModalVisible={setShowCompleteModal}
@@ -155,18 +156,16 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                     <Microphone setSpeechResult={setSpeechResult} />
                 )
             }
-            <Text style={styles.text}>Bé: {speechResult.result}</Text>
-            <Text>{countWrongSpeech}</Text>
             <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
                 <Text style={styles.text}>{level.levelContent.main.alt}</Text>
             </TouchableOpacity>
             {
                 showAnswers && (
-                    <View>
-                        <TouchableOpacity onPress={() => playQuestion({ level, index: 0, playSound })} style={styles.container}>
+                    <View style={{ alignItems: "center" }}>
+                        {/* <TouchableOpacity onPress={() => playQuestion({ level, index: 0, playSound })} style={styles.container}>
                             <AntDesign name="questioncircle" size={50} color="yellow" />
                             <Text>{level.levelContent.questions[0].alt}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         {
                             level.levelContent.answers.map((answer, index) => (
                                 <TouchableOpacity 
@@ -178,16 +177,23 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                                 </TouchableOpacity>
                             ))
                         }
-                        <Button title="Trả lời" onPress={handleSubmit} />
+                        <SubmitButton onPress={handleSubmit} />
                     </View>
                 )
             }
             {
                 showCorrectAnswer && (
-                    <Image 
-                        style={styles.image} 
-                        source={{ uri: level.levelContent.answers[level.levelContent.correctIndex].imageUrl }} 
-                    />
+                    <View style={styles.isSelected}>
+                        <Image 
+                            style={styles.image} 
+                            source={{ uri: level.levelContent.answers[level.levelContent.correctIndex].imageUrl }} 
+                        />
+                    </View>
+                )
+            }
+            {
+                showMicrophone && (
+                    <Text style={styles.text}>Bé: {speechResult.result}</Text>
                 )
             }
             <AIAssistant 
@@ -200,13 +206,26 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 }
 
 const styles = StyleSheet.create({
+    containerBackground: {
+        height: "100%",
+        padding: 10
+    },
     container: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     text: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginVertical: 20,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 2,
+        borderColor: 'pink'
     },
     image: {
         width: "100%",
@@ -217,12 +236,35 @@ const styles = StyleSheet.create({
         height: 300
     },
     answer: {
-        borderWidth: 1,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        borderWidth: 5,
         width: "100%",
-        padding: 10
+        fontSize: 24,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "white",
+        borderRadius: 20,
+        marginBottom: 5,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 5,
+        borderColor: '#F699CD'
     },
     isSelected: {
-        borderColor: "blue",
-        borderWidth: 5
-    }
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        fontSize: 24,
+        fontWeight: "bold",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: "pink",
+        borderRadius: 20,
+        marginBottom: 5,
+        padding: 10,
+        color: '#FF3FA4',
+        borderWidth: 5,
+        borderColor: "#FF10F0"
+    },
 })

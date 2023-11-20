@@ -6,7 +6,7 @@ export default function GameItem({ game }) {
 
     return (
         <View style={ styles.container }>
-            <Text style={[theme.text, styles.text]}>{game.gameName}</Text>
+            <Text style={[theme.text, styles.text]}>{game.gameName.replace(/\\n/g, "\n")}</Text>
             {
                 game.thumbnail_url && (
                     <Image style={styles.image} source={{ uri: game.thumbnail_url }} />
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     text: {
+        color: 'white',
         position: 'absolute',
         top: 0,
         left: 0,
@@ -41,9 +42,10 @@ const styles = StyleSheet.create({
         zIndex: 1,
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontSize: 36,
-        textShadowColor: '#FF4DA6',
-        textShadowOffset: {width: -1, height: 1},
-        textShadowRadius: 40
+        fontWeight: 700,
+        fontSize: 40,
+        textShadowColor: 'rgba(0, 0, 0, 1)',
+        textShadowOffset: {width: 10, height: 10},
+        textShadowRadius: 50,
     }
 })

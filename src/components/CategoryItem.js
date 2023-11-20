@@ -31,17 +31,20 @@ const styles = StyleSheet.create({
     },
     text: {
         position: 'absolute',
-        top: 0,
+        bottom: 0,
         left: 0,
         width: "100%",
-        height: "100%",
-        padding: 10,
+        padding: 5,
         zIndex: 1,
         textAlign: 'center',
+        fontWeight: 700,
         textAlignVertical: 'center',
-        fontSize: 36,
-        textShadowColor: '#FF4DA6',
-        textShadowOffset: {width: -1, height: 1},
-        textShadowRadius: 40
+        backgroundColor: "#9376E0",
+        color: "white",
+        fontSize: 20,
+        textShadowColor: 'black',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 10,
+        borderRadius: 10
     }
 })
