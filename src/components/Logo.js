@@ -1,9 +1,9 @@
-import { Image, Text } from "react-native";
+import { Image, Text, StyleSheet } from "react-native";
 import { Svg, Path } from "react-native-svg";
 
 export default function Logo() {
   return (
-    <Text style={{ fontSize: 24, fontWeight: "500", color: "pink" }}>Logo</Text>
+    <Image source={require("../assets/images/icon-2.png")} style={styles.image}/>
     // <Svg
     //   viewBox="0 0 36 36"
     //   height="50"
@@ -21,3 +21,10 @@ export default function Logo() {
     // </Svg>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    width: 70,
+    height: 70
+  }
+})
