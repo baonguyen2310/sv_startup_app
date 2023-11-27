@@ -232,7 +232,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
-                onPress={() => playGuide({ level, index: guideIndex, playSound })}
+                onPress={() => {}}
             />
         </ImageBackground>
     )

@@ -40,7 +40,7 @@ export default function AppNavigation() {
                     headerStyle: theme.container
                 })}
             >
-                <AppStack.Screen name="AuthNavigation" component={AuthNavigation} />
+                <AppStack.Screen name="AuthNavigation" component={AuthNavigation} options={{ headerRight: null }}/>
                 <AppStack.Screen name="Menu" component={MenuScreen} />
                 <AppStack.Screen name="MenuNavigation" component={MenuNavigation} />
                 <AppStack.Screen name="Home" component={HomeScreen} />

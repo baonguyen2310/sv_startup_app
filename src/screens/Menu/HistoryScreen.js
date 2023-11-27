@@ -20,11 +20,11 @@ export default function HistoryScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>HistoryScreen</Text>
+      <Text style={styles.title}>Lịch sử chơi của bé</Text>
       {
         histories.map((history, index) => {
           return (
-            <View style={styles.container} key={history.id} >
+            <View style={styles.itemContainer} key={history.id} >
               <View style={styles.header}>
                 <Text>gameId: {history.gameId}</Text>
                 <Text>levelId: {history.levelId}</Text>
@@ -46,8 +46,11 @@ export default function HistoryScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    margin: 10
+  },
+  itemContainer: {
     borderWidth: 1,
-    borderColor: "#ccc"
+    borderColor: "#ccc",
   },
   header: {
 
@@ -55,7 +58,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
+    color: '#F875AA'
   },
   content: {
     fontSize: 16,

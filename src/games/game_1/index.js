@@ -9,13 +9,13 @@ import { checkSpeechAnswer } from "../../utils"
 import Microphone from "../../components/Microphone"
 import CompleteModal from "../../components/CompleteModal"
 import { 
-    playMain,
-    playQuestion,
+    playMainAsync,
+    playQuestionAsync,
     playAnswer,
-    playGuide,
+    playGuideAsync,
     playReviewAnswer,
-    playReviewSpeech,
-    playTip
+    playReviewSpeechAsync,
+    playTipAsync,
 } from "../../utils/playSound"
 
 export default function GameBody({ time = 30, requireScore = 100, level, navigation }) {
@@ -38,6 +38,12 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
         await sound.playAsync()
     }
 
+    async function playClapAsync() {
+        const { sound } = await Audio.Sound.createAsync(require("../../assets/sounds/clap.mp3"))
+        setSound(sound)
+        await sound.playAsync()
+    }
+
     useEffect(() => {
         return sound 
         ? () => {
@@ -50,10 +56,10 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
     // ONLOAD
     useEffect(() => {
         const timeOutId_main = setTimeout(() => {
-            playMain({ level, playSound })
+            playMainAsync({ level, playSound })
         }, 1000)
         const timeOutId_guide = setTimeout(() => {
-            playGuide({ level, index: 0, playSound })
+            playGuideAsync({ level, index: 0, playSound })
         }, 2000)
 
 
@@ -69,31 +75,28 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
 
     // ONSPEECHRESULT
     useEffect(() => {
-        if (speechResult != "") {
-            if (checkSpeechAnswer(speechResult.result, level.levelContent.main.alt)) {
-                playReviewSpeech({ level, status:'right', playSound })
-                setTimeout(() => {
-                    playTip({ level, index: 0, playSound })
-                }, 2000)
-                setTimeout(() => {
+        async function onEnd() {
+            if (speechResult != "") {
+                if (checkSpeechAnswer(speechResult.result, level.levelContent.main.alt)) {
+                    await playReviewSpeechAsync({ level, status:'right', playSound })
+                    await playTipAsync({ level, index: 0, playSound })
+                    //await playClapAsync()
                     setShowCompleteModal(true)
-                    playReviewSpeech({ level, status: 'complete', playSound })
-                }, 2000)
-            } else {
-                if (countWrong < maxWrong) {
-                    playReviewSpeech({ level, status: 'wrong', playSound })
-                    setCountWrong(prev => prev + 1)
+                    await playReviewSpeechAsync({ level, status: 'complete', playSound })
                 } else {
-                    setTimeout(() => {
-                        playTip({ level, index: 0, playSound })
-                    }, 2000)
-                    setTimeout(() => {
+                    if (countWrong < maxWrong) {
+                        await playReviewSpeechAsync({ level, status: 'wrong', playSound })
+                        setCountWrong(prev => prev + 1)
+                    } else {
+                        await playTipAsync({ level, index: 0, playSound })
                         setShowCompleteModal(true)
-                        playReviewSpeech({ level, status: 'uncomplete', playSound })
-                    }, 2000)
+                        await playReviewSpeechAsync({ level, status: 'uncomplete', playSound })
+                    }
                 }
             }
         }
+
+        onEnd()
     }, [speechResult])
 
 
@@ -110,7 +113,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
                 star={5-countWrong}
                 navigation={navigation}
             />
-            <TouchableOpacity onPress={ () => playMain({ level, playSound }) }>
+            <TouchableOpacity onPress={ () => playMainAsync({ level, playSound }) }>
                 <Text style={styles.text}>{level.levelContent.main.alt}</Text>
                 <Image 
                     //source={require("./meo.jpg")} 
@@ -123,7 +126,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
             <AIAssistant 
                 height={height} 
                 isPortrait={isPortrait} 
-                onPress={() => playGuide({ level, index: 0, playSound })}
+                onPress={() => playGuideAsync({ level, index: 0, playSound })}
             />
         </ImageBackground>
     )

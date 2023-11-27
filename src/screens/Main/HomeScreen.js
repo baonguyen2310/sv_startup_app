@@ -14,27 +14,7 @@ import { createDatabase } from "../../services/firebase/firestore";
 import GameServices from "../../services/firebase/GameServices";
 import Layout from "../../layout";
 import useTheme from "../../themes";
-
-const gameListInitial = [
-  {
-    description: "Mô tả trò chơi",
-    gameName: "Từ vựng",
-    id: "hJcaehYOG48HsOZahthM",
-    status: "active",
-  },
-  {
-    description: "Mô tả trò chơi",
-    gameName: "Sắp xếp từ trong câu",
-    id: "Z8bxYCs0h3gkfQqTeME3",
-    status: "active",
-  },
-  {
-    description: "Mô tả trò chơi",
-    gameName: "Kể chuyện",
-    id: "rq9ZbIEa4sR23lg3EjvN",
-    status: "active",
-  },
-];
+import { tinhTuoi } from "../../utils";
 
 export default function HomeScreen({ navigation }) {
   const theme = useTheme()
@@ -45,7 +25,7 @@ export default function HomeScreen({ navigation }) {
     `Bé ${user.childName} hãy chọn một trò chơi mà bé thích!`,
   ];
 
-  const [gameList, setGameList] = useState(gameListInitial);
+  const [gameList, setGameList] = useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,6 +54,9 @@ export default function HomeScreen({ navigation }) {
       <ScrollView >
         <Text style={[styles.primary, theme.primaryText]}>Chào bé {user.childName}!</Text>
         <Text style={styles.primary}>Cùng chơi nào!</Text>
+        <Text style={styles.secondary}>
+          Các trò chơi dành cho bé {user.childName} {tinhTuoi(new Date(user.childBirthdate))} tuổi
+        </Text>
 
         {/* <Button 
           title="BabylonTextToSpeechWebView" 
@@ -86,7 +69,7 @@ export default function HomeScreen({ navigation }) {
           }}
         /> */}
         <View style={styles.container}>
-          {gameList.filter((value) => value.status == 'active').map((game, index) => {
+          {gameList && gameList.filter((value) => value.status == 'active' && value.allowAges.includes(tinhTuoi(new Date(user.childBirthdate)))).map((game, index) => {
             return (
               <TouchableOpacity
                 key={game.id}
@@ -115,8 +98,9 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   secondary: {
-    color: "black",
-    fontSize: 24,
-    fontWeight: "bold"
+    color: "#0dcaf0",
+    marginLeft: 5,
+    fontSize: 16,
+    fontWeight: "400"
   }
 })

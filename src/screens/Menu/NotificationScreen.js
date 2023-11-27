@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 export default function NotificationScreen() {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>NotificationScreen</Text>
+      <Text style={styles.title}>Thông báo</Text>
     </ScrollView>
   );
 };
@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
+    color: '#F875AA'
   },
   content: {
     fontSize: 16,

@@ -15,10 +15,10 @@ function StarChart({ starData, starLabel }) {
     <View>
       <LineChart
         data={{
-          labels: starLabel,
+          labels: data_2.labels,
           datasets: [
             {
-              data: starData,
+              data: data_2.data,
             },
           ],
         }}
@@ -30,9 +30,14 @@ function StarChart({ starData, starLabel }) {
   );
 }
 
+const data_2 = {
+  labels: [0,1,2,3,4,5,6,7,8,9], // optional
+  data: [0,2,2,3,4,3,4,2,4,5]
+};
+
 const data = {
-  labels: ["game1", "game2", "game3"], // optional
-  data: [0.4, 0.6, 0.8]
+  labels: ["Từ", "Câu", "Đoạn"], // optional
+  data: [0.8, 0.6, 0.2]
 };
 
 export default function StatisticScreen() {
@@ -62,7 +67,6 @@ export default function StatisticScreen() {
     )
   })
 
-
   const chartConfig= {
     backgroundColor: "#e26a00",
     backgroundGradientFrom: "#fb8c00",
@@ -83,9 +87,9 @@ export default function StatisticScreen() {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Thống kê</Text>
-      <Text style={styles.content}>Số sao của người chơi mỗi màn</Text>
+      <Text style={styles.secondary}>Biểu đồ số sao của bé</Text>
       <StarChart starData={starData} starLabel={starLabel} />
-      <Text style={styles.content}>Điểm mạnh yếu của người chơi</Text>
+      <Text style={styles.secondary}>Biểu đồ hoàn thiện nhóm trò chơi</Text>
       <ProgressChart
         data={data}
         width={350}
@@ -106,9 +110,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
+    color: '#F875AA'
   },
   content: {
     fontSize: 16,
+  },
+  secondary: {
+    color: "#0dcaf0",
+    marginTop: 20,
+    marginBottom: 10,
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: 'center'
   },
 });

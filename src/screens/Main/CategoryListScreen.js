@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react"
 import {
   View,
@@ -10,10 +11,14 @@ import {
 import CategoryItem from "../../components/CategoryItem"
 import LevelServices from "../../services/firebase/LevelServices"
 import Layout from "../../layout"
+import { tinhTuoi } from "../../utils";
+
 
 const categoryListInitial = {}
 
 export default function CategoryListScreen({ navigation, route }) {
+  const { user } = useSelector((state) => state.userReducer);
+
   const { gameId, gameName } = route.params;
   const [categoryList, setCategoryList] = useState(categoryListInitial)
 
@@ -23,7 +28,7 @@ export default function CategoryListScreen({ navigation, route }) {
         const levelList = await LevelServices.getLevelList({ gameId })
         if (levelList) {
             const newCategoryList = {}
-            levelList.forEach((level) => {
+            levelList.filter((value) => value.allowAges.includes(tinhTuoi(new Date(user.childBirthdate)))).forEach((level) => {
                 const category = level.category
                 if (!newCategoryList[category]) {
                     newCategoryList[category] = []

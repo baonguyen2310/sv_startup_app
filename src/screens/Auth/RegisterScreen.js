@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
+import Slider from '@react-native-community/slider';
 import AuthService from '../../services/firebase/AuthServices';
 import UserServices from '../../services/firebase/UserServices';
+
+import { tinhTuoi } from '../../utils';
 
 export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('')
@@ -15,6 +18,9 @@ export default function RegisterScreen({ navigation }) {
   const [childName, setChildName] = useState('')
   const [childGender, setChildGender] = useState('Male')
   const [childBirthdate, setChildBirthdate] = useState(new Date())
+
+  const [chamNoiLevel, setChamNoiLevel] = useState(0)
+  const [roiLoanNgonNguLevel, setRoiLoanNgonNguLevel] = useState(0)
 
   const [showBirthdatePicker, setShowBirthdatePicker] = useState(false)
   const [showChildBirthdatePicker, setShowChildBirthdatePicker] = useState(false)
@@ -49,92 +55,153 @@ export default function RegisterScreen({ navigation }) {
         return
       }
       console.log(user)
-      alert("Đăng ký thành công")
+      Alert.alert(
+        title="Thông báo",
+        message="Đăng ký thành công!",
+        buttons=[
+          {
+            text: "OK",
+            onPress: () => null
+          }
+        ],
+        options={
+            cancelable: true
+        }
+      )
       navigation.navigate('Login'); 
     }
   }
 
   return (
     <View style={styles.container}>
-      <Text>Register</Text>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-        inputMode='email'
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Phone Number"
-        value={phone}
-        onChangeText={setPhone}
-        style={styles.input}
-        inputMode='tel'
-      />
-      <Text style={styles.input} onPress={() => setShowBirthdatePicker(true)}>
-        Birthdate: { birthdate.toLocaleDateString() }
-      </Text>
-      {
-        showBirthdatePicker && (
-          <DateTimePicker
-            value={birthdate}
-            mode='date'
-            is24Hour={true}
-            onChange={handleBirthdatePickerChange}
+      <ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.title}>Đăng ký</Text>
+        <Text style={styles.secondary}>Thông tin người dùng:</Text>
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+          inputMode='email'
+        />
+        <TextInput
+          placeholder="Mật khẩu"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Số điện thoại"
+          value={phone}
+          onChangeText={setPhone}
+          style={styles.input}
+          inputMode='tel'
+        />
+        <Text style={styles.input} onPress={() => setShowBirthdatePicker(true)}>
+          Ngày sinh: { birthdate.toLocaleDateString() }
+        </Text>
+        {
+          showBirthdatePicker && (
+            <DateTimePicker
+              value={birthdate}
+              mode='date'
+              is24Hour={true}
+              onChange={handleBirthdatePickerChange}
+            />
+          )
+        }
+        <TextInput
+          placeholder="Họ"
+          value={lastName}
+          onChangeText={setLastName}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Tên"
+          value={firstName}
+          onChangeText={setFirstName}
+          style={styles.input}
+        />
+        <Text style={styles.secondary}>Thông tin của bé:</Text>
+        <TextInput
+          placeholder="Tên"
+          value={childName}
+          onChangeText={setChildName}
+          style={styles.input}
+        />
+        <View style={styles.selectContainer}>
+          <Text>Giới tính của bé:</Text>
+          <Picker
+            mode="dropdown"
+            style={styles.selectPicker}
+            prompt='Child Gender'
+            selectedValue={childGender}
+            onValueChange={(itemValue) => setChildGender(itemValue)}>
+            <Picker.Item label="Nam" value="Male" />
+            <Picker.Item label="Nữ" value="Female" />
+          </Picker>
+        </View>
+        <Text style={styles.input} onPress={() => setShowChildBirthdatePicker(true)}>
+          Ngày sinh: { childBirthdate.toLocaleDateString() }
+        </Text>
+        {
+          showChildBirthdatePicker && (
+            <DateTimePicker
+              value={childBirthdate}
+              mode='date'
+              is24Hour={true}
+              onChange={handleChildBirthdatePickerChange}
+            />
+          )
+        }
+        <TextInput
+          placeholder=""
+          value={`Tuổi: ${tinhTuoi(childBirthdate)}`}
+          style={styles.input}
+          editable={false}
+        />
+        <TouchableOpacity>
+        <Text style={styles.surveyLink}>Khảo sát đánh giá mức độ chậm nói</Text>
+        </TouchableOpacity>
+        <View style={[styles.input, styles.containerInput]}>
+          <Text>Mức độ chậm nói: {chamNoiLevel}</Text>
+          <Slider
+            style={{width: 200, height: 40}}
+            minimumValue={0}
+            maximumValue={10}
+            minimumTrackTintColor="#508D69"
+            maximumTrackTintColor="#000000"
+            step={1}
+            onValueChange={(value) => setChamNoiLevel(value)}
           />
-        )
-      }
-      <TextInput
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={setLastName}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Child Name"
-        value={childName}
-        onChangeText={setChildName}
-        style={styles.input}
-      />
-      <View style={styles.selectContainer}>
-        <Text style={{ color: "#555" }}>Child Gender</Text>
-        <Picker
-          mode="dropdown"
-          style={styles.selectPicker}
-          prompt='Child Gender'
-          selectedValue={childGender}
-          onValueChange={(itemValue) => setChildGender(itemValue)}>
-          <Picker.Item label="Nam" value="Male" />
-          <Picker.Item label="Nữ" value="Female" />
-        </Picker>
+        </View>
+        <TouchableOpacity>
+          <Text style={styles.surveyLink}>Khảo sát đánh giá rối loạn ngôn ngữ</Text>
+        </TouchableOpacity>
+        <View style={[styles.input, styles.containerInput]}>
+          <Text>Mức độ rối loạn ngôn ngữ: {roiLoanNgonNguLevel}</Text>
+          <Slider
+            style={{width: 200, height: 40}}
+            minimumValue={0}
+            maximumValue={10}
+            minimumTrackTintColor="#508D69"
+            maximumTrackTintColor="#000000"
+            step={1}
+            onValueChange={(value) => setRoiLoanNgonNguLevel(value)}
+          />
+        </View>
       </View>
-      <Text style={styles.input} onPress={() => setShowChildBirthdatePicker(true)}>
-        Child Birthdate: { childBirthdate.toLocaleDateString() }
-      </Text>
-      {
-        showChildBirthdatePicker && (
-          <DateTimePicker
-            value={childBirthdate}
-            mode='date'
-            is24Hour={true}
-            onChange={handleChildBirthdatePickerChange}
-          />
-        )
-      }
-      <Button title="Register" onPress={handleRegister} />
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleRegister}
+        >
+          <Text style={styles.buttonText}>Đăng ký</Text>
+        </TouchableOpacity>
+      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -142,12 +209,65 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    padding: 10
+  },
+  containerInput: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    height: 70
+  },
+  header: {
+    width: "100%",
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    resizeMode: 'contain'
+  },
+  footer: {
+    width: "100%",
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#F875AA'
+  },
+  secondary: {
+    color: "#0dcaf0",
+    marginBottom: 10,
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: 'center'
+  },
+  button: {
+    marginVertical: 10,
+    padding: 10,
+    width: "100%",
+    backgroundColor: '#2ecc71',
+    borderRadius: 5,
+    alignItems: 'center', // Canh giữa nội dung bên trong TouchableOpacity
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   input: {
-    width: '80%',
-    height: 40,
+    width: '100%',
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     margin: 10,
@@ -157,14 +277,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '80%',
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
-    margin: 10,
+    marginVertical: 10,
+    marginHorizontal: -25,
     padding: 5
   },
   selectPicker: {
     width: '45%'
+  },
+  surveyLink: {
+    color: "#508D69",
+    fontStyle: "italic",
+    textDecorationLine: "underline"
   }
 });

@@ -37,9 +37,26 @@ function checkSpeechAnswer(speechResult, answer) {
   }
 }
 
+function tinhTuoi(ngaySinhDate) {
+  var ngayHienTai = new Date();
+
+  var tuoi = ngayHienTai.getFullYear() - ngaySinhDate.getFullYear();
+
+  // Kiểm tra nếu chưa đến sinh nhật trong năm nay
+  if (
+      ngayHienTai.getMonth() < ngaySinhDate.getMonth() ||
+      (ngayHienTai.getMonth() === ngaySinhDate.getMonth() && ngayHienTai.getDate() < ngaySinhDate.getDate())
+  ) {
+      tuoi--;
+  }
+
+  return tuoi;
+}
+
 export {
     shuffleArray,
     arraysAreEqual,
     normalizeText,
-    checkSpeechAnswer
+    checkSpeechAnswer,
+    tinhTuoi
 }

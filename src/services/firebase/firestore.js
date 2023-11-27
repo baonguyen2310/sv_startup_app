@@ -1,4 +1,4 @@
-import { doc, collection, addDoc, setDoc, getDocs, serverTimestamp } from "firebase/firestore"; 
+import { doc, collection, addDoc, setDoc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore"; 
 import { db } from '.'
 
 // firebase auth sẽ quản lý tài khoản người dùng để xác thực
@@ -56,14 +56,14 @@ const userPremiumPackageData = {
     updatedAt: serverTimestamp()
 }
 
-const gameData = {
-    gameName: "Ôn tập: Vượt chướng ngại vật",
-    description: "Mô tả trò chơi",
-    thumbnail_url: "https://i.ibb.co/NpYLSPr/game-3-thumbnail.jpg",
-    status: "active", // ["active", "deleted", "beta"]
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp()
-}
+// const gameData = {
+//     gameName: "Ôn tập: Vượt chướng ngại vật",
+//     description: "Mô tả trò chơi",
+//     thumbnail_url: "https://i.ibb.co/NpYLSPr/game-3-thumbnail.jpg",
+//     status: "inactive", // ["active", "deleted", "beta"]
+//     createdAt: serverTimestamp(),
+//     updatedAt: serverTimestamp()
+// }
 
 // LEVEL DATA: CHUNG VÀ RIÊNG (levelContent) CHO CÁC TRÒ CHƠI
 // GAME 1: Từ vựng: 1 hình 1 chữ
@@ -1187,18 +1187,29 @@ const proposedPlayScheduleData = {
     updatedAt: serverTimestamp()
 }
 
+const gameData = {
+    allowAges: [2,3,4,5,6]
+}
+
+const update_levelData_1 = {
+    allowAges: [2,3,4,5,6]
+}
+
 export async function createDatabase() {
     try {
       //const docRef = await addDoc(collection(db, "premiumPackages"), premiumPackageData)
       //const docRef = await addDoc(collection(db, "purchasePackages"), purchasePackageData)
       //const docRef = await addDoc(collection(db, "users"), userData)
       //const docRef = await addDoc(collection(db, "userPremiumPackage"), userPremiumPackageData)
-      //const docRef = doc(db, "games", "17")
-      //await setDoc(docRef, gameData)
+      //const docRef = doc(db, "games", "12")
+      //await updateDoc(docRef, gameData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
       //const docRef = await addDoc(collection(db, "levels"), levelData)
       //const docRef = doc(db, "levels", "11_1") // 1_1: game1 level1
       //await setDoc(docRef, levelData_11)
+
+      const docRef = doc(db, "levels", "1_1")
+      await updateDoc(docRef, update_levelData_1)
 
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)

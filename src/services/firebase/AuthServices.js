@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const auth = initializeAuth(firebaseApp, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
+import { Alert } from 'react-native'
 
 
 //const auth = getAuth(firebaseApp)
@@ -43,13 +44,49 @@ class AuthService {
             const errorMessage = error.message;
             switch (errorCode) {
                 case "auth/email-already-in-use":
-                    alert("Email đã được sử dụng")
+                    Alert.alert(
+                        title="Thông báo",
+                        message="Email đã được sử dụng!",
+                        buttons=[
+                          {
+                            text: "OK",
+                            onPress: () => null
+                          }
+                        ],
+                        options={
+                            cancelable: true
+                        }
+                      )
                     break
                 case "auth/invalid-email":
-                    alert("Email không hợp lệ")
+                    Alert.alert(
+                        title="Thông báo",
+                        message="Email không hợp lệ!",
+                        buttons=[
+                          {
+                            text: "OK",
+                            onPress: () => null
+                          }
+                        ],
+                        options={
+                            cancelable: true
+                        }
+                    )
                     break
                 case "auth/weak-password":
-                    alert("Mật khẩu phải có ít nhất 6 ký tự")
+                    Alert.alert(
+                        title="Thông báo",
+                        message="Mật khẩu phải có ít nhất 6 ký tự!",
+                        buttons=[
+                          {
+                            text: "OK",
+                            onPress: () => null
+                          }
+                        ],
+                        options={
+                            cancelable: true
+                        }
+                    )
                     break
                 default:
                     alert(errorCode)
