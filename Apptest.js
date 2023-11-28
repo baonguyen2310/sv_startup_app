@@ -71,7 +71,7 @@ export default function App() {
   };
 
   const onSpeechError = (error) => {
-    console.log(error);
+    //console.log(error);
   };
 
   return (

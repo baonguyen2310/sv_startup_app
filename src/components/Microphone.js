@@ -22,7 +22,7 @@ export default function Microphone({ setSpeechResult }) {
     }
 
     function onSpeechError(error) {
-        console.log(error)
+        //console.log(error)
     }
 
     function startSpeechToText() {

@@ -7,7 +7,7 @@ class LevelServices {
     static async getLevelList({ gameId }) {
         //const gameDocRef = doc(gamesCollectionRef, gameId)
 
-        console.log(gameId)
+        //console.log(gameId)
         const q = query(collection(db, "levels"), where("gameId", "==", gameId));
 
         const docs = await getDocs(q);

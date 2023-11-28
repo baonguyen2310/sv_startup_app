@@ -75,7 +75,7 @@ export default function MenuScreen({ navigation }) {
                     text: "CÓ", 
                     onPress: async () => {
                         await AuthService.logout()
-                        console.log("Logout success")
+                        //console.log("Logout success")
                         navigation.dispatch(CommonActions.reset({
                             index: 0,
                             routes: [
@@ -87,7 +87,7 @@ export default function MenuScreen({ navigation }) {
                 {
                     text: "KHÔNG",
                     onPress: () => {
-                        console.log("Canceled")
+                        //console.log("Canceled")
                     }
                 }
             ],

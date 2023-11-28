@@ -8,6 +8,7 @@ import GameBody_7 from "./game_7"
 import GameBody_9 from "./game_9"
 import GameBody_10 from "./game_10"
 import GameBody_11 from "./game_11"
+import GameBody_12 from "./game_12"
 
 
 const gameBodyList = [
@@ -50,6 +51,10 @@ const gameBodyList = [
     {
         gameId: "11",
         component: GameBody_11
+    },
+    {
+        gameId: "12",
+        component: GameBody_12
     }
 ]
 

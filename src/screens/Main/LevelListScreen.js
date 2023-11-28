@@ -40,6 +40,7 @@ export default function LevelListScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingBottom: 200,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",

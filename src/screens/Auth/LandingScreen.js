@@ -14,7 +14,7 @@ export default function LandingScreen({ navigation }) {
     async function getUser(){
       const userId = await AuthService.checkLoggedIn()
       if (userId) {
-        console.log(userId);
+        //console.log(userId);
         try {
           const user = await UserServices.getUserById({ userId })
           if (user) {

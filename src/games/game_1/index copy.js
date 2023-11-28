@@ -87,7 +87,7 @@ export default function GameBody({ time = 30, requireScore = 100, level, navigat
       }
     
       const onSpeechError = (error) => {
-        console.log(error)
+        //console.log(error)
       }
 
     const { height, width } = useWindowDimensions()

@@ -25,7 +25,7 @@ class HistoryServices {
 
     static async getHistoryByUserId() {
         const userId = await AsyncStorage.getItem('user')
-        console.log(userId)
+        //console.log(userId)
         const q = query(collection(db, "histories"))
         const docs = await getDocs(q)
         const histories = []

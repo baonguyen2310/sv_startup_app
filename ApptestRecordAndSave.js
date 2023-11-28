@@ -9,25 +9,25 @@ export default function App() {
 
   async function startRecording() {
     try {
-      console.log('Requesting permissions');
+      //console.log('Requesting permissions');
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
-      console.log('Starting recording');
+      //console.log('Starting recording');
       const { recording } = await Audio.Recording.createAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
       setRecording(recording);
-      console.log('Recording started');
+      //console.log('Recording started');
     } catch (err) {
       console.error('Failed to start recording', err);
     }
   }
 
   async function stopRecording() {
-    console.log('Stopping recording');
+    //console.log('Stopping recording');
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
     const { sound } = await recording.createNewLoadedSoundAsync();
@@ -56,7 +56,7 @@ export default function App() {
   useEffect(() => {
     return sound
       ? () => {
-          console.log('Unloading sound');
+          //console.log('Unloading sound');
           sound.unloadAsync();
         }
       : undefined;

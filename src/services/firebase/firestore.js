@@ -65,24 +65,27 @@ const userPremiumPackageData = {
 //     updatedAt: serverTimestamp()
 // }
 
+
+
 // LEVEL DATA: CHUNG VÀ RIÊNG (levelContent) CHO CÁC TRÒ CHƠI
 // GAME 1: Từ vựng: 1 hình 1 chữ
 const levelData_1 = {
     gameId: "1",
-    title: "Cái miệng",
-    thumbnail_url: "https://nhakhoakim.com/wp-content/uploads/2021/11/con-nguoi-co-bao-nhieu-cai-rang-3.png",
+    title: "Đôi mắt",
+    thumbnail_url: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701094508/game_1/level_2/doimat_le3on9.jpg",
     description: "Mô tả cấp độ",
-    category: "Bộ phận cơ thể",
+    category: "Cơ thể bé",
     requireScore: 100,
     limitTime: 60,
     goldReward: 50,
     status: "active",
+    allowAges: [2,3,4,5,6],
     levelContent: {
-        imageUrl: "https://nhakhoakim.com/wp-content/uploads/2021/11/con-nguoi-co-bao-nhieu-cai-rang-3.png",
+        imageUrl: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701094508/game_1/level_2/doimat_le3on9.jpg",
         videoUrl: "",
         main: {
             audioUrl: "",
-            alt: "Cái miệng"
+            alt: "Đôi mắt"
         },
         questions: [
             {
@@ -98,8 +101,8 @@ const levelData_1 = {
         ],
         guides: [
             {
-                audioUrl: "https://firebasestorage.googleapis.com/v0/b/sv-startup.appspot.com/o/games%2Fsounds%2Fgame_1%2Flevel_1%2Fbe_hay_doc_tu_cai_mieng_111123074824.mp3?alt=media&token=dda4ed55-c3a8-4757-b124-1b4eecfb4bdf",
-                alt: "Bé hãy đọc từ . Cái , miệng"
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . Đôi , mắt"
             }
         ],
         reviews_speech: {
@@ -109,7 +112,7 @@ const levelData_1 = {
             },
             wrong: {
                 audioUrl: "",
-                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. cái. miệng"
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. đôi. mắt"
             },
             complete: {
                 audioUrl: "",
@@ -123,7 +126,7 @@ const levelData_1 = {
         tips: [
             {
                 audioUrl: "",
-                alt: "Miệng bé dùng để nói"
+                alt: ""
             }
         ]
     },
@@ -1090,6 +1093,287 @@ const levelData_11 = {
 }
 
 
+// GAME 12: Bé tìm đồ vật
+const levelData_12_1 = {
+    gameId: "12",
+    title: "Con vật",
+    allowAges: [2,3,4,5,6],
+    thumbnail_url: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701107095/game_12/level_1_1/cute-7270285_1280_1_lck8qc.png",
+    description: "Mô tả cấp độ",
+    category: "Con vật",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701107095/game_12/level_1_1/cute-7270285_1280_1_lck8qc.png",
+        videoUrl: "",
+        main: {
+            audioUrl: "",
+            alt: "Con mèo",
+            url: "https://sv-startup-web-demo.netlify.app/categories/convat"
+        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        answers: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy tìm hình ảnh . con , mèo , trong 30 giây"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . con , mèo"
+            }
+        ],
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. con. mèo"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ]
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+const levelData_12_2 = {
+    gameId: "12",
+    title: "Phương tiện giao thông",
+    allowAges: [2,3,4,5,6],
+    thumbnail_url: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701107356/game_12/level_2_1/transportation-304696_1280_1_drssii.png",
+    description: "Mô tả cấp độ",
+    category: "Phương tiện giao thông",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701107356/game_12/level_2_1/transportation-304696_1280_1_drssii.png",
+        videoUrl: "",
+        main: {
+            audioUrl: "",
+            alt: "Xe máy",
+            url: "https://sv-startup-web-demo.netlify.app/categories/phuongtiengiaothong"
+        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        answers: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy tìm hình ảnh . xe , máy , trong 30 giây"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . xe , máy"
+            }
+        ],
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. xe. máy"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ]
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+const levelData_12_3 = {
+    gameId: "12",
+    title: "Rau củ quả",
+    allowAges: [2,3,4,5,6],
+    thumbnail_url: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701107501/game_12/level_3_1/apples-575317_1280_1_ufr1kw.png",
+    description: "Mô tả cấp độ",
+    category: "Rau củ quả",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701107501/game_12/level_3_1/apples-575317_1280_1_ufr1kw.png",
+        videoUrl: "",
+        main: {
+            audioUrl: "",
+            alt: "Quả táo",
+            url: "https://sv-startup-web-demo.netlify.app/categories/raucuqua"
+        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        answers: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy tìm . quả , táo , trong 30 giây"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . quả , táo"
+            }
+        ],
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. quả. táo"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ]
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
+const levelData_12_4 = {
+    gameId: "12",
+    title: "Vật dụng xung quanh",
+    allowAges: [4,5,6],
+    thumbnail_url: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701130369/game_12/level_4_1/toothbrush-311373_1280_1_ax5a32.png",
+    description: "Mô tả cấp độ",
+    category: "Vật dụng xung quanh",
+    requireScore: 100,
+    limitTime: 60,
+    goldReward: 50,
+    status: "active",
+    levelContent: {
+        imageUrl: "https://res.cloudinary.com/baonguyen2310/image/upload/v1701130369/game_12/level_4_1/toothbrush-311373_1280_1_ax5a32.png",
+        videoUrl: "",
+        main: {
+            audioUrl: "",
+            alt: "Bàn chải đánh răng",
+            url: "https://sv-startup-web-demo.netlify.app/categories/vatdungxungquanh"
+        },
+        questions: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        answers: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ],
+        guides: [
+            {
+                audioUrl: "",
+                alt: "Bé hãy tìm , bàn , chải, đánh, răng , trong 30 giây"
+            },
+            {
+                audioUrl: "",
+                alt: "Bé hãy đọc từ . bàn , chải, đánh, răng"
+            }
+        ],
+        reviews_speech: {
+            right: {
+                audioUrl: "",
+                alt: "Bé đã đọc đúng"
+            },
+            wrong: {
+                audioUrl: "",
+                alt: "Bé đọc chưa chính xác, bé hãy đọc lại từ. bàn, chải, đánh, răng"
+            },
+            complete: {
+                audioUrl: "",
+                alt: "Chúc mừng bé đã hoàn thành! Bé hãy chọn màn chơi tiếp theo"
+            },
+            uncomplete: {
+                audioUrl: "",
+                alt: "Bé hãy luyện tập để phát âm tốt hơn nha"
+            }
+        },
+        tips: [
+            {
+                audioUrl: "",
+                alt: ""
+            }
+        ]
+    },
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+}
+
 const unlockMethodData = {
     levelId: "XSkpAx1EFIdoGb8QuPtc",
     method: "gold", // ["gold", "ruby"]
@@ -1205,11 +1489,11 @@ export async function createDatabase() {
       //await updateDoc(docRef, gameData)
       //const docRef = await addDoc(collection(db, "games"), gameData)
       //const docRef = await addDoc(collection(db, "levels"), levelData)
-      //const docRef = doc(db, "levels", "11_1") // 1_1: game1 level1
-      //await setDoc(docRef, levelData_11)
+      const docRef = doc(db, "levels", "12_1_1") // 1_1: game1 level1
+      await setDoc(docRef, levelData_12_1)
 
-      const docRef = doc(db, "levels", "1_1")
-      await updateDoc(docRef, update_levelData_1)
+      //const docRef = doc(db, "levels", "1_1")
+      //await updateDoc(docRef, update_levelData_1)
 
       //const docRef = await addDoc(collection(db, "unlockMethod"), unlockMethodData)
       //const docRef = await addDoc(collection(db, "userLevelUnlocked"), userLevelUnlockedData)

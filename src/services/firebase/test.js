@@ -9,7 +9,7 @@ export async function test() {
         born: 1815,
         country: "USA"
       });
-      console.log("Document written with ID: ", docRef.id);
+      //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -18,6 +18,6 @@ export async function test() {
 export async function test2() {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data().country}`);
+        //console.log(`${doc.id} => ${doc.data().country}`);
     });
 }

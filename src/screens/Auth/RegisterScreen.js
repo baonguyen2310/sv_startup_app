@@ -54,7 +54,7 @@ export default function RegisterScreen({ navigation }) {
       } catch (error) {
         return
       }
-      console.log(user)
+      //console.log(user)
       Alert.alert(
         title="Thông báo",
         message="Đăng ký thành công!",

@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }) {
           setGameList(gameList);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     };
 
@@ -61,8 +61,8 @@ export default function HomeScreen({ navigation }) {
         {/* <Button 
           title="BabylonTextToSpeechWebView" 
           onPress={()=>navigation.navigate('BabylonTextToSpeech')}
-        />
-        <Button
+        /> */}
+        {/* <Button
           title="createDatabase"
           onPress={() => {
             createDatabase();

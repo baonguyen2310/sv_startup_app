@@ -38,7 +38,7 @@ export default function CategoryListScreen({ navigation, route }) {
             setCategoryList(newCategoryList);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     };
 
@@ -57,7 +57,7 @@ export default function CategoryListScreen({ navigation, route }) {
           <Image style={styles.imageSmall} source={ require('../../assets/images/start.gif') } />
         </View> */}
         <ScrollView>
-          <View>
+          <View style={styles.fullContainer}>
             {Object.keys(categoryList).map((category, index) => {
               return (
                 <TouchableOpacity
@@ -83,6 +83,9 @@ export default function CategoryListScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  fullContainer: {
+    paddingBottom: 200,
+  },
   container: {
     flexDirection: "row",
     flexWrap: "wrap",

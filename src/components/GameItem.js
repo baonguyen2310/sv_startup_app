@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         fontWeight: 700,
-        fontSize: 40,
+        fontSize: 30,
         textShadowColor: 'rgba(0, 0, 0, 1)',
         textShadowOffset: {width: 10, height: 10},
         textShadowRadius: 50,

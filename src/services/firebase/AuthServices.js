@@ -27,7 +27,7 @@ class AuthService {
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage)
+            //console.log(errorMessage)
             return null
         }
     }
@@ -37,7 +37,7 @@ class AuthService {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
             const user = userCredential.user.uid
-            console.log(user)
+            //console.log(user)
             return user
         } catch (error) {
             const errorCode = error.code;
@@ -101,13 +101,13 @@ class AuthService {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
             const user = userCredential.user.uid
-            console.log(user)
+            //console.log(user)
             await AsyncStorage.setItem('user', user)
             return user
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage)
+            //console.log(errorMessage)
             return null
         }
     }
@@ -119,7 +119,7 @@ class AuthService {
             await AsyncStorage.removeItem('user')
             return
         } catch (error) {
-            console.log(error)
+            //console.log(error)
         }
     }
 }

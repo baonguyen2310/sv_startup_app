@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import * as Speech from 'expo-speech'
 
 export default function AIAssistant({ height, isPortrait, onPress }) {
 
-    // function onPress() {
-    //     const sentence = sentenceList[Math.floor(Math.random() * sentenceList.length)]
-    //     Speech.speak(sentence)
-    // }
+    function handlePress() {
+        Speech.speak("Bé hãy nhấn vào micro để nói, và nhấn thêm lần nữa để xác nhận")
+    }
 
     return (
         <View style={{ ...styles.container, top: isPortrait? height - 220: height - 260 }}>
-            <TouchableOpacity onPress={onPress} style={{ ...styles.image }}>
+            <TouchableOpacity onPress={handlePress} style={{ ...styles.image }}>
                 <Image
-                    source={require("../assets/images/bear3.gif")} 
+                    source={require("../assets/images/help.png")} 
                     style={styles.image}
                 />
                 {/* <Text style={stylesRoot.contentText}>AIAssistant</Text> */}

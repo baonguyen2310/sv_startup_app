@@ -11,7 +11,7 @@ export default function HistoryScreen() {
         setHistories(histories)
       } catch (error) {
         setHistories([])
-        console.log(error)
+        //console.log(error)
       }
     }
 

@@ -35,7 +35,7 @@ export default function ProfileScreen({ navigation }) {
             setChildBirthdate(new Date(user.childBirthdate))
           }
         } catch (error) {
-          console.log(error)
+          //console.log(error)
           return
         }
       }

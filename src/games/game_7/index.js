@@ -140,7 +140,7 @@ export default function GameBody({ time, requireScore, level }) {
                             onDragRelease={(e, gestureState) => {
                                 const x = e.nativeEvent.pageX - e.nativeEvent.locationX
                                 const y = e.nativeEvent.pageY - e.nativeEvent.locationY-300
-                                console.log(`X: ${x}, Y: ${y}`)
+                                //console.log(`X: ${x}, Y: ${y}`)
                                 minDistance = calculateDistance(x, y, boxes[0].x, boxes[0].y)
                                 minDistanceIndex = 0
                                 for (let i = 0; i < boxes.length; i++) {
@@ -149,7 +149,7 @@ export default function GameBody({ time, requireScore, level }) {
                                         minDistanceIndex = i
                                     }
                                 }
-                                console.log(minDistanceIndex)
+                                //console.log(minDistanceIndex)
 
                                 // swap 2 box: swap chữ và swap màu
                                 const newBoxes = [...boxes]

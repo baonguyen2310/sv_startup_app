@@ -131,7 +131,7 @@ export default function GameBody({ time, requireScore, level, navigation }) {
             
             //const reviewStory = await ChatGPTServices.reviewStory({ story: "Dạo ở xứ sở Mây, có chú gấu tên là Bông. Bông muốn làm bạn với những chú cún sói biết nói, nhưng chúng lại thích húc cùng mèo hổ. Chú gấu buồn quá, nhưng mỗi khi nhớ đến bóng mây trắng, Bông biến thành siêu gấu có cánh bay lượn trên trời. " })
             const reviewStory = await ChatGPTServices.reviewStory({ story: speechResult.result })
-            console.log(reviewStory.choices[0].message.content)
+            //console.log(reviewStory.choices[0].message.content)
             Speech.speak(reviewStory.choices[0].message.content)
             setLoading(false)
             setTimeout(() => {
